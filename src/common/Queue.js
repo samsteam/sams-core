@@ -34,10 +34,19 @@ cocktail.mix({
 
   //Instance variables of the class.
   '@properties': {
-    array: []
+    /*
+     *  This variable could be defined as "private"
+     *  by moving it out of the @properties annotation.
+     */
+    array: undefined
   },
 
   constructor: function() {
+    /*
+     *  According to @elmasse default variable initialization must be done
+     *  in the constructor and not in the @properties declaration.
+     */
+    this.setArray([]);
     this.log("Created.");
   },
 

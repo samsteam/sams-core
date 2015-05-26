@@ -12,15 +12,15 @@ cocktail.mix({
      *  using the method it defined for that request.
      */
     ComparingMethod: function(value){
-        if (typeof value.equals == "function") {
-          return (function(a, b) {
-            return a.equals(b);
-          });
-        }
+      if (typeof value.equals == "function") {
         return (function(a, b) {
-          return a === b;
+          return a.equals(b);
         });
-      },
+      }
+      return (function(a, b) {
+        return a === b;
+      });
+    },
 
     /*
      *  Checks whether the clone method is defined and return a function

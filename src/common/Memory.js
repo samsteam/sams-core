@@ -39,11 +39,7 @@ cocktail.mix({
   },
 
   /*
-   *  Creates a memory with a determined ammount of frames.
-   *  Should be called with an object like this:
-   *  {
-   *    size: aSize
-   *  }
+   *  Creates a memory with 'size' ammount of frames.
    */
   constructor: function(size) {
     this.setSize(size);
@@ -87,7 +83,7 @@ cocktail.mix({
   /*
    *	Look for the frame that contains the element.
    *	If the element isn't found, return -1.
-   *  This method is identical to Queue_cocktail.js indexOf.
+   *  This method is identical to Queue.js indexOf.
    */
   getFrameOf: function(element) {
     //Move all asignations out of the loop.
@@ -224,7 +220,7 @@ cocktail.mix({
     //Using Memory class.
     var Memory = require('./Memory');
     var aux = new Memory(this.getSize());
-    
+
     var myArray = this.getArray();
     myArray.forEach(function(element, index) {
       //Check that the Memory holds a reference to itself.
