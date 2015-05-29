@@ -13,7 +13,6 @@ var Behavior = require('./Behavior');
  *  the properties defined as instance variables.
  */
 //var Configurable = require('cocktail-trait-configurable');
-//cocktail.use(Configurable);
 
 /*
  **********************************************************************
@@ -40,6 +39,7 @@ cocktail.mix({
 
   /*
    *  Creates a memory with 'size' ammount of frames.
+   *  The proper initialization of the properties must be here.
    */
   constructor: function(size) {
     this.setSize(size);

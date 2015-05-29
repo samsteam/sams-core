@@ -14,7 +14,6 @@ var Behavior = require('./Behavior');
  *  the properties defined as instance variables.
  */
 var Configurable = require('cocktail-trait-configurable');
-cocktail.use(Configurable);
 
 cocktail.mix({
 	//Define this file as a single class module exportable.

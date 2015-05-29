@@ -14,7 +14,6 @@ var Behavior = require('./Behavior');
  *  In this case is not needed because the constructor dosn't take parameters.
  */
 // var Configurable = require('cocktail-trait-configurable');
-// cocktail.use(Configurable);
 
 /*
  **********************************************************************
