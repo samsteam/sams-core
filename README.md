@@ -16,7 +16,7 @@ You can help us adding new algorithms :)
 
 Check the [docs](https://github.com/samsteam/sams-core/tree/master/docs/design).
 
-For testing, we're using [mochajs](mochajs.org)
+For testing, we're using [mochajs](http://mochajs.org)
 
 #### Install mocha
 `npm install -g mocha`
