@@ -9,3 +9,17 @@ All documentation here [Docs](https://github.com/samsteam/sams-core/wiki)
 `git clone https://github.com/samsteam/sams-core`
 #### Install dependencies:
 `npm install`
+
+## How to contribute
+
+You can help us adding new algorithms :)
+
+Check the [docs](https://github.com/samsteam/sams-core/tree/master/docs/design).
+
+For testing, we're using [mochajs](mochajs.org)
+
+#### Install mocha
+`npm install -g mocha`
+
+#### Run tests
+`npm test`
