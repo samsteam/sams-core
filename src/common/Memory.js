@@ -30,20 +30,25 @@ cocktail.mix({
   //Set the logger and signature of this class.
  '@logger' : [console, "Memory:"],
 
-  //Instance variables of the class.
-  '@properties': {
-    array: undefined,
-    size: 0,
-    used: 0
-  },
+  /*
+   *  Instance variables of the class.
+   *  Since we want them to be private, we'll define them in the constructor.
+   */
+  // '@properties': {
+  //   array: undefined,
+  //   size: 0,
+  //   used: 0
+  // },
+
 
   /*
    *  Creates a memory with 'size' ammount of frames.
    *  The proper initialization of the properties must be here.
    */
   constructor: function(size) {
-    this.setSize(size);
-    this.setArray([]);
+    this._size = size;
+    this._array = [];
+    this._used = 0;
     this.log("Created with " + size + " frame.");
   },
 
@@ -51,7 +56,7 @@ cocktail.mix({
    *  Return whether the memory is full or not.
    */
   isFull: function() {
-    if (this.getUsed() === this.getSize()) {
+    if (this._used === this._size) {
       return true;
     }
     return false;
@@ -70,8 +75,8 @@ cocktail.mix({
 
     //Move all initializations out of the loop.
     var i = 0;
-    var array = this.getArray();
-    var length = this.getSize();
+    var array = this._array;
+    var length = this._size;
 
 		for (; i < length; i++) {
 			if (array[i] == undefined) {
@@ -88,7 +93,7 @@ cocktail.mix({
   getFrameOf: function(element) {
     //Move all asignations out of the loop.
     var i = 0;
-    var array = this.getArray();
+    var array = this._array;
     var length = array.length;
 
     //Ask for the supported comparing method of the element.
@@ -123,11 +128,11 @@ cocktail.mix({
    */
   at: function(position) {
     //Check if the position is out of the array.
-    if(position >= this.getSize()) {
+    if(position >= this._size) {
       this.log("Access to the position " + position + " out of bounds. Access denied.");
       return undefined;
     }
-    return this.getArray()[position];
+    return this._array[position];
   },
 
   /*
@@ -137,7 +142,7 @@ cocktail.mix({
    */
   atPut: function(position, element) {
     //Check if the position is out of the array.
-    if(position >= this.getSize()) {
+    if(position >= this._size) {
       this.log("Access to the position " + position + " out of bounds. Access denied.");
       return false;
     }
@@ -145,13 +150,13 @@ cocktail.mix({
     //Check if the position was free and add 1 to the used acumulator.
     //Log all replaced elements.
     if(this.at(position) === undefined) {
-      this.setUsed(this.getUsed() + 1);
+      this._used(this._used + 1);
     } else {
       this.log(this.at(position).toString() + " at frame[" + position + "] being replaced.");
     }
 
     //Finally add the element to the Memory and log it.
-    this.getArray()[position] = element;
+    this._array[position] = element;
     this.log(element.toString() + " added to the frame[" + position + "].");
     return true;
   },
@@ -171,15 +176,15 @@ cocktail.mix({
      *  were instantiated with the same params and
      *  if the internal state of the objects at this given time is "similar".
      */
-    if(this.constructor !== obj.constructor || this.getSize() !== obj.getSize() || this.getUsed() !== obj.getUsed()) {
+    if(this.constructor !== obj.constructor || this._size !== obj._size || this._used !== obj._used) {
       return false;
     }
 
     //Then it's time for a deep check.
     //Move all asignations out of the loop.
     var i = 0;
-    var myArray = this.getArray();
-    var herArray = obj.getArray();
+    var myArray = this._array;
+    var herArray = obj._array;
     var length = myArray.length;
 
     /*
@@ -212,16 +217,16 @@ cocktail.mix({
 
   /*
    *  Generate a new object equivalent to this one.
-   *  Tryes to do a deep clone.
+   *  Tries to do a deep clone.
    */
   clone: function() {
     this.log("---Start of Clonation.---");
 
     //Using Memory class.
     var Memory = require('./Memory');
-    var aux = new Memory(this.getSize());
+    var aux = new Memory(this._size);
 
-    var myArray = this.getArray();
+    var myArray = this._array;
     myArray.forEach(function(element, index) {
       //Check that the Memory holds a reference to itself.
       //Then add a reference to the new object.
@@ -240,7 +245,7 @@ cocktail.mix({
   },
 
   forEach: function(exec, that) {
-    var myArray = this.getArray();
+    var myArray = this._array;
     if(that) {
       myArray.forEach(function(element, index) {
         //Use the contex passed by the caller in the execution of the function.
