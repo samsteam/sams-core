@@ -1,4 +1,15 @@
-# algorithm-common
-######This is a submodule of samsteam/algorithm repositories.
+# Sams-Core
+######This is the repo that holds the algorithms & structures for the memory scheduler.
 
-Auxiliar structures, classes &amp; annotations.
+All documentation here [Docs](https://github.com/samsteam/sams-core/wiki)
+
+## How to use
+
+### To clone this module:
+	git clone https://github.com/samsteam/sams-core
+
+## Demo
+
+Execute `node test.js`.
+
+
