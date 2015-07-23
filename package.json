@@ -1,0 +1,33 @@
+{
+  "name": "sams-core",
+  "version": "0.0.1",
+  "description": "Some Awsome Memory Scheduler.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samsteam/sams-core"
+  },
+  "keywords": [
+    "sams",
+    "memory",
+    "scheduler",
+    "os",
+		"fifo",
+		"lru",
+		"optimal",
+		"nru"
+  ],
+  "author": "Sams Team <dev.samsjs@gmail.com> (http://samsjs.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samsteam/sams-core/issues"
+  },
+  "homepage": "https://github.com/samsteam/sams-core",
+  "dependencies": {
+    "cocktail": "^0.7.0",
+    "cocktail-trait-configurable": "^1.0.0"
+  }
+}
