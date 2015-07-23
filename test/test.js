@@ -1,2 +1,2 @@
 require('./QueueTest')();
-require('./QueueTest')();
+require('./BehaviorTest')();
