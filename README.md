@@ -5,11 +5,7 @@ All documentation here [Docs](https://github.com/samsteam/sams-core/wiki)
 
 ## How to use
 
-### To clone this module:
-	git clone https://github.com/samsteam/sams-core
-
-## Demo
-
-Execute `node test.js`.
-
-
+#### Clone this module:
+	`git clone https://github.com/samsteam/sams-core`
+#### Install dependencies:
+	`npm install`
