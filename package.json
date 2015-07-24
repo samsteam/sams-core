@@ -4,7 +4,7 @@
   "description": "Some Awsome Memory Scheduler.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --reporter nyan"
   },
   "repository": {
     "type": "git",
