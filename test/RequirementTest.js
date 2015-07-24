@@ -1,6 +1,7 @@
 var assert = require("assert");
 
 var Requirement = require('../src/common/Requirement.js');
+var Page = require('../src/common/Page.js');
 
 /*
 | --------------------------------------------------------------------
@@ -70,74 +71,113 @@ module.exports = function() {
     });
 
 
-    // // Test method equals(object):boolean
-    // describe('#equals(object)', function () {
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    // });
-    //
-    //
-    // // Test method asDataObject():object
-    // describe('#asDataObject()', function () {
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    // });
-    //
-    //
-    // // Test method asPage():object
-    // describe('#asPage()', function () {
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    // });
-    //
-    //
-    // // Test method clone():object
-    // describe('#clone()', function () {
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    // });
-    //
-    //
-    // // Test method toString():string
-    // describe('#toString()', function () {
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    //   it('', function () {
-    //
-    //   });
-    //
-    // });
+    // Test method equals(object):boolean
+    describe('#equals(object)', function () {
+
+      it('Comparing a request with itself, should return true', function () {
+
+        assert.equal(true, rq1.equals(rq1));
+
+      });
+
+      it('Comparing 2 requests who has the same internal state, should return true', function () {
+
+        assert.equal(true, rq1.equals(rq2));
+
+      });
+
+      it('Comparing 2 different requests, should return false', function () {
+
+        assert.equal(false, rq1.equals(rq3));
+        assert.equal(false, rq3.equals(rq4));
+
+      });
+
+    });
+
+
+    // Test method asDataObject():object
+    describe('#asDataObject()', function () {
+
+      it('Data object should retain the same data that the request', function () {
+
+        var dataObject = rq1.asSimpleObject();
+        assert.equal(dataObject.pageNumber, rq1.getPageNumber());
+        assert.equal(dataObject.process, rq1.getProcess());
+        assert.equal(dataObject.mode, rq1.getMode());
+
+      });
+
+    });
+
+
+    // Test method asPage():object
+    describe('#asPage()', function () {
+
+      it('Resultant object should be a Page', function () {
+
+        var page = rq1.asPage();
+        assert.equal(true, page instanceof Page);
+
+      });
+
+      it('Resultant Page should retain the same data as the Requirement', function () {
+
+        var page = rq1.asPage();
+
+        assert.equal(rq1.getMode(), page.getMode());
+        assert.equal(rq1.getProcess(), page.getProcess());
+        assert.equal(rq1.getPageNumber(), page.getPageNumber());
+
+      });
+
+    });
+
+
+    // Test method clone():object
+    describe('#clone()', function () {
+
+      it('Resultant object should be a Requirement', function () {
+
+        var page = rq1.clone();
+        assert.equal(true, page instanceof Requirement);
+
+      });
+
+      it('Resultant Requirement should retain the same data as the original', function () {
+
+        var rq1clone = rq1.clone();
+
+        assert.equal(rq1.getMode(), rq1clone.getMode());
+        assert.equal(rq1.getProcess(), rq1clone.getProcess());
+        assert.equal(rq1.getPageNumber(), rq1clone.getPageNumber());
+
+      });
+
+      it('Resultant Requirement should not be identic', function () {
+
+        var rq1clone = rq1.clone();
+
+        assert.equal(rq1.getMode(), rq1clone.getMode());
+        assert.equal(rq1.getProcess(), rq1clone.getProcess());
+        assert.equal(rq1.getPageNumber(), rq1clone.getPageNumber());
+        assert.notEqual(true, rq1 === rq1clone);
+
+      });
+
+    });
+
+
+    // Test method toString():string
+    describe('#toString()', function () {
+
+      it('Should return a string', function () {
+
+        assert.equal(true, typeof rq1.toString() == 'string');
+
+      });
+
+    });
 
   });
 }
