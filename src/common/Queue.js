@@ -141,7 +141,9 @@ cocktail.mix({
    */
   dequeue: function() {
     var element = this.getArray().shift();
-    this.log(element.toString() + " removed.");
+    if ( element ) {
+      this.log(element.toString() + " removed.");
+    }
     return element;
   },
 
