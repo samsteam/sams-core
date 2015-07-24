@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-var Behavior = require('../src/common/Behavior.js');
+var Behavior = require('../../src/common/Behavior.js');
 
 /*
 | --------------------------------------------------------------------

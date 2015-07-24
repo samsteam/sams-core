@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-var Requirement = require('../src/common/Requirement.js');
+var Requirement = require('../../src/common/Requirement.js');
 
 /*
 | --------------------------------------------------------------------

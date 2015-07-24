@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-var Queue = require('../src/common/Queue.js');
+var Queue = require('../../src/common/Queue.js');
 
 /*
 | --------------------------------------------------------------------

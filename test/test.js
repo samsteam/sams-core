@@ -1,3 +1,3 @@
-require('./QueueTest')();
-require('./BehaviorTest')();
-require('./RequirementTest')();
+require('./common/QueueTest')();
+require('./common/BehaviorTest')();
+require('./common/RequirementTest')();
