@@ -1,3 +1,3 @@
 require('./QueueTest')();
 require('./BehaviorTest')();
-require('./RequerimentTest')();
+require('./RequirementTest')();

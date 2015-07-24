@@ -55,7 +55,7 @@ cocktail.mix({
 
   validate: function() {
     if ((this.getProcess() == "") || (typeof this.getPageNumber() !== "number") ||
-      (this.getMode() !== "read" && this.getMode !== "write")) {
+      (this.getMode() !== "read" && this.getMode() !== "write")) {
       return false;
     }
     return true;
