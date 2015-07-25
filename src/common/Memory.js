@@ -142,7 +142,7 @@ cocktail.mix({
    */
   atPut: function(position, element) {
     //Check if the position is out of the array.
-    if(position >= this._size) {
+    if(position < 0 || position >= this._size) {
       this.log("Access to the position " + position + " out of bounds. Access denied.");
       return false;
     }
