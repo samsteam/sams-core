@@ -194,6 +194,49 @@ module.exports = function() {
 
       });
 
+    });
+
+    // Test method validate():boolean
+    describe('#validate()', function () {
+
+      it('Page has erroneous data, should return false', function () {
+
+        assert.equal(false,page5.validate());
+
+      });
+
+      it('Page has correct data, should return true', function () {
+
+        assert.equal(true, page1.validate());
+        assert.equal(true, page2.validate());
+        assert.equal(true, page3.validate());
+        assert.equal(true, page4.validate());
+      });
+
+    });
+
+
+    // Test method equals(object):boolean
+    describe('#equals(object)', function () {
+
+      it('Comparing a page with itself, should return true', function () {
+
+        assert.equal(true, page1.equals(page1));
+
+      });
+
+      it('Comparing 2 pages who has the same internal state, should return true', function () {
+
+        assert.equal(true, page1.equals(page2));
+
+      });
+
+      it('Comparing 2 different pages, should return false', function () {
+
+        assert.equal(false, page1.equals(page3));
+        assert.equal(false, page3.equals(page4));
+
+      });
 
     });
 
