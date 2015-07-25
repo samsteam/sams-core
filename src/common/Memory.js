@@ -150,7 +150,7 @@ cocktail.mix({
     //Check if the position was free and add 1 to the used acumulator.
     //Log all replaced elements.
     if(this.at(position) === undefined) {
-      this._used(this._used + 1);
+      this._used = this._used + 1;
     } else {
       this.log(this.at(position).toString() + " at frame[" + position + "] being replaced.");
     }
