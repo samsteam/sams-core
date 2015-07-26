@@ -147,6 +147,12 @@ cocktail.mix({
       return false;
     }
 
+    //Check if the element is not undefined or null
+    if(!element) {
+      this.log("Element should be not undefined");
+      return false;
+    }
+
     //Check if the position was free and add 1 to the used acumulator.
     //Log all replaced elements.
     if(this.at(position) === undefined) {
