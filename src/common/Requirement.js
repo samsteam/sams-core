@@ -63,6 +63,10 @@ cocktail.mix({
 
 	equals: function(obj) {
 		//For performance improvement, check if they hold the same reference.
+    if (!obj) {
+      return false;
+    }
+    
 		if(this === obj) {
 			return true;
 		}
