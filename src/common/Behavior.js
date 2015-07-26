@@ -11,11 +11,19 @@ cocktail.mix({
    *  using the method it defined for that request.
    */
   ComparingMethod: function(value){
+    if(!value) {
+      return (function(a, b) {
+        return b === undefined;
+      });
+    }
+
     if (typeof value.equals == "function") {
       return (function(a, b) {
         return a.equals(b);
       });
     }
+
+    
     return (function(a, b) {
       return a === b;
     });
