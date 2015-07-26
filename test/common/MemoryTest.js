@@ -56,23 +56,22 @@ module.exports = function() {
 
     // Test method isFull():boolean
     describe('#isFull()', function () {
-      it('Una memoria sin capacidad, debería devolver true', function () {
+      it('A Memory without capacity, should return true', function () {
         assert.equal(true, memoryWithoutCapacity.isFull());
       });
 
-      it('Una memoria con capacidad pero vacía, devuelve false', function () {
+      it('A Memory with capacity but empty, should return false', function () {
         assert.equal(false, memory.isFull());
       });
 
-
-      it('Una memoria con elementos pero no llena, devuelve false', function () {
+      it('A Memory with elements but not empty, should return false', function () {
         memory = new Memory(3);
         memory.atPut(0, page3);
         memory.atPut(1, page1);
         assert.equal(false, memory.isFull());
       });
 
-      it('Una memoria llena, devuelve true', function () {
+      it('A memory full, should return true', function () {
         memory = new Memory(3);
         memory.atPut(0, page3);
         memory.atPut(1, page1);
@@ -84,15 +83,15 @@ module.exports = function() {
 
     // Test method getFreeFrame():int
     describe('#getFreeFrame()', function () {
-      it('Una memoria vacía no tiene Frames libres', function () {
+      it('A memory without capacity, has not free frames', function () {
         assert.equal(-1, memoryWithoutCapacity.getFreeFrame());
       });
 
-      it('Una memoria sin páginas debería devolver la posicion 0', function () {
+      it('A memory without pages, should return position 0', function () {
         assert.equal(0, memory.getFreeFrame());
       });
 
-      it('Una memoria con páginas debería devolver la primera posicion libre', function () {
+      it('A memory with pages, should return the first free position', function () {
         memory.atPut(0, page3);
         assert.equal(1, memory.getFreeFrame());
 
@@ -107,12 +106,12 @@ module.exports = function() {
     // Recibe un Requierement o Page
     // Test method getFreeFrameOf(object):int
     describe('#getFrameOf(object)', function () {
-      it('Un requerimiento que no se encuentra, devuelve -1', function () {
+      it('A not found Requirement, should return -1', function () {
         memory.atPut(0, page3);
         assert.equal(-1, memory.getFrameOf(page1));
       });
 
-      it('Un requerimiento que si se encuentra', function () {
+      it('A found Requirement, should return the position of frame', function () {
         memory.atPut(0, page3);
         memory.atPut(2, page4);
         assert.equal(0, memory.getFrameOf(page3));
@@ -121,7 +120,7 @@ module.exports = function() {
         assert.equal(2, memory.getFrameOf(req4));
       });
 
-      it('Recibe un undefined, devuelve -1', function () {
+      it('An invalid Requeriment, should return -1', function () {
         assert.equal(-1, memory.getFrameOf(undefined));
         assert.equal(-1, memory.getFrameOf({}));
         assert.equal(-1, memory.getFrameOf(null));
@@ -132,12 +131,12 @@ module.exports = function() {
     // Preguntar por páginas, no requerimientos
     // Test method contains(object):boolean
     describe('#contains(object)', function () {
-      it('Un página que no se encuentra, devuelve false', function () {
+      it('A not found page, should return false', function () {
         memory.atPut(0, page3);
         assert.equal(false, memory.contains(page1));
       });
 
-      it('Una página que si se encuentra', function () {
+      it('A found page, should return true', function () {
         memory.atPut(0, page3);
         memory.atPut(2, page4);
         assert.equal(true, memory.contains(page3));
@@ -146,7 +145,7 @@ module.exports = function() {
         assert.equal(true, memory.contains(req4));
       });
 
-      it('Recibe un undefined, devuelve false', function () {
+      it('An invalid Page, should return false', function () {
         assert.equal(false, memory.contains(undefined));
         assert.equal(false, memory.contains({}));
         assert.equal(false, memory.contains(null));
@@ -156,19 +155,19 @@ module.exports = function() {
 
     // Test method at(int):object
     describe('#at(int)', function () {
-      it('Una posición no válida, devuelve undefined', function () {
+      it('An invalid position, should return undefined', function () {
         assert.equal(undefined, memory.at(-1));
         assert.equal(undefined, memory.at(7));
         assert.equal(undefined, memoryWithoutCapacity.at(0));
         assert.equal(undefined, memoryWithoutCapacity.at(2));
       });
 
-      it('Una posición válida, frames vacío', function () {
+      it('A valid position but without page, should return undefined', function () {
         assert.equal(undefined, memory.at(0));
         assert.equal(undefined, memory.at(6));
       });
 
-      it('Una posición válida, con pages', function () {
+      it('A valid position with page, should return a page', function () {
         memory.atPut(1, page1);
         assert.equal(page1, memory.at(1));
         assert.notEqual(page2, memory.at(1));
@@ -178,14 +177,14 @@ module.exports = function() {
 
     // Test method atPut(int, object):boolean
     describe('#atPut(int, object)', function () {
-      it('Una posición no válida, devuelve false', function () {
+      it('An invalid position, should return false', function () {
         assert.equal(false, memory.atPut(-1, page1));
         assert.equal(false, memory.atPut(6, page2));
         assert.equal(false, memory.atPut(7, page3));
         assert.equal(false, memoryWithoutCapacity.atPut(1, page4));
       });
 
-      it('Con una pocisión válida', function () {
+      it('A valid position, should return true', function () {
 
         assert.equal(true, memory.atPut(1, page1));
         assert.equal(page1, memory.at(1));
@@ -198,7 +197,7 @@ module.exports = function() {
         assert.notEqual(page2, memory.at(2));
       });
 
-      it('Posición válida pero sin objeto', function () {
+      it('A valid position but with invalid requirement, should return false', function () {
         assert.equal(false, memory.atPut(1, null));
         assert.equal(false, memory.atPut(1, undefined));
         assert.equal(false, memory.atPut(1, {}));
@@ -208,25 +207,25 @@ module.exports = function() {
 
     // Test method equals(object):boolean
     describe('#equals(object)', function () {
-      it('Una memoria debe ser distinta a undefined', function () {
+      it('A memory should be not undefined', function () {
         memory.atPut(1, page1);
         assert.equal(false, memory.equals(undefined));
       });
 
-      it('Dos memorias con misma referencia, devuelve true', function () {
+      it('Comparing 2 indentical memories, should return true', function () {
         memory.atPut(1, page1);
         memory3 = memory;
         assert.equal(true, memory.equals(memory3));
       });
 
-      it('Dos memorias distintas con mismo contenido, devuelve true', function () {
+      it('Comparing 2 non indentical memories but same content, should return true', function () {
         memory.atPut(1, page1);
         memory2 = new Memory(6);
         memory2.atPut(1, page1);
         assert.equal(true, memory.equals(memory2));
       });
 
-      it('Dos memorias distintas con distinto contenido, devuelve false', function () {
+      it('Comparing 2 non indentical memories and not same content, should return false', function () {
         memory.atPut(1, page1);
         memory4 = new Memory(6);
         memory4.atPut(2, page1);
@@ -237,12 +236,12 @@ module.exports = function() {
 
     // Test method clone():object
     describe('#clone()', function () {
-      it('Una memoria clonada es igual a la original, en contenido', function () {
+      it('A cloned memory is equal to original (same content)', function () {
         assert.deepEqual(memory, memory.clone());
         assert.deepEqual( (new Memory(6)), memory.clone());
       });
 
-      it('Una memoria clonada debe tener una referencia distinta a la original', function () {
+      it('A cloned memory should be non indentical to original (!==)', function () {
         assert.notEqual(memory, memory.clone());
       });
     });
