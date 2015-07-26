@@ -256,6 +256,10 @@ cocktail.mix({
 
   forEach: function(exec, that) {
     var myArray = this._array;
+
+    if ( typeof exec !== 'function')
+      throw new Error('First param must be a function')
+
     if(that) {
       myArray.forEach(function(element, index) {
         //Use the contex passed by the caller in the execution of the function.
