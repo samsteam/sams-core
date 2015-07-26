@@ -147,8 +147,8 @@ cocktail.mix({
       return false;
     }
 
-    //Check if the element is not undefined or null
-    if(!element) {
+    //Check if the element is not defined or is empty
+    if(!element || (typeof element === 'object' && !Object.keys(element).length)) {
       this.log("Element should be not undefined");
       return false;
     }
