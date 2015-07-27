@@ -80,6 +80,11 @@ cocktail.mix({
     this.setReferenced(false);
   },
 
+  clearAll: function() {
+    this.clearPageFault();
+    this.clearReferenced();
+  }
+
   //@Override
   asPage: function() {
     return this.clone();
