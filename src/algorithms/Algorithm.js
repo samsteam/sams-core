@@ -1,11 +1,13 @@
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
+var AlgorithmInterface = require('./AlgorithmInterface');
 
 cocktail.use(Logger);
 
 cocktail.mix({
 	'@exports': module,
 	'@as': 'class',
+	'@traits': [AlgorithmInterface],
 	'@logger' : [console, "Algorithm Base:"],
 
 	constructor: function() {
@@ -19,11 +21,30 @@ cocktail.mix({
 		var filteredVictims = this._victims.clone();
 
 		var i = 0;
-		var length = this.filters.length;
-		for (i; i < length; i++) {
+		var length = this._filters.length;
+		for (; i < length; i++) {
 			this._filters[i].apply(filteredVictims, requirement, this);
 		}
-		return filteredVictims.next();
+		//Call to the child.
+		this.addPage(requirement);
+
+		return filteredVictims.first();
+	},
+
+	addPage: function(requirement) {
+	  throw new Error("Subclass responsibility.")
+	},
+
+	getPage: function(requirement) {
+	  throw new Error("Subclass responsibility.")
+	},
+
+	update: function(requirement) {
+	  throw new Error("Subclass responsibility.")
+	},
+
+	recycle: function(requirement) {
+	  throw new Error("Subclass responsibility.")
 	},
 
 	clearPolicies: function() {
