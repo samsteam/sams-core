@@ -1,6 +1,6 @@
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
-var VictimsStructures = require('./VictimsStructures');
+var VictimsStructure = require('./VictimsStructure');
 
 cocktail.use(Logger);
 
@@ -15,7 +15,7 @@ cocktail.mix({
   //Define this file as a single class module exportable.
   '@exports': module,
   '@as': 'class',
-	'@traits': [VictimsStructures],
+	'@traits': [VictimsStructure],
 
 
   '@logger' : [console, "VictimsQueue:"],
