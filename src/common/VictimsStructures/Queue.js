@@ -4,7 +4,6 @@ var VictimsStructure = require('./VictimsStructure');
 
 cocktail.use(Logger);
 
-var Behavior = require('./Behavior');
 /*
  **********************************************************************
  *  This Queue doesn't define Equals nor Clone method. Should it?     *
