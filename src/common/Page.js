@@ -4,9 +4,6 @@ var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 cocktail.use(Logger);
 
-//Using Behavior class.
-var Behavior = require('./Behavior');
-
 //Inheriting from Requirement Class.
 var Requirement = require('./Requirement');
 
