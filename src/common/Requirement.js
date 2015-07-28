@@ -66,7 +66,7 @@ cocktail.mix({
     if (!obj) {
       return false;
     }
-    
+
 		if(this === obj) {
 			return true;
 		}
@@ -116,7 +116,6 @@ cocktail.mix({
 
     this.log("---End of Clonation.---");
 	  return aux;
-
 	},
 
   toString: function() {
