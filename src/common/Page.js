@@ -80,7 +80,7 @@ cocktail.mix({
   clearAll: function() {
     this.clearPageFault();
     this.clearReferenced();
-  }
+  },
 
   //@Override
   asPage: function() {
