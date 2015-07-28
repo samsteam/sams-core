@@ -24,5 +24,9 @@ cocktail.mix({
 			this._filters[i].apply(filteredVictims, requirement, this);
 		}
 		return filteredVictims.next();
+	},
+
+	clearPolicies: function() {
+	  this._filters = [];
 	}
 });
