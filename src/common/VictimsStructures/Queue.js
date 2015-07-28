@@ -1,6 +1,6 @@
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
-var VictimsStructure = require('./VictimsStructure');
+var VictimsStructureInterface = require('./VictimsStructureInterface');
 
 cocktail.use(Logger);
 
@@ -8,7 +8,7 @@ cocktail.mix({
   //Define this file as a single class module exportable.
   '@exports': module,
   '@as': 'class',
-	'@traits': [VictimsStructure],
+	'@traits': [VictimsStructureInterface],
 
   '@logger' : [console, "VictimsQueue:"],
 
@@ -71,7 +71,7 @@ cocktail.mix({
   first: function() {
     var page = this._array.shift();
     if (page) {
-      this.log(element.toString() + " removed.");
+      this.log(page.toString() + " removed.");
     }
     return page;
   },
@@ -115,6 +115,15 @@ cocktail.mix({
       return false;
     }
     return true;
+  },
+
+  clone: function() {
+    var aux = new this.constructor();
+    this._array.forEach(function(page) {
+      aux.add(page.clone());
+    });
+
+    return aux;
   },
 
   /*

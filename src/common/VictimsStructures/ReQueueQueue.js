@@ -1,6 +1,6 @@
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
-var VictimsStructure = require('./VictimsStructure');
+var VictimsStructureInterface = require('./VictimsStructureInterface');
 var Queue = require('./Queue');
 
 cocktail.use(Logger);
@@ -16,7 +16,7 @@ cocktail.mix({
   '@exports': module,
   '@as': 'class',
 	'@extends': Queue,
-	'@traits': [VictimsStructure],
+	'@traits': [VictimsStructureInterface],
 
 
   '@logger' : [console, "VictimsReQQueue:"],

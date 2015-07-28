@@ -4,5 +4,5 @@ var cocktail = require('cocktail');
 cocktail.mix({
 	'@exports': module,
 
-	'@requires': ['add', 'addAll', 'first', 'peek', 'contains', 'pageOf', 'size', 'clear']
+	'@requires': ['add', 'addAll', 'clone', 'first', 'peek', 'contains', 'pageOf', 'size', 'clear']
 });
