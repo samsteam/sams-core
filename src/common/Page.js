@@ -65,21 +65,23 @@ cocktail.mix({
 
     this.log("---End of Clonation.---");
 		return aux;
-
 	},
 
   //Clearing Page flags methods.
   clearPageFault: function() {
     this.setPageFault(false);
+    return this;
   },
 
   clearReferenced: function() {
     this.setReferenced(false);
+    return this;
   },
 
   clearAll: function() {
     this.clearPageFault();
     this.clearReferenced();
+    return this;
   },
 
   //@Override
