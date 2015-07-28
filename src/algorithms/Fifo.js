@@ -1,5 +1,6 @@
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
+var AlgorithmInterface = require('./AlgorithmInterface');
 var Algorithm = require('./Algorithm');
 var Queue = require('../common/VictimsStructures/Queue');
 
@@ -9,14 +10,16 @@ cocktail.mix({
 	'@exports': module,
 	'@as': 'class',
 	'@extends': Algorithm,
+	'@traits': [AlgorithmInterface],
 	'@logger' : [console, "Algorithm Fifo:"],
 
 	constructor: function() {
+		this.callSuper("constructor");
 		this._victims = new Queue();
 	},
 
 	addPage: function(requirement) {
-	  this._victims.add(requirement.asPage().clearAll());
+  	this._victims.add(requirement.asPage().clearAll());
 	},
 
 	getPage: function(page) {
