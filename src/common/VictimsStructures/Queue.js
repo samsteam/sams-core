@@ -4,18 +4,11 @@ var VictimsStructure = require('./VictimsStructure');
 
 cocktail.use(Logger);
 
-/*
- **********************************************************************
- *  This Queue doesn't define Equals nor Clone method. Should it?     *
- *  This Queue doesn't allow to have the same element twice.          *
- **********************************************************************
- */
 cocktail.mix({
   //Define this file as a single class module exportable.
   '@exports': module,
   '@as': 'class',
 	'@traits': [VictimsStructure],
-
 
   '@logger' : [console, "VictimsQueue:"],
 
@@ -30,25 +23,17 @@ cocktail.mix({
 
   /*
    *  Add a page to the Queue.
-   *  If the page is already in the queue, remove it,
-   *  then enqueue it again.
    */
   add: function(page) {
-    var array = this._array;
-    var index = this._indexOf(element);
 
-    //Don't use contains method here because
-    //you would have to search again for the index.
-    if (index != -1) {
-      array.splice(index ,1);
-      this.log(element.toString() + " removed. Waiting to requeue.");
+    if(!this.contains(page)) {
+      this._array.push(page);
+      this.log(page.toString() + " added.");
+    } else {
+      this.log(page.toString() + " was already on the Queue.")
     }
-
-    //Always add the element to the queue.
-    array.push(element);
-    this.log(element.toString() + " added.");
-
     return this;
+
   },
 
   /*
@@ -98,12 +83,12 @@ cocktail.mix({
    */
   _indexOf: function (requirement) {
     var i = 0;
-    var array = this.getArray();
+    var array = this._array;
     var length = array.length;
 
     //Use a normal looping to stop when a match is encountered.
     for(; i< length; i++) {
-        if(element.equals(array[i])) {
+        if(requirement.equals(array[i])) {
           return i;
         }
     }
