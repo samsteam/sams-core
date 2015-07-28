@@ -5,8 +5,6 @@ var Queue = require('../common/VictimsStructures/Queue');
 
 cocktail.use(Logger);
 
-var Behavior = require('./Behavior');
-
 cocktail.mix({
 	'@exports': module,
 	'@as': 'class',
