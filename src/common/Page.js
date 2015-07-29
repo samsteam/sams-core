@@ -44,7 +44,7 @@ cocktail.mix({
 	 */
 
    //@Override
-  asSimpleObject: function() {
+  asDataObject: function() {
     var obj =
 		{
 			process : this.getProcess(),
@@ -61,7 +61,7 @@ cocktail.mix({
 
     //Using Page class.
     var Page = require('./Page');
-    var aux = new Page(this.asSimpleObject());
+    var aux = new Page(this.asDataObject());
 
     this.log("---End of Clonation.---");
 		return aux;

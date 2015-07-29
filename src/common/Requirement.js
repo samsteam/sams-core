@@ -84,7 +84,7 @@ cocktail.mix({
 		return true;
 	},
 
-  asSimpleObject: function() {
+  asDataObject: function() {
     var obj =
 		{
 			process : this.getProcess(),
@@ -95,7 +95,7 @@ cocktail.mix({
   },
 
   asPage: function() {
-    var obj = this.asSimpleObject();
+    var obj = this.asDataObject();
     //Set a requirement on page fault by default.
     obj.pageFault = true;
     obj.referenced = true;
@@ -112,13 +112,13 @@ cocktail.mix({
 
     //Using Requirement class.
     var Requirement = require('./Requirement');
-    var aux = new Requirement(this.asSimpleObject());
+    var aux = new Requirement(this.asDataObject());
 
     this.log("---End of Clonation.---");
 	  return aux;
 	},
 
   toString: function() {
-    return JSON.stringify(this.asSimpleObject());
+    return JSON.stringify(this.asDataObject());
   }
 });
