@@ -79,7 +79,14 @@ cocktail.mix({
   remove: function(requirement) {
     index = this._indexOf(requirement);
     if (index != -1) {
-      this._array.splice(index, 1);
+      return this._array.splice(index, 1);
+    }
+    return undefined;
+  },
+
+  recycle: function(requirement) {
+    if(this.remove(requirement)) {
+      this.add(requirement);
     }
   },
 

@@ -11,6 +11,7 @@ cocktail.mix({
 		'first',
 		'peek',
 		'remove',
+		'recycle',
 		'contains',
 		'pageOf',
 		'size',
