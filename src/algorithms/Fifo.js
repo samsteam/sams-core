@@ -16,6 +16,7 @@ cocktail.mix({
 	constructor: function() {
 		this.callSuper("constructor");
 		this._victims = new Queue();
+		this.log("Created.");
 	},
 
 	addPage: function(requirement) {
@@ -27,7 +28,11 @@ cocktail.mix({
 	},
 
 	update: function(requirement) {
-	  this._victims.pageOf(requirement).setReferenced(true);
+		if (this._victims.contains(requirement)) {
+	  	this._victims.pageOf(requirement).setReferenced(true);
+			return;
+		}
+		this.addPage(requirement);
 	},
 
 	//Just re-add the page.

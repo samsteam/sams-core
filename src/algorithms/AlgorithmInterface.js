@@ -4,5 +4,15 @@ var cocktail = require('cocktail');
 cocktail.mix({
 	'@exports': module,
 
-	'@requires': ['victimFor', 'addPage', 'getPage', 'update', 'recycle', 'clearPolicies']
+	'@requires': [
+		'victimFor',
+		'addPage',
+		'getPage',
+		'update',
+		'recycle',
+		'clearPolicies',
+		'setLocalReplacementPolicy',
+		'setAsyncFlushReplacementPolicy',
+		'setSecondChanceReplacementPolicy',
+	]
 });
