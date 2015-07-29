@@ -35,9 +35,9 @@ cocktail.mix({
 		this.addPage(requirement);
 	},
 
-	//Just re-add the page.
+	//Just recycle the page.
 	recycle: function(requirement) {
-		this.addPage(requirement);
+		this._victims.recycle(requirement);
 	},
 
 });

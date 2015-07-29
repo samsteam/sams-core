@@ -1,6 +1,8 @@
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
+var ReplacementFiltersPath = "../replacement_filters/";
+var SecondChanceReplacementPolicy = require(ReplacementFiltersPath + 'SecondChanceReplacementPolicy');
 
 cocktail.use(Logger);
 
@@ -61,7 +63,7 @@ cocktail.mix({
 	},
 
 	setSecondChanceReplacementPolicy: function(enabled) {
-	  // this._filters[2] = new SecondChanceReplacementPolicy();
+	  this._filters[2] = new SecondChanceReplacementPolicy();
 	},
 
 	clearPolicies: function() {
