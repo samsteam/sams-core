@@ -18,16 +18,20 @@ cocktail.mix({
 	},
 
 	victimFor: function(requirement) {
+
+		this.log("---Started applying replacement filters.---");
 		var filteredVictims = this._victims.clone();
 
 		var i = 0;
 		var length = this._filters.length;
 		for (; i < length; i++) {
-			this._filters[i].apply(filteredVictims, requirement, this);
+			if (this._filters[i]) {
+				this._filters[i].apply(filteredVictims, requirement, this);
+			}
 		}
-		//Call to the child.
-		this.addPage(requirement);
-
+		this.log("Finished applying replacement filters.---\n");
+		this.log("The selected victim is: " + filteredVictims.peek() + ".\n");
+		this._victims.remove(filteredVictims.peek());
 		return filteredVictims.first();
 	},
 
@@ -45,6 +49,19 @@ cocktail.mix({
 
 	recycle: function(requirement) {
 	  throw new Error("Subclass responsibility.")
+	},
+
+	//	This methods should be uncommented when the filters are implemented.
+	setLocalReplacementPolicy: function(enabled) {
+	  // this._filters[0] = new LocalReplacementPolicy();
+	},
+
+	setAsyncFlushReplacementPolicy: function(enabled) {
+	  // this._filters[1] = new AsyncFlushReplacementPolicy();
+	},
+
+	setSecondChanceReplacementPolicy: function(enabled) {
+	  // this._filters[2] = new SecondChanceReplacementPolicy();
 	},
 
 	clearPolicies: function() {
