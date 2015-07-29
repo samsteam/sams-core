@@ -76,6 +76,13 @@ cocktail.mix({
     return page;
   },
 
+  remove: function(requirement) {
+    index = this._indexOf(requirement);
+    if (index != -1) {
+      this._array.splice(index, 1);
+    }
+  },
+
   /*
    *  Determines if a requirement exists in the queue.
    *  If its found return the index of the element in the array.
