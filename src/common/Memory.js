@@ -49,7 +49,7 @@ cocktail.mix({
     this._size = size;
     this._array = [];
     this._used = 0;
-    this.log("Created with " + size + " frame.");
+    this.log("Created with " + size + " frames.");
   },
 
   /*

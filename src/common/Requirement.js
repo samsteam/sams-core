@@ -108,13 +108,8 @@ cocktail.mix({
   },
 
 	clone : function() {
-    this.log("---Start of Clonation.---");
-
-    //Using Requirement class.
     var Requirement = require('./Requirement');
     var aux = new Requirement(this.asDataObject());
-
-    this.log("---End of Clonation.---");
 	  return aux;
 	},
 

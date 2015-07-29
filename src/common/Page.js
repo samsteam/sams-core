@@ -57,13 +57,8 @@ cocktail.mix({
   },
   //@Override
 	clone : function() {
-    this.log("---Start of Clonation.---");
-
-    //Using Page class.
     var Page = require('./Page');
     var aux = new Page(this.asDataObject());
-
-    this.log("---End of Clonation.---");
 		return aux;
 	},
 
