@@ -66,7 +66,7 @@ cocktail.mix({
     if (!obj) {
       return false;
     }
-
+    
 		if(this === obj) {
 			return true;
 		}

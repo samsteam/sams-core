@@ -1,6 +1,8 @@
 var assert = require("assert");
 
-var Queue = require('../../src/common/Queue.js');
+var Queue = require('../../src/common/VictimsStructures/Queue.js');
+var Requirement = require('../../src/common/Requirement.js');
+var Page = require('../../src/common/Page.js');
 
 /*
 | --------------------------------------------------------------------
@@ -9,11 +11,11 @@ var Queue = require('../../src/common/Queue.js');
 | Methods:
 |   - size(): int
 |   - peek(): object
-|   - indexOf(element): int
+|   - pageOf(element): int
 |   - contains(element): boolean
-|   - enqueue(element)
+|   - add(element)
 |   - addAll(collection)
-|   - dequeue(): object
+|   - first(): object
 |   - clear()
 | --------------------------------------------------------------------
 */
@@ -25,17 +27,33 @@ module.exports = function() {
     var q = new Queue();
 
     // Hook method: reset queue when each describe() has finished.
-    afterEach(function() {
+    beforeEach(function() {
       q = new Queue();
+      obj1 = { 'process': 'A', 'pageNumber': 1, 'mode' : 'read' };
+      obj2 = { 'process': 'B', 'pageNumber': 1, 'mode' : 'read' };
+      obj3 = { 'process': 'C', 'pageNumber': 2, 'mode' : 'read' };
+      obj4 = { 'process': 'A', 'pageNumber': 1, 'mode' : 'read' };
+      obj5 = { 'process': 'D', 'pageNumber': 1, 'mode' : 'read' };
+      req1 = new Requirement(obj1);
+      req2 = new Requirement(obj2);
+      req3 = new Requirement(obj3);
+      req4 = new Requirement(obj4);
+      req5 = new Requirement(obj5);
+      page1 = new Requirement(obj1).asPage();
+      page2 = new Requirement(obj2).asPage();
+      page3 = new Requirement(obj3).asPage();
+      page4 = new Requirement(obj4).asPage();
+      page5 = new Requirement(obj5).asPage();
     });
 
-    // Test method enqueue()
-    describe('#enqueue()', function () {
+    // Test method add()
+    describe('#add()', function () {
       it('Queue is empty, add one element', function () {
-        q.enqueue(3);
+        assert.equal(q, q.add(page1));
       });
       it('Queue is not empty, add other element', function () {
-        q.enqueue(5);
+        q.add(page1);
+        assert.equal(q, q.add(page2));
       });
     });
 
@@ -46,8 +64,12 @@ module.exports = function() {
       });
 
       it('Queue is not empty, should be != 0', function () {
-        q.enqueue(5);
+        q.add(page1);
         assert.notEqual(0, q.size());
+        assert.equal(1, q.size());
+        q.add(page2);
+        assert.notEqual(0, q.size());
+        assert.equal(2, q.size());
       });
     });
 
@@ -58,57 +80,57 @@ module.exports = function() {
       });
 
       it('Queue is not empty, should be the first element', function () {
-        q.enqueue(3);
-        q.enqueue(1);
-        q.enqueue(2);
-        assert.equal(3, q.peek());
-        assert.notEqual(1, q.peek());
+        q.add(page3);
+        q.add(page4);
+        q.add(page1);
+        assert.equal(page3, q.peek());
+        assert.notEqual(page2, q.peek());
       });
     });
 
-    // Test method indexOf()
-    describe('#indexOf()', function () {
-      it('Queue is empty, should return -1', function () {
-        assert.equal(-1, q.indexOf(3));
+    // Test method pageOf()
+    describe('#pageOf()', function () {
+      it('Queue is empty, should return undefined', function () {
+        assert.equal(undefined, q.pageOf(page3));
       });
 
-      it('Queue is not empty, item is present, should return != -1', function () {
-        q.enqueue(3);
-        q.enqueue(1);
-        q.enqueue(2);
-        assert.equal(0, q.indexOf(3));
-        assert.equal(1, q.indexOf(1));
-        assert.equal(2, q.indexOf(2));
+      it('Queue is not empty, item is present, should return != undefined', function () {
+        q.add(page3);
+        q.add(page1);
+        q.add(page2);
+        assert.equal(page3, q.pageOf(req3));
+        assert.equal(page1, q.pageOf(req1));
+        assert.equal(page2, q.pageOf(req2));
       });
 
-      it('Queue is not empty, item is not present, should return -1', function () {
-        q.enqueue(3);
-        q.enqueue(1);
-        q.enqueue(2);
-        assert.equal(-1, q.indexOf(4));
+      it('Queue is not empty, item is not present, should return undefined', function () {
+        q.add(page3);
+        q.add(page1);
+        q.add(page2);
+        assert.equal(undefined, q.pageOf(req5));
       });
     });
 
     // Test method contains()
     describe('#contains()', function () {
       it('Queue is empty, should return false', function () {
-        assert.equal(false, q.contains(3));
+        assert.equal(false, q.contains(page3));
       });
 
       it('Queue is not empty, item is present, should return true', function () {
-        q.enqueue(3);
-        q.enqueue(1);
-        q.enqueue(2);
-        assert.equal(true, q.contains(3));
-        assert.equal(true, q.contains(1));
-        assert.equal(true, q.contains(2));
+        q.add(page3);
+        q.add(page1);
+        q.add(page2);
+        assert.equal(true, q.contains(page3));
+        assert.equal(true, q.contains(page1));
+        assert.equal(true, q.contains(page2));
       });
 
       it('Queue is not empty, item is not present, should return false', function () {
-        q.enqueue(3);
-        q.enqueue(1);
-        q.enqueue(2);
-        assert.equal(false, q.contains(5));
+        q.add(page3);
+        q.add(page1);
+        q.add(page2);
+        assert.equal(false, q.contains(page5));
       });
     });
 
@@ -120,28 +142,59 @@ module.exports = function() {
       });
 
       it('Queue should add all the elements', function () {
-        q.addAll([1,2,3,4,5]);
-        assert.equal(5, q.size());
-        assert.equal(true, q.contains(1));
-        assert.equal(true, q.contains(2));
-        assert.equal(true, q.contains(3));
-        assert.equal(true, q.contains(4));
-        assert.equal(true, q.contains(5));
+        q.addAll([page1,page2,page3,page5]);
+        assert.equal(4, q.size());
+        assert.equal(true, q.contains(page1));
+        assert.equal(true, q.contains(page2));
+        assert.equal(true, q.contains(page3));
+        assert.equal(true, q.contains(page5));
       });
     });
 
-    // Test method dequeue()
-    describe('#dequeue()', function () {
+    // Test method first()
+    describe('#first()', function () {
       it('Queue is empty, should return undefined', function () {
-        assert.equal(undefined, q.dequeue());
+        assert.equal(undefined, q.first());
       });
 
       it('Queue is not empty, should return first element', function () {
-        q.addAll([3,1,2]);
-        assert.equal(3, q.dequeue());
-        assert.equal(1, q.dequeue());
-        assert.equal(2, q.dequeue());
-        assert.equal(undefined, q.dequeue());
+        q.addAll([page3,page1,page2]);
+        assert.equal(page3, q.first());
+        assert.equal(page1, q.first());
+        assert.equal(page2, q.first());
+        assert.equal(undefined, q.first());
+      });
+    });
+
+    // Test method remove()
+    describe('#remove()', function () {
+      it('Queue is empty, should return undefined', function () {
+        assert.equal(undefined, q.remove(req1));
+      });
+
+      it('Queue is not empty, should return an element', function () {
+        q.addAll([page3,page1,page2]);
+        assert.equal(page3, q.remove(req3));
+        assert.equal(page2, q.remove(req2));
+        assert.equal(page1, q.remove(req1));
+        assert.equal(undefined, q.remove(req5));
+        assert.equal(undefined, q.remove(req1));
+      });
+    });
+
+    // Test method clone()
+    describe('#clone()', function () {
+      it('Queue is empty, your clone should be equal to a new queue', function () {
+        q2 = new Queue();
+        assert.deepEqual(q, q2);
+        assert.deepEqual(q.clone(), q2);
+      });
+
+      it('Queue is empty, your clone should be equal in content, not in referenced', function () {
+        q.add(page2);
+        q.add(page5);
+        q2 = q.clone();
+        assert.deepEqual(q, q2);
       });
     });
 
@@ -153,7 +206,7 @@ module.exports = function() {
       });
 
       it('Queue is not empty, should be empty', function () {
-        q.addAll([3,2,3,4,5,6]);
+        q.addAll([page3,page2,page3,page4,page5,page1]);
         q.clear();
         assert.equal(0, q.size());
       });

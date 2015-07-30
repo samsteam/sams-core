@@ -43,7 +43,7 @@ cocktail.mix({
   addAll: function(collection) {
     this.log("Massive assignment started.");
     collection.forEach(function(page) {
-			this.enqueue(page);
+			this.add(page);
 		}, this);
     this.log("Massive assignment finished.");
 
@@ -77,9 +77,9 @@ cocktail.mix({
   },
 
   remove: function(requirement) {
-    index = this._indexOf(requirement);
+    var index = this._indexOf(requirement);
     if (index != -1) {
-      return this._array.splice(index, 1);
+      return (this._array.splice(index, 1))[0];
     }
     return undefined;
   },
@@ -101,7 +101,8 @@ cocktail.mix({
     var length = array.length;
 
     //Use a normal looping to stop when a match is encountered.
-    for(; i< length; i++) {
+    for(; i < length; i++) {
+        // console.log(requirement);
         if(requirement.equals(array[i])) {
           return i;
         }
@@ -144,7 +145,7 @@ cocktail.mix({
    * Removes all objects from the Queue.
    */
   clear: function() {
-    this.setArray([]);
+    this._array = [];
     this.log("Cleared.");
   }
 });
