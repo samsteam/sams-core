@@ -57,7 +57,7 @@ module.exports = function() {
 
       it('Data object should retain the same information as the Page', function () {
 
-        dataObj = page1.asSimpleObject();
+        dataObj = page1.asDataObject();
 
         assert.equal(dataObj.process, page1.getProcess());
         assert.equal(dataObj.pageNumber, page1.getPageNumber());
