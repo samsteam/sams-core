@@ -1,5 +1,5 @@
 {
-  "name": "sams-core",
+  "name": "sams",
   "version": "0.0.1",
   "description": "Some Awsome Memory Scheduler.",
   "main": "index.js",
@@ -15,10 +15,10 @@
     "memory",
     "scheduler",
     "os",
-		"fifo",
-		"lru",
-		"optimal",
-		"nru"
+    "fifo",
+    "lru",
+    "optimal",
+    "nru"
   ],
   "author": "Sams Team <dev.samsjs@gmail.com> (https://samsteam.github.io/)",
   "license": "MIT",
