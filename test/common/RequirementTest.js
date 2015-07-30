@@ -101,7 +101,7 @@ module.exports = function() {
 
       it('Data object should retain the same data that the request', function () {
 
-        var dataObject = rq1.asSimpleObject();
+        var dataObject = rq1.asDataObject();
         assert.equal(dataObject.pageNumber, rq1.getPageNumber());
         assert.equal(dataObject.process, rq1.getProcess());
         assert.equal(dataObject.mode, rq1.getMode());
