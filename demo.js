@@ -7,6 +7,13 @@ var req0 =
   mode: "read"
 };
 
+var req0M =
+{
+  process: 'A',
+  pageNumber: 1,
+  mode: "write"
+};
+
 var req1 =
 {
   process: 'A',
@@ -35,11 +42,16 @@ var req4 =
   mode: "read"
 };
 
-var reqs = [req0, req1, req2, req0, req3, req4, req4];
+var reqs = [req0, req0M, req1, req2, req0, req3, req4];
 
 var sams = new Scheduler();
-sams.setAlgorithm("fifo");
+sams.setAlgorithm("lru");
+sams.setSecondChanceReplacementPolicy(true);
+sams.setAsyncFlushReplacementPolicy(true);
 sams.setMemorySize(3);
 sams.addRequirements(reqs);
 var instants = sams.run();
-console.log(instants);
+instants.forEach(function(moment, index) {
+  console.log("Moment: " + index);
+  console.log(moment);
+});
