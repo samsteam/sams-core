@@ -1,11 +1,9 @@
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var ReplacementFilterInterface = require('./ReplacementFilterInterface');
-var SecondChanceReplacementPolicy = require('./SecondChanceReplacementPolicy');
 
 cocktail.use(Logger);
 
-//Using a trait as an interface.
 cocktail.mix({
 	'@exports': module,
 	'@as': 'class',
@@ -14,7 +12,7 @@ cocktail.mix({
 	'@logger' : [console, "SecondChanceReplacementPolicy:"],
 
 	constructor: function() {
-
+		this.log("Created.");
 	},
 
 	apply: function(filteredVictims, requirement, context) {
