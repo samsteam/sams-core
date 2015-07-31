@@ -29,6 +29,7 @@ cocktail.mix({
 
 	update: function(requirement) {
 		if (this._victims.contains(requirement)) {
+			this.addPage(requirement);
 			if (requirement.getMode() === "read") {
 	  		this._victims.pageOf(requirement).setReferenced(true);
 				this.log("Updated victim queue, referenced.");

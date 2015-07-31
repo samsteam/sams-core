@@ -1,6 +1,7 @@
 var cocktail = require('cocktail');
 var Logger = require('./annotations/Logger');
 var Fifo = require('./algorithms/Fifo');
+var Lru = require('./algorithms/Lru');
 var Memory = require('./common/Memory');
 var Requirement = require('./common/Requirement');
 var AsyncFlushAssignmentPolicy = require('./assignment_filters/AsyncFlushAssignmentPolicy');
@@ -30,6 +31,10 @@ cocktail.mix({
       case 'fifo':
         this.clearPolicies();
         this._algorithm = new Fifo();
+        break;
+      case 'lru':
+        this.clearPolicies();
+        this._algorithm = new Lru();
         break;
       default:
         return;
@@ -198,7 +203,6 @@ cocktail.mix({
 
   _clearMemoryFlags: function() {
     this._memory.forEach(function(page) {
-      console.log(page);
       page.clearPageFault();
       page.clearReferenced();
     });

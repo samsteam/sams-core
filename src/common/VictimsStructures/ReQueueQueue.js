@@ -42,5 +42,15 @@ cocktail.mix({
     this.callSuper("add", page);
 
 		return this;
+  },
+
+  clone: function() {
+    var ReQueueQueue = require('./ReQueueQueue');
+    var aux = new ReQueueQueue();
+    this._array.forEach(function(page) {
+      aux.add(page.clone());
+    });
+
+    return aux;
   }
 });
