@@ -19,6 +19,7 @@ cocktail.mix({
 		var potentialVictim = filteredVictims.peek();
 
 	  while(potentialVictim.isReferenced()) {
+			this.log("The victim " + potentialVictim + " was referenced, applying 2nd chance.");
 			//Recycle the page in the filteredVictims structure until we get one not referenced.
 			//Clear the potentialVictim referenced flag.
 			potentialVictim.clearReferenced();
