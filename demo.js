@@ -51,7 +51,7 @@ sams.setAsyncFlushReplacementPolicy(true);
 sams.setMemorySize(3);
 sams.addRequirements(reqs);
 var instants = sams.run();
-instants.forEach(function(moment, index) {
+instants.forEach(function(instant, index) {
   console.log("Moment: " + index);
-  console.log(moment);
+  console.log(instant);
 });
