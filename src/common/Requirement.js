@@ -54,8 +54,11 @@ cocktail.mix({
   },
 
   validate: function() {
-    if ((this.getProcess() == "") || (typeof this.getPageNumber() !== "number") ||
-      (this.getMode() !== "read" && this.getMode() !== "write")) {
+    var process = this.getProcess();
+    var pageNumber = this.getPageNumber();
+    var mode = this.getMode();
+    if ((process == "") || (typeof pageNumber !== "number") ||
+        (mode !== "read" && mode !== "write" && mode !== "finish" && mode !== "reserved")) {
       return false;
     }
     return true;
@@ -66,7 +69,7 @@ cocktail.mix({
     if (!obj) {
       return false;
     }
-    
+
 		if(this === obj) {
 			return true;
 		}
@@ -77,7 +80,7 @@ cocktail.mix({
 		*  if the internal state of the objects at this given time is "similar".
 		*/
 		if(this.constructor !== obj.constructor || this.getProcess() !== obj.getProcess() ||
-			this.getPageNumber() !== obj.getPageNumber() || this.getMode() !== obj.getMode()) {
+			this.getPageNumber() !== obj.getPageNumber()) {
 			return false;
 		}
 		//Seems like they are the same.
@@ -99,6 +102,7 @@ cocktail.mix({
     //Set a requirement on page fault by default.
     obj.pageFault = true;
     obj.referenced = true;
+    obj.modified = false;
 
     //Using Page class.
     var Page = require('./Page');

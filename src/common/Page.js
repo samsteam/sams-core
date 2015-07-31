@@ -28,7 +28,8 @@ cocktail.mix({
   //Instance variables of the class.
   '@properties': {
     pageFault: false,
-    referenced: false
+    referenced: false,
+    modified: false
   },
 
 	/*
@@ -37,7 +38,9 @@ cocktail.mix({
 	 *		'process': 'A',
 	 *		'pageNumber': 1,
 	 *		'mode' : 'write',
-   *    'pageFault' : false
+   *    'pageFault' : false,
+   *    'referenced': false,
+   *    'modified' :  false
 	 *	}
 	 *	Automaticaly is maped to the corresponding properties
 	 *	thanks to the Configurable trait.
@@ -51,7 +54,8 @@ cocktail.mix({
 			pageNumber : this.getPageNumber(),
 			mode : this.getMode(),
       pageFault : this.isPageFault(),
-      referenced : this.isReferenced()
+      referenced : this.isReferenced(),
+      modified: this.isModified()
 		}
     return obj;
   },
@@ -73,9 +77,14 @@ cocktail.mix({
     return this;
   },
 
+  clearModified: function() {
+    this.setModified(false);
+  },
+
   clearAll: function() {
     this.clearPageFault();
     this.clearReferenced();
+    this.clearModified();
     return this;
   },
 

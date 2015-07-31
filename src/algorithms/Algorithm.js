@@ -1,8 +1,8 @@
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
-var ReplacementFiltersPath = "../replacement_filters/";
-var SecondChanceReplacementPolicy = require(ReplacementFiltersPath + 'SecondChanceReplacementPolicy');
+var SecondChanceReplacementPolicy = require('../replacement_filters/SecondChanceReplacementPolicy');
+var AsyncFlushReplacementPolicy = require('../replacement_filters/AsyncFlushReplacementPolicy');
 
 cocktail.use(Logger);
 
@@ -58,12 +58,20 @@ cocktail.mix({
 	  // this._filters[0] = new LocalReplacementPolicy();
 	},
 
-	setAsyncFlushReplacementPolicy: function(enabled) {
-	  // this._filters[1] = new AsyncFlushReplacementPolicy();
+	setAsyncFlushReplacementPolicy: function(enabled, counterpartFilter) {
+		if (enabled) {
+	  	this._filters[1] = new AsyncFlushReplacementPolicy(counterpartFilter);
+		} else {
+			this._filters[1] = undefined;
+		}
 	},
 
 	setSecondChanceReplacementPolicy: function(enabled) {
-	  this._filters[2] = new SecondChanceReplacementPolicy();
+		if (enabled) {
+	  	this._filters[2] = new SecondChanceReplacementPolicy();
+		} else {
+			this._filters[2] = undefined;
+		}
 	},
 
 	clearPolicies: function() {

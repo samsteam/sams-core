@@ -3,6 +3,7 @@ var Logger = require('./annotations/Logger');
 var Fifo = require('./algorithms/Fifo');
 var Memory = require('./common/Memory');
 var Requirement = require('./common/Requirement');
+var AsyncFlushAssignmentPolicy = require('./assignment_filters/AsyncFlushAssignmentPolicy');
 cocktail.use(Logger);
 
 cocktail.mix({
@@ -60,8 +61,13 @@ cocktail.mix({
     if (enabled === undefined) {
       return;
     }
-    if (this._algorithm) {
-      this._algorithm.setAsyncFlushReplacementPolicy(enabled);
+    if (this._algorithm && enabled) {
+      var policy = new AsyncFlushAssignmentPolicy()
+      this._assignmentPolicies[1] = policy;
+      this._algorithm.setAsyncFlushReplacementPolicy(true, policy);
+    } else {
+      this._assignmentPolicies[1] = undefined;
+      this._algorithm.setAsyncFlushReplacementPolicy(false);
     }
 	},
 
@@ -88,6 +94,7 @@ cocktail.mix({
     }
     this._memory = new Memory(size);
     this._memorySize = size;
+    this._updatePolicies();
   },
 
   addRequirements: function(requirements) {
@@ -103,7 +110,7 @@ cocktail.mix({
 
   run: function() {
     if (!this._memory || !this._algorithm || !this._requirements.length) {
-      throw new Error("Some initialization is missing!!")
+      throw new Error("Some initialization is missing!!");
     }
     this._processRequirements();
     /*
@@ -150,17 +157,37 @@ cocktail.mix({
 
   //  To be implemented with FixedEven assignment filter.
   _assignmentFiltersAproves: function(requirement) {
-    return (!this._memory.isFull());
+    var hasSpace = !this._memory.isFull();
+
+    var i = 0;
+		var length = this._assignmentPolicies.length;
+		for (; i < length; i++) {
+			if (this._assignmentPolicies[i]) {
+				hasSpace &= this._assignmentPolicies[i].hasFreeFrameFor(requirement, this._memory, this);
+			}
+		}
+    return hasSpace;
   },
 
   _update: function(requirement) {
     this._algorithm.update(requirement);
     this._updateMemory(requirement);
+    this._updatePolicies();
   },
 
   _updateMemory: function(requirement) {
     //  Assume that the requirement is already in memory.
-    this._memory.at(this._memory.getFrameOf(requirement)).setReferenced(true);
+    var page = this._memory.at(this._memory.getFrameOf(requirement));
+    page.setReferenced(true);
+    if (requirement.getMode() === "write") {
+      page.setModified(true);
+    }
+  },
+
+  _updatePolicies: function() {
+    this._assignmentPolicies.forEach(function(policy) {
+      policy.update(this._memory, this)
+    }, this);
   },
 
   _saveMemory: function() {
@@ -171,7 +198,9 @@ cocktail.mix({
 
   _clearMemoryFlags: function() {
     this._memory.forEach(function(page) {
-      page.clearAll();
+      console.log(page);
+      page.clearPageFault();
+      page.clearReferenced();
     });
     this.log("All page flags cleared.");
   },

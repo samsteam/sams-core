@@ -29,7 +29,14 @@ cocktail.mix({
 
 	update: function(requirement) {
 		if (this._victims.contains(requirement)) {
-	  	this._victims.pageOf(requirement).setReferenced(true);
+			if (requirement.getMode() === "read") {
+	  		this._victims.pageOf(requirement).setReferenced(true);
+				this.log("Updated victim queue, referenced.");
+			}
+			if(requirement.getMode() === "write") {
+				this._victims.pageOf(requirement).setModified(true);
+				this.log("Updated victim queue, modified.");
+			}
 			return;
 		}
 		this.addPage(requirement);
