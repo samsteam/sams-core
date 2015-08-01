@@ -45,8 +45,7 @@ var req4 =
 var reqs = [req0, req0M, req1, req2, req0, req3, req4];
 
 var sams = new Scheduler();
-sams.setAlgorithm("lru");
-sams.setSecondChanceReplacementPolicy(true);
+sams.setAlgorithm("fifo");
 sams.setAsyncFlushReplacementPolicy(true);
 sams.setMemorySize(3);
 sams.addRequirements(reqs);
