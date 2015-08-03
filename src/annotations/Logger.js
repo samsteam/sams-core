@@ -19,7 +19,7 @@ cocktail.mix({
      *  SET THIS VARIABLE TO FALSE WHEN GOING TO PRODUCTION!  *
      **********************************************************
      */
-    this._debug = true;
+    this._debug = false;
 
     //Check if the object passed has the method that we will use to log.
     if(typeof parameter[0].log == "function") {
