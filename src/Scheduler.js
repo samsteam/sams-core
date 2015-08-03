@@ -23,7 +23,16 @@ cocktail.mix({
     this.log("Created.");
   },
   getAlgorithm: function() {
-  	return this._algorithm;
+    switch (this._algorithm) {
+      case instanceof Fifo:
+        return 'fifo';
+        break;
+        case instanceof Lru:
+        return 'lru';
+        break;
+      default:
+        return undefined;
+    }
   },
   getMemorySize: function() {
   	return this._memorySize;
