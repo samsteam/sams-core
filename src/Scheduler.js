@@ -71,7 +71,7 @@ cocktail.mix({
       this._assignmentPolicies[1] = policy;
       this._algorithm.setAsyncFlushReplacementPolicy(true, policy);
     } else {
-      this._assignmentPolicies[1] = undefined;
+      delete this._assignmentPolicies[1];
       this._algorithm.setAsyncFlushReplacementPolicy(false);
     }
 	},
@@ -117,6 +117,7 @@ cocktail.mix({
     if (!this._memory || !this._algorithm || !this._requirements.length) {
       throw new Error("Some initialization is missing!!");
     }
+    this._init();
     this._processRequirements();
     /*
      *  _processRequirements will save all data in _moments.

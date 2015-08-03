@@ -62,7 +62,7 @@ cocktail.mix({
 		if (enabled) {
 	  	this._filters[1] = new AsyncFlushReplacementPolicy(counterpartFilter);
 		} else {
-			this._filters[1] = undefined;
+			delete this._filters[1];
 		}
 	},
 
@@ -70,7 +70,7 @@ cocktail.mix({
 		if (enabled) {
 	  	this._filters[2] = new SecondChanceReplacementPolicy();
 		} else {
-			this._filters[2] = undefined;
+			delete this._filters[2];
 		}
 	},
 
