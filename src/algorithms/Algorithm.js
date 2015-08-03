@@ -21,7 +21,7 @@ cocktail.mix({
 
 	initialize: function(requirements) {
 	  this._requirements = requirements;
-	}
+	},
 
 	victimFor: function(requirement) {
 
