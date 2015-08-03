@@ -23,16 +23,16 @@ cocktail.mix({
     this.log("Created.");
   },
   getAlgorithm: function() {
-  	return this._algorithm;	
+  	return this._algorithm;
   },
   getMemorySize: function() {
-  	return this._memorySize;	
+  	return this._memorySize;
   },
   getAssignmentPolicies: function() {
-  	return this._assignmentPolicies;	
+  	return this._assignmentPolicies;
   },
   getRequirements: function() {
-  	return this._requirements;	
+  	return this._requirements;
   },
   setAlgorithm: function(algorithm) {
     if (!algorithm) {
@@ -128,7 +128,7 @@ cocktail.mix({
     if (!this._memory || !this._algorithm || !this._requirements.length) {
       throw new Error("Some initialization is missing!!");
     }
-    this._init();
+    this._algorithm.initialize(this._requirements);
     this._processRequirements();
     /*
      *  _processRequirements will save all data in _moments.

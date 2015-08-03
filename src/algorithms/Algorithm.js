@@ -15,9 +15,13 @@ cocktail.mix({
 	constructor: function() {
 		//Should be initialized by some especification of this class.
 		this._victims = undefined;
-
+		this._requirements = undefined;
 		this._filters = [];
 	},
+
+	initialize: function(requirements) {
+	  this._requirements = requirements;
+	}
 
 	victimFor: function(requirement) {
 
