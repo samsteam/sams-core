@@ -225,7 +225,9 @@ cocktail.mix({
   _clearMemoryFlags: function() {
     this._memory.forEach(function(page) {
       page.clearPageFault();
-      page.clearReferenced();
+      if (!this.getSecondChanceReplacementPolicy()) {
+        page.clearReferenced();
+      }
     });
     this.log("All page flags cleared.");
   },
