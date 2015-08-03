@@ -222,6 +222,33 @@ module.exports = function() {
         var instants = sams.run();
 
         var expected = [createPageExpected(page7, true, true, false),
+                      createPageExpected(pageDA, false, false, false),
+                      createPageExpected(page6, false, false, true),
+                    ];
+        assert.equal(true, comparingInstant(instants[4], expected));
+      });
+
+      it('#Analizando instante 5', function () {
+        requirements = [req1, req2, req4, req6, req7, req5];
+        initializeSams(requirements, false, true);
+        var instants = sams.run();
+
+        var expected = [createPageExpected(page7, false, false, false),
+                      createPageExpected(page5, true, true, false),
+                      createPageExpected(pageDA, false, false, false),
+                    ];
+        assert.equal(true, comparingInstant(instants[5], expected));
+      });
+    });
+
+    describe('Asignacion dinámica - Reemplazo global - DA y 2da', function () {
+
+      it('#Analizando instante 4', function () {
+        requirements = [req1, req2, req4, req6, req7, req5];
+        initializeSams(requirements, false, true);
+        var instants = sams.run();
+
+        var expected = [createPageExpected(page7, true, true, false),
                       createPageExpected(page4, false, false, true),
                       createPageExpected(pageDA, false, false, false),
                     ];
