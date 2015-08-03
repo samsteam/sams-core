@@ -22,7 +22,18 @@ cocktail.mix({
     this._assignmentPolicies = [];
     this.log("Created.");
   },
-
+  getAlgorithm: function() {
+  	return this._algorithm;	
+  },
+  getMemorySize: function() {
+  	return this._memorySize;	
+  },
+  getAssignmentPolicies: function() {
+  	return this._assignmentPolicies;	
+  },
+  getRequirements: function() {
+  	return this._requirements;	
+  },
   setAlgorithm: function(algorithm) {
     if (!algorithm) {
       return;
