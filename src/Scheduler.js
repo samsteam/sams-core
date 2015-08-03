@@ -28,11 +28,20 @@ cocktail.mix({
   getMemorySize: function() {
   	return this._memorySize;
   },
-  getAssignmentPolicies: function() {
-  	return this._assignmentPolicies;
-  },
   getRequirements: function() {
   	return this._requirements;
+  },
+  isFixedEvenAssignmentPolicy: function() {
+    return this._assignmentPolicies[0] !== undefined;
+  },
+  getLocalReplacementPolicy: function() {
+    return this._algorithm.isLocalReplacementPolicy();
+  },
+  isAsyncFlushPolicy: function() {
+    return this._assignmentPolicies[1] !== undefined;
+  },
+  getSecondChanceReplacementPolicy: function() {
+    return this._algorithm.isSecondChanceReplacementPolicy();
   },
   setAlgorithm: function(algorithm) {
     if (!algorithm) {
