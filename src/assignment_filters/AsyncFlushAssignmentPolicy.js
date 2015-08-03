@@ -15,12 +15,13 @@ cocktail.mix({
 	constructor: function() {
 		this._reserved = new Page(
 			{
-				'process': 'Async Flush',
+				'process': '',
 				'pageNumber': 0,
 				'mode' : 'reserved',
 				'pageFault' : false,
 				'referenced': false,
-				'modified': false
+				'modified': false,
+				'reservedForAsyncFlush': true
 			});
 		this._position = 0;
 		this._memory = undefined;

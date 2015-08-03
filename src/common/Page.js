@@ -29,7 +29,8 @@ cocktail.mix({
   '@properties': {
     pageFault: false,
     referenced: false,
-    modified: false
+    modified: false,
+    reservedForAsyncFlush: false
   },
 
 	/*
@@ -40,7 +41,8 @@ cocktail.mix({
 	 *		'mode' : 'write',
    *    'pageFault' : false,
    *    'referenced': false,
-   *    'modified' :  false
+   *    'modified' :  false,
+   *    'reservedForAsyncFlush' : false
 	 *	}
 	 *	Automaticaly is maped to the corresponding properties
 	 *	thanks to the Configurable trait.
@@ -52,10 +54,10 @@ cocktail.mix({
 		{
 			process : this.getProcess(),
 			pageNumber : this.getPageNumber(),
-			mode : this.getMode(),
       pageFault : this.isPageFault(),
       referenced : this.isReferenced(),
-      modified: this.isModified()
+      modified: this.isModified(),
+      reservedForAsyncFlush: this.isReservedForAsyncFlush()
 		}
     return obj;
   },
@@ -79,6 +81,10 @@ cocktail.mix({
 
   clearModified: function() {
     this.setModified(false);
+  },
+
+  clearReservedForAsyncFlush: function() {
+    this.reservedForAsyncFlush(false);
   },
 
   clearAll: function() {

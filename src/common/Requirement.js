@@ -92,7 +92,6 @@ cocktail.mix({
 		{
 			process : this.getProcess(),
 			pageNumber : this.getPageNumber(),
-			mode : this.getMode()
 		}
     return obj;
   },
@@ -103,6 +102,7 @@ cocktail.mix({
     obj.pageFault = true;
     obj.referenced = true;
     obj.modified = false;
+    obj.reservedForAsyncFlush = false;
 
     //Using Page class.
     var Page = require('./Page');
