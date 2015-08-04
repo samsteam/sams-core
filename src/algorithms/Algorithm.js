@@ -1,6 +1,7 @@
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
+var LocalReplacementPolicy = require('../replacement_filters/LocalReplacementPolicy');
 var SecondChanceReplacementPolicy = require('../replacement_filters/SecondChanceReplacementPolicy');
 var AsyncFlushReplacementPolicy = require('../replacement_filters/AsyncFlushReplacementPolicy');
 
@@ -61,9 +62,12 @@ cocktail.mix({
 	  throw new Error("Subclass responsibility.")
 	},
 
-	//	This methods should be uncommented when the filters are implemented.
 	setLocalReplacementPolicy: function(enabled) {
-	  // this._filters[0] = new LocalReplacementPolicy();
+		if (enabled) {
+	  	this._filters[0] = new LocalReplacementPolicy();
+		} else {
+			delete this._filters[0];
+		}
 	},
 
 	setAsyncFlushReplacementPolicy: function(enabled, counterpartFilter) {

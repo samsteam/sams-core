@@ -4,6 +4,7 @@ var Fifo = require('./algorithms/Fifo');
 var Lru = require('./algorithms/Lru');
 var Memory = require('./common/Memory');
 var Requirement = require('./common/Requirement');
+var FixedEvenAssignmentPolicy = require('./assignment_filters/FixedEvenAssignmentPolicy');
 var AsyncFlushAssignmentPolicy = require('./assignment_filters/AsyncFlushAssignmentPolicy');
 cocktail.use(Logger);
 
@@ -62,7 +63,7 @@ cocktail.mix({
   getSecondChanceReplacementPolicy: function() {
     return this._algorithm.isSecondChanceReplacementPolicy();
   },
-  
+
   isSecondChanceReplacementPolicy: function() {
     if (this._algorithm){
       return this._algorithm.isSecondChanceReplacementPolicy();
@@ -89,16 +90,15 @@ cocktail.mix({
     }
   },
 
-  // to be uncommented when FixedEven is implemented
-  setFixedEvenAssignmentPolicy: function(enabled) {
-    // if (enabled === undefined) {
-    //   return;
-    // }
-    // if (enabled) {
-    //   this._assignmentPolicies[0] = new FixedEven();
-    // } else {
-    //   this._assignmentPolicies[0] = undefined;
-    // }
+  setFixedEvenAssignmentPolicy: function(size) {
+    if (size === undefined) {
+      return;
+    }
+    if (size) {
+      this._assignmentPolicies[0] = new FixedEvenAssignmentPolicy(size);
+    } else {
+      delete this._assignmentPolicies[0];
+    }
   },
 
   setLocalReplacementPolicy: function(enabled) {

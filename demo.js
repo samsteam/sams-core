@@ -42,12 +42,15 @@ var req4 =
   mode: "read"
 };
 
-var reqs = [req0, req0M, req1, req2, req0, req3, req4];
+var reqs = [req0, req0M, req1, req2, req0, req3];
 
 var sams = new Scheduler();
 sams.setAlgorithm("fifo");
+sams.setSecondChanceReplacementPolicy(true);
+sams.setLocalReplacementPolicy(true);
 sams.setAsyncFlushReplacementPolicy(true);
-sams.setMemorySize(3);
+sams.setMemorySize(4);
+sams.setFixedEvenAssignmentPolicy(2);
 sams.addRequirements(reqs);
 var instants = sams.run();
 instants.forEach(function(instant, index) {

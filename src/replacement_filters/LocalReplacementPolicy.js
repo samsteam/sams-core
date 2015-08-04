@@ -9,7 +9,7 @@ cocktail.mix({
 	'@as': 'class',
 	'@traits': [ReplacementFilterInterface],
 
-	'@logger' : [console, "SecondChanceReplacementPolicy:"],
+	'@logger' : [console, "LocalReplacementPolicy:"],
 
 	constructor: function() {
 		this.log("Created.");
@@ -18,16 +18,16 @@ cocktail.mix({
 	apply: function(filteredVictims, requirement, context) {
 		var potentialVictim = filteredVictims.peek();
 
-	  while(potentialVictim.isReferenced()) {
-			this.log("The victim " + potentialVictim + " was referenced, applying 2nd chance.");
-			//Recycle the page in the filteredVictims structure until we get one not referenced.
-			//Clear the potentialVictim referenced flag.
-			potentialVictim.clearReferenced();
-			filteredVictims.recycle(potentialVictim);
-			context.recycle(potentialVictim);
+	  while(filteredVictims.size() && potentialVictim.getProcess() !== requirement.getProcess()) {
+			this.log("The victim " + potentialVictim + " was isn't from the same process, Applying Local filter.");
+			//Remove the page from the filteredVictims structure.
+			filteredVictims.remove(potentialVictim);
 
 			//get a new potentialVictim
 			potentialVictim = filteredVictims.peek();
+		}
+		if (!filteredVictims.size()) {
+			throw new Error("The new process has no free frames to be assigned!!");
 		}
 	}
 });
