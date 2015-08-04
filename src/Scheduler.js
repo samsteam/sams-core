@@ -43,13 +43,13 @@ cocktail.mix({
   isFixedEvenAssignmentPolicy: function() {
     return this._assignmentPolicies[0] !== undefined;
   },
-  getLocalReplacementPolicy: function() {
+  isLocalReplacementPolicy: function() {
     return this._algorithm.isLocalReplacementPolicy();
   },
   isAsyncFlushPolicy: function() {
     return this._assignmentPolicies[1] !== undefined;
   },
-  getSecondChanceReplacementPolicy: function() {
+  isSecondChanceReplacementPolicy: function() {
     return this._algorithm.isSecondChanceReplacementPolicy();
   },
   setAlgorithm: function(algorithm) {
