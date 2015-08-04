@@ -19,6 +19,7 @@ cocktail.mix({
     this._memorySize = 0;
     this._moments = [];
     this._algorithm = undefined;
+    this._rawRequirements = [];
     this._requirements = [];
     this._assignmentPolicies = [];
     this.log("Created.");
@@ -42,7 +43,7 @@ cocktail.mix({
   },
 
   getRequirements: function() {
-  	return this._requirements;
+  	return this._rawRequirements;
   },
 
   isFixedEvenAssignmentPolicy: function() {
@@ -154,6 +155,7 @@ cocktail.mix({
     if (!requirements) {
       return;
     }
+    this._rawRequirements = requirements;
     this.log("---Started generating the requirements queue.---");
     requirements.forEach(function(elem) {
       this._requirements.push(new Requirement(elem));
