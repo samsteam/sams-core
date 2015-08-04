@@ -61,6 +61,8 @@ cocktail.mix({
 
   getSecondChanceReplacementPolicy: function() {
     return this._algorithm.isSecondChanceReplacementPolicy();
+  },
+  
   isSecondChanceReplacementPolicy: function() {
     if (this._algorithm){
       return this._algorithm.isSecondChanceReplacementPolicy();
