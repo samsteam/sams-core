@@ -141,6 +141,25 @@ cocktail.mix({
     return aux;
   },
 
+  forEach: function(exec, that) {
+    var myArray = this._array;
+
+    if ( typeof exec !== 'function')
+      throw new Error('First param must be a function')
+
+    if(that) {
+      myArray.forEach(function(element, index) {
+        //Use the contex passed by the caller in the execution of the function.
+        exec.call(that, element, index);
+      },that);
+    } else {
+      //If no contex was especified use a simple forEach.
+      myArray.forEach(function(element, index) {
+        exec(element, index);
+      });
+    }
+  },
+
   /*
    * Removes all objects from the Queue.
    */

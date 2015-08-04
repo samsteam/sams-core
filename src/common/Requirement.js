@@ -92,6 +92,7 @@ cocktail.mix({
 		{
 			process : this.getProcess(),
 			pageNumber : this.getPageNumber(),
+      mode: this.getMode()
 		}
     return obj;
   },

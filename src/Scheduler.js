@@ -22,27 +22,35 @@ cocktail.mix({
     this._assignmentPolicies = [];
     this.log("Created.");
   },
+
   getAlgorithm: function() {
   	return this._algorithm;
   },
+
   getMemorySize: function() {
   	return this._memorySize;
   },
+
   getRequirements: function() {
   	return this._requirements;
   },
+
   isFixedEvenAssignmentPolicy: function() {
     return this._assignmentPolicies[0] !== undefined;
   },
+
   getLocalReplacementPolicy: function() {
     return this._algorithm.isLocalReplacementPolicy();
   },
+
   isAsyncFlushPolicy: function() {
     return this._assignmentPolicies[1] !== undefined;
   },
+
   getSecondChanceReplacementPolicy: function() {
     return this._algorithm.isSecondChanceReplacementPolicy();
   },
+
   setAlgorithm: function(algorithm) {
     if (!algorithm) {
       return;
@@ -156,13 +164,23 @@ cocktail.mix({
     var allMoments = [];
 
     //Here we use the context to bind the array in which i want the pages to be added.
-    this._moments.forEach(function(memory) {
-      var singleMoment = [];
+    this._moments.forEach(function(moment) {
+      var singleMoment = {
+        requirement: moment.requirement.asDataObject(),
+        pageFault: moment.pageFault,
+        instant: [],
+        victim: (moment.victim)? moment.victim.asDataObject() : undefined,
+        potentialVictims: []
+      }
 
       //Here too (it's a matrix).
-      memory.forEach(function(page) {
+      moment.instant.forEach(function(page) {
         this.push(page.asDataObject());
-      }, singleMoment);
+      }, singleMoment.instant);
+
+      moment.potentialVictims.forEach(function(potentialVictim) {
+        this.push(potentialVictim.asDataObject());
+      }, singleMoment.potentialVictims)
 
       this.push(singleMoment);
 
@@ -216,9 +234,16 @@ cocktail.mix({
     }, this);
   },
 
-  _saveMemory: function() {
+  _saveMoment: function(requirement, pageFault, victim) {
     this.log("Saving moment " + this._moments.length + ".");
-    this._moments.push(this._memory.clone());
+    var moment = {
+      requirement: requirement.clone(),
+      instant: this._memory.clone(),
+      pageFault: pageFault,
+      victim: victim,
+      potentialVictims: this._algorithm.getVictimsStructure()
+    };
+    this._moments.push(moment);
     this.log("Moment " + (this._moments.length -1) + " saved.\n");
   },
 
@@ -228,7 +253,7 @@ cocktail.mix({
       if (!this.getSecondChanceReplacementPolicy()) {
         page.clearReferenced();
       }
-    });
+    }, this);
     this.log("All page flags cleared.");
   },
 
@@ -236,6 +261,9 @@ cocktail.mix({
     this._requirements.forEach(function(requirement) {
       //  Start with a clean image of the frames.
       this._clearMemoryFlags();
+      //Declare victim here because it'll be used for update.
+      var victim;
+      var pageFault;
 
       if (this._memory.contains(requirement)) {
         this.log("---Memory hit! Updating reference.---\n")
@@ -251,20 +279,21 @@ cocktail.mix({
          *  3) Load the requirement to the memory as a page.
          */
          this.log("---Page Fault.---");
+         pageFault = true;
          var frame;
          if(this._assignmentFiltersAproves(requirement)) {
             this.log("---Free frame available.---\n");
             frame = this._memory.getFreeFrame();
          } else {
            this.log("---Searching for a victim muajajaja!---\n");
-           var victim = this._algorithm.victimFor(requirement);
+           victim = this._algorithm.victimFor(requirement);
            frame = this._memory.getFrameOf(victim);
          }
          this._memory.atPut(frame, requirement.asPage());
       }
       //  Even if it's a page fault or not, call to update.
       this._update(requirement);
-      this._saveMemory();
+      this._saveMoment(requirement, pageFault, victim);
     }, this);
   }
 });

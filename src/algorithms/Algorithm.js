@@ -19,6 +19,10 @@ cocktail.mix({
 		this._filters = [];
 	},
 
+	getVictimsStructure: function() {
+	  return this._victims.clone();
+	},
+
 	initialize: function(requirements) {
 	  this._requirements = requirements;
 	},
@@ -80,11 +84,11 @@ cocktail.mix({
 
 	isLocalReplacementPolicy: function() {
 	  return this._filters[0] !== undefined;
-	}
+	},
 
 	isSecondChanceReplacementPolicy: function() {
 	  return this._filters[2] !== undefined;
-	}
+	},
 
 	clearPolicies: function() {
 	  this._filters = [];
