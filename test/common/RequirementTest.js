@@ -104,7 +104,7 @@ module.exports = function() {
         var dataObject = rq1.asDataObject();
         assert.equal(dataObject.pageNumber, rq1.getPageNumber());
         assert.equal(dataObject.process, rq1.getProcess());
-        assert.equal(dataObject.mode, rq1.getMode());
+//        assert.equal(dataObject.mode, rq1.getMode());
 
       });
 

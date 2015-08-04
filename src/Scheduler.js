@@ -24,7 +24,16 @@ cocktail.mix({
   },
 
   getAlgorithm: function() {
-  	return this._algorithm;
+    if ( this._algorithm !== undefined ) {
+
+      if (this._algorithm instanceof Lru)
+          return 'lru';
+
+      if (this._algorithm instanceof Fifo)
+        return 'fifo';
+    }
+
+    return undefined;
   },
 
   getMemorySize: function() {
@@ -38,9 +47,12 @@ cocktail.mix({
   isFixedEvenAssignmentPolicy: function() {
     return this._assignmentPolicies[0] !== undefined;
   },
-
-  getLocalReplacementPolicy: function() {
-    return this._algorithm.isLocalReplacementPolicy();
+  isLocalReplacementPolicy: function() {
+    if (this._algorithm){
+      return this._algorithm.isLocalReplacementPolicy();
+    } else {
+      return undefined;
+    }
   },
 
   isAsyncFlushPolicy: function() {
@@ -49,6 +61,12 @@ cocktail.mix({
 
   getSecondChanceReplacementPolicy: function() {
     return this._algorithm.isSecondChanceReplacementPolicy();
+  isSecondChanceReplacementPolicy: function() {
+    if (this._algorithm){
+      return this._algorithm.isSecondChanceReplacementPolicy();
+    } else {
+      return undefined;
+    }
   },
 
   setAlgorithm: function(algorithm) {
