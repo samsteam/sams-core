@@ -190,18 +190,18 @@ cocktail.mix({
       var singleMoment = {
         requirement: moment.requirement.asDataObject(),
         pageFault: moment.pageFault,
-        instant: [],
-        victim: (moment.victim)? moment.victim.asDataObject() : undefined,
+        frames: [],
+        victim: (moment.victim)? moment.victim.asVictim() : undefined,
         potentialVictims: []
       }
 
       //Here too (it's a matrix).
       moment.instant.forEach(function(page) {
         this.push(page.asDataObject());
-      }, singleMoment.instant);
+      }, singleMoment.frames);
 
       moment.potentialVictims.forEach(function(potentialVictim) {
-        this.push(potentialVictim.asDataObject());
+        this.push(potentialVictim.asVictim());
       }, singleMoment.potentialVictims)
 
       this.push(singleMoment);
@@ -284,7 +284,10 @@ cocktail.mix({
       //  Start with a clean image of the frames.
       this._clearMemoryFlags();
       //Declare victim here because it'll be used for update.
-      var victim;
+      var victim = {
+        frame: undefined,
+        page: undefined
+      };
       var pageFault = false;
 
       if (this._memory.contains(requirement)) {
@@ -309,13 +312,13 @@ cocktail.mix({
          } else {
            this.log("---Searching for a victim muajajaja!---\n");
            victim = this._algorithm.victimFor(requirement);
-           frame = this._memory.getFrameOf(victim);
+           frame = this._memory.getFrameOf(victim.frame);
          }
          this._memory.atPut(frame, requirement.asPage());
       }
       //  Even if it's a page fault or not, call to update.
       this._update(requirement);
-      this._saveMoment(requirement, pageFault, victim);
+      this._saveMoment(requirement, pageFault, victim.page);
     }, this);
   }
 });

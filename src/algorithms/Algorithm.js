@@ -43,7 +43,20 @@ cocktail.mix({
 		this.log("Finished applying replacement filters.---\n");
 		this.log("The selected victim is: " + filteredVictims.peek() + ".\n");
 		this._victims.remove(filteredVictims.peek());
-		return filteredVictims.first();
+
+		// A pedidio de Cristian S.
+		var position = filteredVictims.first();
+		var victim = position;
+		if (position.isReservedForAsyncFlush()) {
+			victim = this._filters[1]._counterpart._memory.at(this._filters[1]._counterpart._position);
+		}
+		
+		var result = {
+			frame: position,
+			page: victim
+		}
+
+		return result;
 	},
 
 	addPage: function(requirement) {

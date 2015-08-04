@@ -54,13 +54,24 @@ cocktail.mix({
 		{
 			process : this.getProcess(),
 			pageNumber : this.getPageNumber(),
-      pageFault : this.isPageFault(),
       referenced : this.isReferenced(),
       modified: this.isModified(),
       reservedForAsyncFlush: this.isReservedForAsyncFlush()
 		}
     return obj;
   },
+
+  asVictim: function() {
+    var obj =
+		{
+			process : this.getProcess(),
+			pageNumber : this.getPageNumber(),
+      referenced : this.isReferenced(),
+      modified: this.isModified(),
+		}
+    return obj;
+  },
+  
   //@Override
 	clone : function() {
     var Page = require('./Page');
