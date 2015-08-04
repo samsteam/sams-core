@@ -1,5 +1,5 @@
 var cocktail = require('cocktail');
-
+var config = require('../../config');
 
 cocktail.mix({
   //Create logger cocktail annotation and export it as a module.
@@ -19,7 +19,7 @@ cocktail.mix({
      *  SET THIS VARIABLE TO FALSE WHEN GOING TO PRODUCTION!  *
      **********************************************************
      */
-    this._debug = false;
+    this._debug = config.debug;
 
     //Check if the object passed has the method that we will use to log.
     if(typeof parameter[0].log == "function") {
