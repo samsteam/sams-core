@@ -283,7 +283,7 @@ cocktail.mix({
       this._clearMemoryFlags();
       //Declare victim here because it'll be used for update.
       var victim;
-      var pageFault;
+      var pageFault = false;
 
       if (this._memory.contains(requirement)) {
         this.log("---Memory hit! Updating reference.---\n")
