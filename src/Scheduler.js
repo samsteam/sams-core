@@ -23,11 +23,14 @@ cocktail.mix({
     this.log("Created.");
   },
   getAlgorithm: function() {
-    if (this._algorithm instanceof Fifo)
-      return 'fifo';
+    if ( this._algorithm !== undefined ) {
 
-    if (this._algorithm instanceof Lru)
-        return 'lru';
+      if (this._algorithm instanceof Lru)
+          return 'lru';
+
+      if (this._algorithm instanceof Fifo)
+        return 'fifo';
+    }
 
     return undefined;
   },
