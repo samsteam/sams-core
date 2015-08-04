@@ -44,13 +44,21 @@ cocktail.mix({
     return this._assignmentPolicies[0] !== undefined;
   },
   isLocalReplacementPolicy: function() {
-    return this._algorithm.isLocalReplacementPolicy();
+    if (this._algorithm){
+      return this._algorithm.isLocalReplacementPolicy();
+    } else {
+      return undefined;
+    }
   },
   isAsyncFlushPolicy: function() {
     return this._assignmentPolicies[1] !== undefined;
   },
   isSecondChanceReplacementPolicy: function() {
-    return this._algorithm.isSecondChanceReplacementPolicy();
+    if (this._algorithm){
+      return this._algorithm.isSecondChanceReplacementPolicy();
+    } else {
+      return undefined;
+    }
   },
   setAlgorithm: function(algorithm) {
     if (!algorithm) {
