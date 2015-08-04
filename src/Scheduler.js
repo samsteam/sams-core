@@ -23,11 +23,14 @@ cocktail.mix({
     this.log("Created.");
   },
   getAlgorithm: function() {
-    if (this._algorithm instanceof Fifo)
-      return 'fifo';
+    if ( this._algorithm !== undefined ) {
 
-    if (this._algorithm instanceof Lru)
-        return 'lru';
+      if (this._algorithm instanceof Lru)
+          return 'lru';
+
+      if (this._algorithm instanceof Fifo)
+        return 'fifo';
+    }
 
     return undefined;
   },
@@ -40,14 +43,22 @@ cocktail.mix({
   isFixedEvenAssignmentPolicy: function() {
     return this._assignmentPolicies[0] !== undefined;
   },
-  getLocalReplacementPolicy: function() {
-    return this._algorithm.isLocalReplacementPolicy();
+  isLocalReplacementPolicy: function() {
+    if (this._algorithm){
+      return this._algorithm.isLocalReplacementPolicy();
+    } else {
+      return undefined;
+    }
   },
   isAsyncFlushPolicy: function() {
     return this._assignmentPolicies[1] !== undefined;
   },
-  getSecondChanceReplacementPolicy: function() {
-    return this._algorithm.isSecondChanceReplacementPolicy();
+  isSecondChanceReplacementPolicy: function() {
+    if (this._algorithm){
+      return this._algorithm.isSecondChanceReplacementPolicy();
+    } else {
+      return undefined;
+    }
   },
   setAlgorithm: function(algorithm) {
     if (!algorithm) {
