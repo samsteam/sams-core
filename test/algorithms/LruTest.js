@@ -221,12 +221,12 @@ module.exports = function() {
         requirements = [req1, req2, req4, req6, req7, req5];
         initializeSams(3, requirements, false, true);
         var instants = sams.run();
-        instants.forEach(function(instant, index) {
-          console.log("Moment: " + index);
-          console.log(instant);
-        });
+        // instants.forEach(function(instant, index) {
+        //   console.log("Moment: " + index);
+        //   console.log(instant);
+        // });
         var expected = [createPageExpected(pageDA, false, false, false, true),
-                      createPageExpected(page4, false, true, true),
+                      createPageExpected(page4, false, false, true),
                       createPageExpected(page6, true, true, true),
                     ];
         // console.log(instants[3].frames);
@@ -256,8 +256,7 @@ module.exports = function() {
                       createPageExpected(page5, true, true, false),
                       createPageExpected(pageDA, false, false, false, true),
                     ];
-        console.log(instants[5].frames);
-        console.log(expected);
+
         assert.equal(true, comparingInstant(instants[5].frames, expected));
         assert.equal(true, instants[5].pageFault);
       });
@@ -277,6 +276,8 @@ module.exports = function() {
                       createPageExpected(page4, false, false, true),
                       createPageExpected(pageDA, false, false, false, true),
                     ];
+        console.log(instants[4].frames);
+        console.log(expected);
         assert.equal(true, comparingInstant(instants[4].frames, expected));
         assert.equal(true, instants[4].pageFault);
       });
