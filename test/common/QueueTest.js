@@ -29,21 +29,16 @@ module.exports = function() {
     // Hook method: reset queue when each describe() has finished.
     beforeEach(function() {
       q = new Queue();
-      obj1 = { 'process': 'A', 'pageNumber': 1, 'mode' : 'read' };
-      obj2 = { 'process': 'B', 'pageNumber': 1, 'mode' : 'read' };
-      obj3 = { 'process': 'C', 'pageNumber': 2, 'mode' : 'read' };
-      obj4 = { 'process': 'A', 'pageNumber': 1, 'mode' : 'read' };
-      obj5 = { 'process': 'D', 'pageNumber': 1, 'mode' : 'read' };
-      req1 = new Requirement(obj1);
-      req2 = new Requirement(obj2);
-      req3 = new Requirement(obj3);
-      req4 = new Requirement(obj4);
-      req5 = new Requirement(obj5);
-      page1 = new Requirement(obj1).asPage();
-      page2 = new Requirement(obj2).asPage();
-      page3 = new Requirement(obj3).asPage();
-      page4 = new Requirement(obj4).asPage();
-      page5 = new Requirement(obj5).asPage();
+      req1 = new Requirement({ 'process': 'A', 'pageNumber': 1, 'mode' : 'read' });
+      req2 = new Requirement({ 'process': 'B', 'pageNumber': 1, 'mode' : 'read' });
+      req3 = new Requirement({ 'process': 'C', 'pageNumber': 2, 'mode' : 'read' });
+      req4 = new Requirement({ 'process': 'A', 'pageNumber': 1, 'mode' : 'read' });
+      req5 = new Requirement({ 'process': 'D', 'pageNumber': 1, 'mode' : 'read' });
+      page1 = req1.asPage();
+      page2 = req2.asPage();
+      page3 = req3.asPage();
+      page4 = req4.asPage();
+      page5 = req5.asPage();
     });
 
     // Test method add()
@@ -190,11 +185,12 @@ module.exports = function() {
         assert.deepEqual(q.clone(), q2);
       });
 
-      it('Queue is empty, your clone should be equal in content, not in referenced', function () {
+      it('Queue is not empty, your clone should be equal in content, not in referenced', function () {
         q.add(page2);
         q.add(page5);
         q2 = q.clone();
-        assert.deepEqual(q, q2);
+        assert.equal(true, q.pageOf(page2).equals(q2.pageOf(page2)));
+        assert.equal(true, q.pageOf(page5).equals(q2.pageOf(page5)));
       });
     });
 
