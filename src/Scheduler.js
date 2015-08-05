@@ -156,8 +156,9 @@ cocktail.mix({
       return;
     }
     this._rawRequirements = requirements;
+    this._requirements = [];
     this.log("---Started generating the requirements queue.---");
-    requirements.forEach(function(elem) {
+    this._rawRequirements.forEach(function(elem) {
       this._requirements.push(new Requirement(elem));
     }, this);
     this.log("---Finished generating the requirements queue.---\n");
@@ -217,7 +218,7 @@ cocktail.mix({
       this._memory = new Memory(this._memorySize);
     }
     this._moments = [];
-    this._requirements = [];
+    //this._requirements = [];
     this.log("All buffers cleared.");
   },
 
