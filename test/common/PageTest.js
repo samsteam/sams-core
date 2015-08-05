@@ -63,7 +63,7 @@ module.exports = function() {
         assert.equal(dataObj.pageNumber, page1.getPageNumber());
 //        assert.equal(dataObj.mode, page1.getMode());
         assert.equal(dataObj.referenced, page1.isReferenced());
-        assert.equal(dataObj.pageFault, page1.isPageFault());
+//        assert.equal(dataObj.pageFault, page1.isPageFault());
 
       });
 
@@ -89,9 +89,7 @@ module.exports = function() {
         assert.equal(page2.getProcess(), p2clone.getProcess());
         assert.equal(page2.getPageNumber(), p2clone.getPageNumber());
         assert.equal(page2.isReferenced(), p2clone.isReferenced());
-        assert.equal(page2.isPageFault(), p2clone.isPageFault());
-
-
+//        assert.equal(page2.isPageFault(), p2clone.isPageFault());
       });
 
       it('Resultant Requirement should not be identic', function () {
@@ -102,10 +100,8 @@ module.exports = function() {
         assert.equal(page2.getProcess(), p2clone.getProcess());
         assert.equal(page2.getPageNumber(), p2clone.getPageNumber());
         assert.equal(page2.isReferenced(), p2clone.isReferenced());
-        assert.equal(page2.isPageFault(), p2clone.isPageFault());
-
+//        assert.equal(page2.isPageFault(), p2clone.isPageFault());
         assert.notEqual(true, page2 === p2clone);
-
       });
 
     });
@@ -174,11 +170,11 @@ module.exports = function() {
 
         pageCopy = page4.asPage();
 
-        assert.equal(page4.getMode(), pageCopy.getMode());
+        // assert.equal(page4.getMode(), pageCopy.getMode());
         assert.equal(page4.getProcess(), pageCopy.getProcess());
         assert.equal(page4.getPageNumber(), pageCopy.getPageNumber());
         assert.equal(page4.isReferenced(), pageCopy.isReferenced());
-        assert.equal(page4.isPageFault(), pageCopy.isPageFault());
+        // assert.equal(page4.isPageFault(), pageCopy.isPageFault());
 
       });
 
@@ -186,11 +182,11 @@ module.exports = function() {
 
         pageCopy = page4.asPage();
 
-        assert.equal(page4.getMode(), pageCopy.getMode());
+        // assert.equal(page4.getMode(), pageCopy.getMode());
         assert.equal(page4.getProcess(), pageCopy.getProcess());
         assert.equal(page4.getPageNumber(), pageCopy.getPageNumber());
         assert.equal(page4.isReferenced(), pageCopy.isReferenced());
-        assert.equal(page4.isPageFault(), pageCopy.isPageFault());
+        // assert.equal(page4.isPageFault(), pageCopy.isPageFault());
 
       });
 
