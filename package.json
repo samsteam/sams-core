@@ -1,6 +1,6 @@
 {
   "name": "sams",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Some Awsome Memory Scheduler.",
   "main": "index.js",
   "scripts": {
