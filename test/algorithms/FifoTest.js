@@ -3015,27 +3015,15 @@ module.exports = function() {
           victim: undefined
         }];
       var obtainedInstants = sams.run();
+
       it('#Amount of instants', function() {
         assert.equal(expectedInstants.length, obtainedInstants.length);
       });
-
-      // it.each(expectedInstants, '#Instant %s', ['x'], function(element){
-      //   var index = expectedInstants.indexOf(element);
-      //   assert.deepEqual(element, obtainedInstants[index]);
-      // });
 
       it.each(obtainedInstants, '#Instant %s', ['x'], function(element){
         var index = obtainedInstants.indexOf(element);
         assert.deepEqual(element, expectedInstants[index]);
       });
-
-      // for (i = 0; i < expectedInstants.length; i++) {
-      //   it('#Instant ' + i, function() {
-      //     assert.deepEqual(expectedInstants[i], obtainedInstants[i]);
-      //     console.log(i);
-      //   });
-      // }
-
     });
   });
 
