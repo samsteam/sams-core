@@ -59,7 +59,6 @@ module.exports = function() {
           // console.log((expected[index].modified == (jsPage.modified)));
 
           ret =  ret && ( (expected[index].equals((new Page(jsPage))))
-//                        && (expected[index].pageFault == (jsPage.pageFault))
                         && (expected[index].referenced == (jsPage.referenced))
                         && (expected[index].modified == (jsPage.modified)) );
         });
@@ -68,8 +67,8 @@ module.exports = function() {
 
       createPageExpected = function (req, pf, ref, mod,reservedForAsyncFlush) {
         reservedForAsyncFlush = reservedForAsyncFlush || false;
-        return new Page({ 'process': req.getProcess(), 'pageNumber': req.getPageNumber(), 'mode': req.getMode(),
-          'pageFault': pf, 'referenced': ref, 'modified': mod, 'reservedForAsyncFlush': reservedForAsyncFlush}) ;
+        return (new Page({ 'process': req.getProcess(), 'pageNumber': req.getPageNumber(), 'mode': req.getMode(),
+          'pageFault': pf, 'referenced': ref, 'modified': mod, 'reservedForAsyncFlush': reservedForAsyncFlush})).clone();
       }
     });
 
@@ -160,49 +159,6 @@ module.exports = function() {
 
     });
 
-    describe('Asignacion dinámica - Reemplazo global - 2da', function () {
-
-      it('#Analizando instante 4', function () {
-        requirements = [req1, req2, req3, req4, req5, req6, req7, req5];
-        initializeSams(3, requirements, true);
-        var instants = sams.run();
-
-        var expected = [createPageExpected(page1, false, true, true),
-                      createPageExpected(page5, true, true, false),
-                      createPageExpected(page6, false, false, false),
-                    ];
-        //  console.log(instants[4].frames);
-        //  console.log("Instante esperado");
-        //  console.log(expected);
-        assert.equal(true, comparingInstant(instants[4].frames, expected));
-      });
-
-      it('#Analizando instante 6', function () {
-        requirements = [req1, req2, req3, req4, req5, req6, req7, req5];
-        initializeSams(3, requirements, true);
-        var instants = sams.run();
-
-        var expected = [createPageExpected(page4, false, false, true),
-                      createPageExpected(page7, true, true, false),
-                      createPageExpected(page6, false, false, true),
-                    ];
-        assert.equal(true, comparingInstant(instants[6].frames, expected));
-      });
-
-      it('#Analizando instante 7', function () {
-        requirements = [req1, req2, req3, req4, req5, req6, req7, req5];
-        initializeSams(3, requirements, true);
-        var instants = sams.run();
-
-        var expected = [createPageExpected(page4, false, false, true),
-                      createPageExpected(page7, false, false, false),
-                      createPageExpected(page5, true, true, false),
-                    ];
-        assert.equal(true, comparingInstant(instants[7].frames, expected));
-      });
-
-    });
-
     describe('Asignacion dinámica - Reemplazo global - DA', function () {
 
       it('#Analizando instante 2', function () {
@@ -221,16 +177,10 @@ module.exports = function() {
         requirements = [req1, req2, req4, req6, req7, req5];
         initializeSams(3, requirements, false, true);
         var instants = sams.run();
-        // instants.forEach(function(instant, index) {
-        //   console.log("Moment: " + index);
-        //   console.log(instant);
-        // });
         var expected = [createPageExpected(pageDA, false, false, false, true),
                       createPageExpected(page4, false, false, true),
                       createPageExpected(page6, true, true, true),
                     ];
-        // console.log(instants[3].frames);
-        // console.log(expected);
         assert.equal(true, comparingInstant(instants[3].frames, expected));
         assert.equal(true, instants[3].pageFault);
       });
@@ -256,41 +206,11 @@ module.exports = function() {
                       createPageExpected(page5, true, true, false),
                       createPageExpected(pageDA, false, false, false, true),
                     ];
-
-        assert.equal(true, comparingInstant(instants[5].frames, expected));
-        assert.equal(true, instants[5].pageFault);
-      });
-    });
-
-    describe('Asignacion dinámica - Reemplazo global - DA y 2da', function () {
-
-      it('#Analizando instante 4', function () {
-        requirements = [req1, req2, req4, req6, req7, req5];
-        initializeSams(3, requirements, false, true);
-        var instants = sams.run();
-        // instants.forEach(function(frames, index) {
-        //   console.log("Moment: " + index);
-        //   console.log(frames);
-        // });
-        var expected = [createPageExpected(page7, true, true, false),
-                      createPageExpected(page4, false, false, true),
-                      createPageExpected(pageDA, false, false, false, true),
-                    ];
-        console.log(instants[4].frames);
-        console.log(expected);
-        assert.equal(true, comparingInstant(instants[4].frames, expected));
-        assert.equal(true, instants[4].pageFault);
-      });
-
-      it('#Analizando instante 5', function () {
-        requirements = [req1, req2, req4, req6, req7, req5];
-        initializeSams(3, requirements, false, true);
-        var instants = sams.run();
-
-        var expected = [createPageExpected(page7, false, false, false),
-                      createPageExpected(pageDA, false, false, false, true),
-                      createPageExpected(page5, true, true, false),
-                    ];
+        // console.log(instants[3].frames);
+        // console.log(instants[4].frames);
+        // console.log(instants[5].frames);
+        // console.log("\n" + "EX");
+        // console.log(expected);
         assert.equal(true, comparingInstant(instants[5].frames, expected));
         assert.equal(true, instants[5].pageFault);
       });
