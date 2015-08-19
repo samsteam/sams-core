@@ -21,7 +21,7 @@ cocktail.mix({
 	},
 
 	getVictimsStructure: function() {
-	  return this._victims.clone();
+	  return this._victims;
 	},
 
 	initialize: function(requirements) {
@@ -50,7 +50,7 @@ cocktail.mix({
 		if (position.isReservedForAsyncFlush()) {
 			victim = this._filters[1]._counterpart._memory.at(this._filters[1]._counterpart._position);
 		}
-		
+
 		var result = {
 			frame: position,
 			page: victim

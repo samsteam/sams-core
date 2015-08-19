@@ -17,5 +17,10 @@ cocktail.mix({
 		this.callSuper("constructor");
 		this._victims = new ReQueueQueue();
 		this.log("Created.");
+	},
+
+	initialize: function(requirements) {
+		this.callSuper("initialize", requirements);
+	  this._victims = new ReQueueQueue();
 	}
 });

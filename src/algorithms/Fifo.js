@@ -19,6 +19,11 @@ cocktail.mix({
 		this.log("Created.");
 	},
 
+	initialize: function(requirements) {
+		this.callSuper("initialize", requirements);
+	  this._victims = new Queue();
+	},
+
 	addPage: function(requirement) {
   	this._victims.add(requirement.asPage().clearAll());
 	},
@@ -35,8 +40,9 @@ cocktail.mix({
 				this.log("Updated victim queue, referenced.");
 			}
 			if(requirement.getMode() === "write") {
+				this._victims.pageOf(requirement).setReferenced(true);
 				this._victims.pageOf(requirement).setModified(true);
-				this.log("Updated victim queue, modified.");
+				this.log("Updated victim queue, modified & referenced.");
 			}
 			return;
 		}
