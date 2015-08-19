@@ -34,5 +34,9 @@ cocktail.mix({
 
 	update: function(memory, context) {
 		//Nothing to do here.
+	},
+
+	localSize: function() {
+	  return this._size;
 	}
 });

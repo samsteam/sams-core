@@ -142,12 +142,37 @@ cocktail.mix({
     this.log("All policies cleared.")
   },
 
+  _clearBuffers: function(arguments) {
+    if (this._memorySize) {
+      this._memory = new Memory(this._memorySize);
+    }
+    this._moments = [];
+    this._resetPolicies();
+    this.log("All buffers cleared.");
+  },
+
+  _resetPolicies: function() {
+    if (this.isFixedEvenAssignmentPolicy()) {
+      this.setFixedEvenAssignmentPolicy(this._assignmentPolicies[0].localSize());
+    }
+    if (this.isLocalReplacementPolicy()) {
+      this.setLocalReplacementPolicy(true);
+    }
+    if (this.isAsyncFlushPolicy()) {
+      this.setAsyncFlushReplacementPolicy(true);
+    }
+    if (this.isSecondChanceReplacementPolicy()) {
+      this.setSecondChanceReplacementPolicy(true);
+    }
+  },
+
   setMemorySize: function(size) {
     if (!size) {
       return;
     }
     this._memory = new Memory(size);
     this._memorySize = size;
+    // this._resetPolicies();
     this._updatePolicies();
   },
 
@@ -189,21 +214,12 @@ cocktail.mix({
     //Here we use the context to bind the array in which i want the pages to be added.
     this._moments.forEach(function(moment) {
       var singleMoment = {
-        requirement: moment.requirement.asDataObject(),
+        requirement: moment.requirement,
         pageFault: moment.pageFault,
-        frames: [],
-        victim: (moment.victim)? moment.victim.asVictim() : undefined,
-        potentialVictims: []
+        frames: moment.instant,
+        victim: moment.victim,
+        potentialVictims: moment.potentialVictims
       }
-
-      //Here too (it's a matrix).
-      moment.instant.forEach(function(page) {
-        this.push(page.asDataObject());
-      }, singleMoment.frames);
-
-      moment.potentialVictims.forEach(function(potentialVictim) {
-        this.push(potentialVictim.asVictim());
-      }, singleMoment.potentialVictims)
 
       this.push(singleMoment);
 
@@ -211,15 +227,6 @@ cocktail.mix({
 
     this.log("---Finished generating the output matrix.---\n");
     return allMoments;
-  },
-
-  _clearBuffers: function(arguments) {
-    if (this._memorySize) {
-      this._memory = new Memory(this._memorySize);
-    }
-    this._moments = [];
-    //this._requirements = [];
-    this.log("All buffers cleared.");
   },
 
   //  To be implemented with FixedEven assignment filter.
@@ -236,18 +243,48 @@ cocktail.mix({
     return hasSpace;
   },
 
-  _update: function(requirement) {
+  _saveMoment: function(requirement, pageFault, victim) {
+    this.log("Saving moment " + this._moments.length + ".");
+    var moment = {
+      requirement: requirement.asDataObject(),
+      instant: [],
+      pageFault: pageFault,
+      victim: victim? victim.asVictim(): undefined,
+      potentialVictims: []
+    };
+
+    this._memory.forEach(function(frame) {
+      this.push(frame.asDataObject());
+    }, moment.instant);
+
+    this._algorithm.getVictimsStructure().forEach(function(potentialVictim) {
+      this.push(potentialVictim.asVictim());
+    }, moment.potentialVictims);
+
+    this._moments.push(moment);
+    this.log("Moment " + (this._moments.length -1) + " saved.\n");
+  },
+
+  _update: function(requirement, pageFault, victim) {
     this._algorithm.update(requirement);
-    this._updateMemory(requirement);
+    this._updateMemory(requirement, pageFault);
     this._updatePolicies();
   },
 
-  _updateMemory: function(requirement) {
+  _updateMemory: function(requirement, pageFault) {
     //  Assume that the requirement is already in memory.
     var page = this._memory.at(this._memory.getFrameOf(requirement));
-    page.setReferenced(true);
+
+    page.setRequired(true);
+
     if (requirement.getMode() === "write") {
       page.setModified(true);
+    }
+
+    if (!pageFault) {
+      page.setReferenced(true);
+    } else {
+      page.setPageFault(true);
     }
   },
 
@@ -257,33 +294,18 @@ cocktail.mix({
     }, this);
   },
 
-  _saveMoment: function(requirement, pageFault, victim) {
-    this.log("Saving moment " + this._moments.length + ".");
-    var moment = {
-      requirement: requirement.clone(),
-      instant: this._memory.clone(),
-      pageFault: pageFault,
-      victim: victim,
-      potentialVictims: this._algorithm.getVictimsStructure()
-    };
-    this._moments.push(moment);
-    this.log("Moment " + (this._moments.length -1) + " saved.\n");
-  },
-
-  _clearMemoryFlags: function() {
+  _clearTemporalFlags: function() {
     this._memory.forEach(function(page) {
+      page.clearRequired();
       page.clearPageFault();
-      if (!this.getSecondChanceReplacementPolicy()) {
-        page.clearReferenced();
-      }
     }, this);
-    this.log("All page flags cleared.");
+    this.log("Temporal page flags cleared.");
   },
 
   _processRequirements: function() {
     this._requirements.forEach(function(requirement) {
       //  Start with a clean image of the frames.
-      this._clearMemoryFlags();
+      this._clearTemporalFlags();
       //Declare victim here because it'll be used for update.
       var victim = {
         frame: undefined,
@@ -317,8 +339,7 @@ cocktail.mix({
          }
          this._memory.atPut(frame, requirement.asPage());
       }
-      //  Even if it's a page fault or not, call to update.
-      this._update(requirement);
+      this._update(requirement, pageFault, victim.page);
       this._saveMoment(requirement, pageFault, victim.page);
     }, this);
   }

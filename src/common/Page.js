@@ -28,6 +28,7 @@ cocktail.mix({
   //Instance variables of the class.
   '@properties': {
     pageFault: false,
+    required : false,
     referenced: false,
     modified: false,
     reservedForAsyncFlush: false
@@ -40,6 +41,7 @@ cocktail.mix({
 	 *		'pageNumber': 1,
 	 *		'mode' : 'write',
    *    'pageFault' : false,
+   *    'required' : false,
    *    'referenced': false,
    *    'modified' :  false,
    *    'reservedForAsyncFlush' : false
@@ -55,6 +57,7 @@ cocktail.mix({
 			process : this.getProcess(),
 			pageNumber : this.getPageNumber(),
       pageFault : this.isPageFault(),
+      required : this.isRequired(),
       referenced : this.isReferenced(),
       modified: this.isModified(),
       reservedForAsyncFlush: this.isReservedForAsyncFlush()
@@ -86,6 +89,11 @@ cocktail.mix({
     return this;
   },
 
+  clearRequired: function() {
+    this.setRequired(false);
+    return this;
+  },
+
   clearReferenced: function() {
     this.setReferenced(false);
     return this;
@@ -96,13 +104,15 @@ cocktail.mix({
   },
 
   clearReservedForAsyncFlush: function() {
-    this.reservedForAsyncFlush(false);
+    this.setReservedForAsyncFlush(false);
   },
 
   clearAll: function() {
     this.clearPageFault();
+    this.clearRequired();
     this.clearReferenced();
     this.clearModified();
+    this.clearReservedForAsyncFlush();
     return this;
   },
 

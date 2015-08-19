@@ -100,8 +100,9 @@ cocktail.mix({
   asPage: function() {
     var obj = this.asDataObject();
     //Set a requirement on page fault by default.
-    obj.pageFault = true;
-    obj.referenced = true;
+    obj.pageFault = false;
+    obj.required = false;
+    obj.referenced = false;
     obj.modified = false;
     obj.reservedForAsyncFlush = false;
 

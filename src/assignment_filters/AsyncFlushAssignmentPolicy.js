@@ -19,6 +19,7 @@ cocktail.mix({
 				'pageNumber': 0,
 				'mode' : 'reserved',
 				'pageFault' : false,
+				'required' : false,
 				'referenced': false,
 				'modified': false,
 				'reservedForAsyncFlush': true
