@@ -54,6 +54,7 @@ cocktail.mix({
 		{
 			process : this.getProcess(),
 			pageNumber : this.getPageNumber(),
+      pageFault : this.isPageFault(),
       referenced : this.isReferenced(),
       modified: this.isModified(),
       reservedForAsyncFlush: this.isReservedForAsyncFlush()
@@ -71,7 +72,7 @@ cocktail.mix({
 		}
     return obj;
   },
-  
+
   //@Override
 	clone : function() {
     var Page = require('./Page');
