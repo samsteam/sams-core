@@ -29,5 +29,8 @@
   "dependencies": {
     "cocktail": "^0.7.0",
     "cocktail-trait-configurable": "^1.0.0"
+  },
+  "devDependencies": {
+    "it-each": "^0.3.1"
   }
 }
