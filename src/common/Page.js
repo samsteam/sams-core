@@ -31,7 +31,7 @@ cocktail.mix({
     required : false,
     referenced: false,
     modified: false,
-    reservedForAsyncFlush: false
+    reservedForPageBuffering: false
   },
 
 	/*
@@ -44,7 +44,7 @@ cocktail.mix({
    *    'required' : false,
    *    'referenced': false,
    *    'modified' :  false,
-   *    'reservedForAsyncFlush' : false
+   *    'reservedForPageBuffering' : false
 	 *	}
 	 *	Automaticaly is maped to the corresponding properties
 	 *	thanks to the Configurable trait.
@@ -60,7 +60,7 @@ cocktail.mix({
       required : this.isRequired(),
       referenced : this.isReferenced(),
       modified: this.isModified(),
-      reservedForAsyncFlush: this.isReservedForAsyncFlush()
+      reservedForPageBuffering: this.isReservedForPageBuffering()
 		}
     return obj;
   },
@@ -103,8 +103,8 @@ cocktail.mix({
     this.setModified(false);
   },
 
-  clearReservedForAsyncFlush: function() {
-    this.setReservedForAsyncFlush(false);
+  clearReservedForPageBuffering: function() {
+    this.setReservedForPageBuffering(false);
   },
 
   clearAll: function() {
@@ -112,7 +112,7 @@ cocktail.mix({
     this.clearRequired();
     this.clearReferenced();
     this.clearModified();
-    this.clearReservedForAsyncFlush();
+    this.clearReservedForPageBuffering();
     return this;
   },
 

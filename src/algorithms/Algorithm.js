@@ -1,9 +1,7 @@
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
-var LocalReplacementPolicy = require('../replacement_filters/LocalReplacementPolicy');
-var SecondChanceReplacementPolicy = require('../replacement_filters/SecondChanceReplacementPolicy');
-var AsyncFlushReplacementPolicy = require('../replacement_filters/AsyncFlushReplacementPolicy');
+var LocalReplacementPolicy = require('../filters/replacement_filters/LocalReplacementPolicy');
 
 cocktail.use(Logger);
 
@@ -44,11 +42,10 @@ cocktail.mix({
 		this.log("The selected victim is: " + filteredVictims.peek() + ".\n");
 		this._victims.remove(filteredVictims.peek());
 
-		// A pedidio de Cristian S.
 		var position = filteredVictims.first();
 		var victim = position;
-		if (position.isReservedForAsyncFlush()) {
-			victim = this._filters[1]._counterpart._memory.at(this._filters[1]._counterpart._position);
+		if (position.isReservedForPageBuffering()) {
+			victim = this._filters[1]._memory.at(this._filters[1]._position);
 		}
 
 		var result = {
@@ -83,17 +80,17 @@ cocktail.mix({
 		}
 	},
 
-	setAsyncFlushReplacementPolicy: function(enabled, counterpartFilter) {
+	setPageBufferingFilter: function(enabled, filter) {
 		if (enabled) {
-	  	this._filters[1] = new AsyncFlushReplacementPolicy(counterpartFilter);
+	  	this._filters[1] = filter;
 		} else {
 			delete this._filters[1];
 		}
 	},
 
-	setSecondChanceReplacementPolicy: function(enabled) {
+	setSecondChanceFilter: function(enabled, filter) {
 		if (enabled) {
-	  	this._filters[2] = new SecondChanceReplacementPolicy();
+	  	this._filters[2] = filter;
 		} else {
 			delete this._filters[2];
 		}
@@ -103,7 +100,11 @@ cocktail.mix({
 	  return this._filters[0] !== undefined;
 	},
 
-	isSecondChanceReplacementPolicy: function() {
+	isPageBuffering: function() {
+	  return this._filters[1] !== undefined;
+	},
+
+	isSecondChance: function() {
 	  return this._filters[2] !== undefined;
 	},
 

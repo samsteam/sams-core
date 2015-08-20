@@ -4,8 +4,9 @@ var Fifo = require('./algorithms/Fifo');
 var Lru = require('./algorithms/Lru');
 var Memory = require('./common/Memory');
 var Requirement = require('./common/Requirement');
-var FixedEvenAssignmentPolicy = require('./assignment_filters/FixedEvenAssignmentPolicy');
-var AsyncFlushAssignmentPolicy = require('./assignment_filters/AsyncFlushAssignmentPolicy');
+var FixedEvenAssignmentPolicy = require('./filters/assignment_filters/FixedEvenAssignmentPolicy');
+var PageBufferingFilter = require('./filters/PageBufferingFilter');
+var SecondChanceFilter = require('./filters/SecondChanceFilter');
 cocktail.use(Logger);
 
 cocktail.mix({
@@ -22,6 +23,7 @@ cocktail.mix({
     this._rawRequirements = [];
     this._requirements = [];
     this._assignmentPolicies = [];
+    this._filters = [];
     this.log("Created.");
   },
 
@@ -49,6 +51,7 @@ cocktail.mix({
   isFixedEvenAssignmentPolicy: function() {
     return this._assignmentPolicies[0] !== undefined;
   },
+
   isLocalReplacementPolicy: function() {
     if (this._algorithm){
       return this._algorithm.isLocalReplacementPolicy();
@@ -57,20 +60,12 @@ cocktail.mix({
     }
   },
 
-  isAsyncFlushPolicy: function() {
-    return this._assignmentPolicies[1] !== undefined;
+  isPageBuffering: function() {
+    return this._filters[0] !== undefined;
   },
 
-  getSecondChanceReplacementPolicy: function() {
-    return this._algorithm.isSecondChanceReplacementPolicy();
-  },
-
-  isSecondChanceReplacementPolicy: function() {
-    if (this._algorithm){
-      return this._algorithm.isSecondChanceReplacementPolicy();
-    } else {
-      return undefined;
-    }
+  isSecondChance: function() {
+      return this._filters[1] !== undefined;
   },
 
   setAlgorithm: function(algorithm) {
@@ -111,44 +106,50 @@ cocktail.mix({
     }
   },
 
-  setAsyncFlushReplacementPolicy: function(enabled) {
+  setPageBufferingFilter: function(enabled) {
     if (enabled === undefined) {
       return;
     }
     if (this._algorithm && enabled) {
-      var policy = new AsyncFlushAssignmentPolicy()
-      this._assignmentPolicies[1] = policy;
-      this._algorithm.setAsyncFlushReplacementPolicy(true, policy);
+      var filter = new PageBufferingFilter();
+      this._filters[0] = filter;
+      this._algorithm.setPageBufferingFilter(true, filter);
     } else {
-      delete this._assignmentPolicies[1];
-      this._algorithm.setAsyncFlushReplacementPolicy(false);
+      delete this._assignmentPolicies[0];
+      this._algorithm.setPageBufferingFilter(false);
     }
 	},
 
-  setSecondChanceReplacementPolicy: function(enabled) {
+  setSecondChanceFilter: function(enabled) {
     if (enabled === undefined) {
       return;
     }
-    if (this._algorithm) {
-      this._algorithm.setSecondChanceReplacementPolicy(enabled);
+    if (this._algorithm && enabled) {
+      var filter = new SecondChanceFilter();
+      this._filters[1] = filter;
+      this._algorithm.setSecondChanceFilter(true, filter);
+    } else {
+      delete this._assignmentPolicies[1];
+      this._algorithm.setSecondChanceFilter(false);
     }
   },
 
   clearPolicies: function() {
     this._assignmentPolicies = [];
+    this._filters = [];
     if (this._algorithm) {
       this._algorithm.clearPolicies();
     }
     this.log("All policies cleared.")
   },
 
-  _clearBuffers: function(arguments) {
-    if (this._memorySize) {
-      this._memory = new Memory(this._memorySize);
-    }
+  _clearBuffers: function() {
     this._moments = [];
     this._resetPolicies();
     this.log("All buffers cleared.");
+    if (this._memorySize) {
+      this.setMemorySize(this._memorySize);
+    }
   },
 
   _resetPolicies: function() {
@@ -158,11 +159,11 @@ cocktail.mix({
     if (this.isLocalReplacementPolicy()) {
       this.setLocalReplacementPolicy(true);
     }
-    if (this.isAsyncFlushPolicy()) {
-      this.setAsyncFlushReplacementPolicy(true);
+    if (this.isPageBuffering()) {
+      this.setPageBufferingFilter(true);
     }
-    if (this.isSecondChanceReplacementPolicy()) {
-      this.setSecondChanceReplacementPolicy(true);
+    if (this.isSecondChance()) {
+      this.setSecondChanceFilter(true);
     }
   },
 
@@ -172,8 +173,7 @@ cocktail.mix({
     }
     this._memory = new Memory(size);
     this._memorySize = size;
-    // this._resetPolicies();
-    this._updatePolicies();
+    this._updateFilters();
   },
 
   addRequirements: function(requirements) {
@@ -193,6 +193,7 @@ cocktail.mix({
     if (!this._memory || !this._algorithm || !this._requirements.length) {
       throw new Error("Some initialization is missing!!");
     }
+    this._clearBuffers();
     this._algorithm.initialize(this._requirements);
     this._processRequirements();
     /*
@@ -268,7 +269,7 @@ cocktail.mix({
   _update: function(requirement, pageFault, victim) {
     this._algorithm.update(requirement);
     this._updateMemory(requirement, pageFault);
-    this._updatePolicies();
+    this._updateFilters();
   },
 
   _updateMemory: function(requirement, pageFault) {
@@ -288,10 +289,10 @@ cocktail.mix({
     }
   },
 
-  _updatePolicies: function() {
-    this._assignmentPolicies.forEach(function(policy) {
-      policy.update(this._memory, this)
-    }, this);
+  _updateFilters: function() {
+      this._filters.forEach(function(filter) {
+        filter.update(this._memory)
+      }, this);
   },
 
   _clearTemporalFlags: function() {

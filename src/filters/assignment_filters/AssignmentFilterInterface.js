@@ -4,5 +4,5 @@ var cocktail = require('cocktail');
 cocktail.mix({
 	'@exports': module,
 
-	'@requires': ['hasFreeFrameFor, update']
+	'@requires': ['hasFreeFrameFor']
 });

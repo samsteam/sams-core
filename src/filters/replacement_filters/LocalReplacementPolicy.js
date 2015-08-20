@@ -1,5 +1,5 @@
 var cocktail = require('cocktail');
-var Logger = require('../annotations/Logger');
+var Logger = require('../../annotations/Logger');
 var ReplacementFilterInterface = require('./ReplacementFilterInterface');
 
 cocktail.use(Logger);

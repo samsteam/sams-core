@@ -42,17 +42,20 @@ var req4 =
   mode: "read"
 };
 
-var reqs = [req0, req0M, req1, req2, req0, req3];
+var reqs = [req0, req0M, req1, req2, req0, req3, req4];
 
 var sams = new Scheduler();
 sams.setAlgorithm("fifo");
-sams.setSecondChanceReplacementPolicy(true);
-sams.setLocalReplacementPolicy(true);
-sams.setAsyncFlushReplacementPolicy(true);
+sams.setSecondChanceFilter(true);
+// sams.setLocalReplacementPolicy(true);
+// sams.setPageBufferingFilter(true);
 sams.setMemorySize(4);
-sams.setFixedEvenAssignmentPolicy(2);
+// sams.setFixedEvenAssignmentPolicy(2);
 sams.addRequirements(reqs);
-var instants = sams.run();
+var instants;
+instants = sams.run();
+// sams.setMemorySize(6);
+// instants = sams.run();
 instants.forEach(function(instant, index) {
   console.log("Moment: " + index);
   console.log(instant);

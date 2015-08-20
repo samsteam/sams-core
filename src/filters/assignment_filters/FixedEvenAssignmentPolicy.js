@@ -1,5 +1,5 @@
 var cocktail = require('cocktail');
-var Logger = require('../annotations/Logger');
+var Logger = require('../../annotations/Logger');
 var AssignmentFilterInterface = require('./AssignmentFilterInterface');
 
 cocktail.use(Logger);
@@ -30,10 +30,6 @@ cocktail.mix({
 		}, processCount);
 		return (this._size > processCount.count);
 
-	},
-
-	update: function(memory, context) {
-		//Nothing to do here.
 	},
 
 	localSize: function() {
