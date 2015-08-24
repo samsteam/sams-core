@@ -266,26 +266,40 @@ cocktail.mix({
     this.log("Moment " + (this._moments.length -1) + " saved.\n");
   },
 
-  _update: function(requirement, pageFault, victim) {
+  _update: function(requirement, pageFault) {
     this._algorithm.update(requirement);
     this._updateMemory(requirement, pageFault);
     this._updateFilters();
   },
 
   _updateMemory: function(requirement, pageFault) {
-    //  Assume that the requirement is already in memory.
-    var page = this._memory.at(this._memory.getFrameOf(requirement));
 
-    page.setRequired(true);
+    if(requirement.getMode() === "finish") {
 
-    if (requirement.getMode() === "write") {
-      page.setModified(true);
-    }
-
-    if (!pageFault) {
-      page.setReferenced(true);
+      this._memory.forEach(function(page) {
+        if (this.getProcess() === page.getProcess()) {
+          page.setFinished(true);
+        }
+      }, requirement);
+      
     } else {
-      page.setPageFault(true);
+      //  Assume that the requirement is already in memory.
+      var page = this._memory.at(this._memory.getFrameOf(requirement));
+
+      page.setRequired(true);
+
+      if (requirement.getMode() === "write") {
+        page.setModified(true);
+        this.log("Entring requirement was set as modified.");
+      }
+
+      if (!pageFault) {
+        page.setReferenced(true);
+        this.log("Entring requirement was set as referenced.");
+      } else {
+        page.setPageFault(true);
+        this.log("Entring requirement was set as page fault.");
+      }
     }
   },
 
@@ -308,6 +322,8 @@ cocktail.mix({
       //  Start with a clean image of the frames.
       this._clearTemporalFlags();
       //Declare victim here because it'll be used for update.
+      this.log("Processing requirement: " + requirement + ".");
+
       var victim = {
         frame: undefined,
         page: undefined
@@ -316,7 +332,7 @@ cocktail.mix({
 
       if (this._memory.contains(requirement)) {
         this.log("---Memory hit! Updating reference.---\n")
-      } else {
+      } else if (requirement.getMode() !== "finish") {
         /*
          *  This is a pageFault.
          *  Steps to follow:
@@ -340,7 +356,7 @@ cocktail.mix({
          }
          this._memory.atPut(frame, requirement.asPage());
       }
-      this._update(requirement, pageFault, victim.page);
+      this._update(requirement, pageFault);
       this._saveMoment(requirement, pageFault, victim.page);
     }, this);
   }

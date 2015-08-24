@@ -2,6 +2,7 @@ var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
 var LocalReplacementPolicy = require('../filters/replacement_filters/LocalReplacementPolicy');
+var Queue = require('../common/VictimsStructures/Queue');
 
 cocktail.use(Logger);
 
@@ -15,6 +16,7 @@ cocktail.mix({
 		//Should be initialized by some especification of this class.
 		this._victims = undefined;
 		this._requirements = undefined;
+		this._finalized = new Queue();
 		this._filters = [];
 	},
 
@@ -24,10 +26,23 @@ cocktail.mix({
 
 	initialize: function(requirements) {
 	  this._requirements = requirements;
+		this._finalized = new Queue();
 	},
 
 	victimFor: function(requirement) {
 
+		//If some process has finalized, use it's frames.
+		if (this._finalized.size() !== 0) {
+			this.log("---Seems like I have some finished processes.---");
+			var result = {};
+			result.frame = this._finalized.first();
+			result.page = result.frame;
+			this._victims.remove(result.frame);
+			this.log("The selected victim is: " + result.frame + " from a finished process.\n");
+			return result;
+		}
+
+		//Else search for a victim.
 		this.log("---Started applying replacement filters.---");
 		var filteredVictims = this._victims.clone();
 
@@ -65,7 +80,23 @@ cocktail.mix({
 	},
 
 	update: function(requirement) {
-	  throw new Error("Subclass responsibility.")
+		if (requirement.getMode() === "finish") {
+
+			var context = {
+				requirement: requirement,
+				finalized: this._finalized
+			};
+
+			this.log("Adding all the frames of process " + requirement.getProcess() + " to the finalized Queue.")
+			this._victims.forEach(function(page, index, victims) {
+			  if (this.requirement.getProcess() === page.getProcess()) {
+					victims.pageOf(page).setFinished(true);
+			  	this.finalized.add(page.clone());
+			  }
+			}, context);
+
+			return;
+		}
 	},
 
 	recycle: function(requirement) {

@@ -33,6 +33,14 @@ cocktail.mix({
 	},
 
 	update: function(requirement) {
+
+		this.callSuper("update", requirement);
+
+		//A finish requirement doesn't need any other update.
+		if (requirement.getMode() === "finish") {
+			return;
+		}
+
 		if (this._victims.contains(requirement)) {
 			this.addPage(requirement);
 			if (requirement.getMode() === "read") {
