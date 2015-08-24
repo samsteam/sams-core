@@ -31,6 +31,7 @@ cocktail.mix({
     required : false,
     referenced: false,
     modified: false,
+    finished: false,
     reservedForPageBuffering: false
   },
 
@@ -44,6 +45,7 @@ cocktail.mix({
    *    'required' : false,
    *    'referenced': false,
    *    'modified' :  false,
+   *    'finished' : false,
    *    'reservedForPageBuffering' : false
 	 *	}
 	 *	Automaticaly is maped to the corresponding properties
@@ -60,6 +62,7 @@ cocktail.mix({
       required : this.isRequired(),
       referenced : this.isReferenced(),
       modified: this.isModified(),
+      finished: this.isFinished(),
       reservedForPageBuffering: this.isReservedForPageBuffering()
 		}
     return obj;
@@ -72,6 +75,7 @@ cocktail.mix({
 			pageNumber : this.getPageNumber(),
       referenced : this.isReferenced(),
       modified: this.isModified(),
+      finished: this.isFinished()
 		}
     return obj;
   },
@@ -103,6 +107,10 @@ cocktail.mix({
     this.setModified(false);
   },
 
+  clearFinished: function() {
+    this.setFinished(false);
+  },
+
   clearReservedForPageBuffering: function() {
     this.setReservedForPageBuffering(false);
   },
@@ -112,6 +120,7 @@ cocktail.mix({
     this.clearRequired();
     this.clearReferenced();
     this.clearModified();
+    this.clearFinished();
     this.clearReservedForPageBuffering();
     return this;
   },

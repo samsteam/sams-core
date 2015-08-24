@@ -104,6 +104,7 @@ cocktail.mix({
     obj.required = false;
     obj.referenced = false;
     obj.modified = false;
+    obj.finished = false;
     obj.reservedForAsyncFlush = false;
 
     //Using Page class.
