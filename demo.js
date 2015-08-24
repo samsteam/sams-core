@@ -1,48 +1,57 @@
 var Scheduler  = require('./src/scheduler');
 
-var req0 =
-{
-  process: 'A',
-  pageNumber: 1,
-  mode: "read"
+function reqFactory(string) {
+
+  var req = {};
+
+  req.process = string[0];
+
+  if (string[1] == "F") {
+    req.pageNumber = 0;
+    req.mode = "finish";
+  } else {
+    req.pageNumber = string[1];
+    switch (string[2]) {
+      case "R":
+        req.mode = "read";
+        break;
+      case "M":
+        req.mode = "write";
+        break;
+      default:
+        req.mode = "read";
+    }
+  }
+  return req;
 };
 
-var req0M =
-{
-  process: 'A',
-  pageNumber: 1,
-  mode: "write"
-};
+var A1R = reqFactory("A1R");
 
-var req1 =
-{
-  process: 'A',
-  pageNumber: 2,
-  mode: "read"
-};
+var A1M = reqFactory("A1M");
 
-var req2 =
-{
-  process: 'B',
-  pageNumber: 2,
-  mode: "read"
-};
+var A2R = reqFactory("A2R");
 
-var req3 =
-{
-  process: 'A',
-  pageNumber: 3,
-  mode: "read"
-};
+var A3R = reqFactory("A3R");
 
-var req4 =
-{
-  process: 'C',
-  pageNumber: 1,
-  mode: "read"
-};
+var AF = reqFactory("AF");
 
-var reqs = [req0, req0M, req1, req2, req0, req3, req4];
+var B1R = reqFactory("B1R");
+
+var B2R = reqFactory("B2R");
+
+var B3R = reqFactory("B3R");
+
+var BF = reqFactory("BF");
+
+var C1R = reqFactory("C1R");
+
+var C2R = reqFactory("C2R");
+
+var C3R = reqFactory("C3R");
+
+var CF = reqFactory("CF");
+
+var reqs = [B1R, A1R, A2R, B2R, AF, C1R, C2R, C3R];
 
 var sams = new Scheduler();
 sams.setAlgorithm("fifo");
