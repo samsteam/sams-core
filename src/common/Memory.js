@@ -260,16 +260,21 @@ cocktail.mix({
     if ( typeof exec !== 'function')
       throw new Error('First param must be a function')
 
+    var context = {
+      memory: this,
+      caller: that
+    };
+
     if(that) {
       myArray.forEach(function(element, index) {
         //Use the contex passed by the caller in the execution of the function.
-        exec.call(that, element, index);
-      },that);
+        exec.call(context.caller, element, index, context.memory);
+      }, context);
     } else {
       //If no contex was especified use a simple forEach.
       myArray.forEach(function(element, index) {
-        exec(element, index);
-      });
+        exec(element, index, context.memory);
+      }, context);
     }
   }
 });

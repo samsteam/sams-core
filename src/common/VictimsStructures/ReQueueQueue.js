@@ -19,7 +19,7 @@ cocktail.mix({
 	'@traits': [VictimsStructureInterface],
 
 
-  '@logger' : [console, "VictimsReQQueue:"],
+  '@logger' : [console, "ReQQueue:"],
 
 	/*
    *  Add a page to the Queue.

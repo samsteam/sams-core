@@ -10,7 +10,7 @@ cocktail.mix({
   '@as': 'class',
 	'@traits': [VictimsStructureInterface],
 
-  '@logger' : [console, "VictimsQueue:"],
+  '@logger' : [console, "Queue:"],
 
   constructor: function() {
     /*
@@ -79,7 +79,9 @@ cocktail.mix({
   remove: function(requirement) {
     var index = this._indexOf(requirement);
     if (index != -1) {
-      return (this._array.splice(index, 1))[0];
+      var page = (this._array.splice(index, 1))[0];
+      this.log(page.toString() + " removed.");
+      return page;
     }
     return undefined;
   },
@@ -147,16 +149,21 @@ cocktail.mix({
     if ( typeof exec !== 'function')
       throw new Error('First param must be a function')
 
+    var context = {
+      queue: this,
+      caller: that
+    };
+
     if(that) {
       myArray.forEach(function(element, index) {
         //Use the contex passed by the caller in the execution of the function.
-        exec.call(that, element, index);
-      },that);
+        exec.call(context.caller, element, index, context.queue);
+      }, context);
     } else {
       //If no contex was especified use a simple forEach.
       myArray.forEach(function(element, index) {
-        exec(element, index);
-      });
+        exec(element, index, context.queue);
+      }, context);
     }
   },
 
