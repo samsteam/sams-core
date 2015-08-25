@@ -54,7 +54,7 @@ var CF = reqFactory("CF");
 var reqs = [B1R, A1R, A2R, B2R, AF, C1R, C2R, C3R];
 
 var sams = new Scheduler();
-sams.setAlgorithm("fifo");
+sams.setAlgorithm("lru");
 sams.setSecondChanceFilter(true);
 // sams.setLocalReplacementPolicy(true);
 // sams.setPageBufferingFilter(true);
