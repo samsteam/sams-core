@@ -1,10 +1,11 @@
 {
   "name": "sams",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Some Awsome Memory Scheduler.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter nyan"
+    "test": "mocha --reporter nyan",
+    "demo": "node demo.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,7 @@
   },
   "homepage": "https://github.com/samsteam/sams-core",
   "dependencies": {
-    "cocktail": "^0.7.0",
+    "cocktail": "^0.7.2",
     "cocktail-trait-configurable": "^1.0.0"
   },
   "devDependencies": {
