@@ -55,16 +55,14 @@ var reqs = [B1R, A1R, A2R, B2R, AF, C1R, C2R, C3R];
 
 var sams = new Scheduler();
 sams.setAlgorithm("lru");
-sams.setSecondChanceFilter(true);
+sams.setMemorySize(4);
+// sams.setSecondChanceFilter(true);
 // sams.setLocalReplacementPolicy(true);
 // sams.setPageBufferingFilter(true);
-sams.setMemorySize(4);
 // sams.setFixedEvenAssignmentPolicy(2);
 sams.addRequirements(reqs);
 var instants;
 instants = sams.run();
-// sams.setMemorySize(6);
-// instants = sams.run();
 instants.forEach(function(instant, index) {
   console.log("Moment: " + index);
   console.log(instant);
