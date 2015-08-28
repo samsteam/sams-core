@@ -13,20 +13,19 @@ cocktail.mix({
 	'@logger' : [console, "Algorithm Base:"],
 
 	constructor: function() {
-		//Should be initialized by some especification of this class.
 		this._victims = undefined;
-		this._requirements = undefined;
 		this._finalized = new Queue();
+		this._requirements = [];
 		this._filters = [];
-	},
-
-	getVictimsStructure: function() {
-	  return this._victims;
 	},
 
 	initialize: function(requirements) {
 	  this._requirements = requirements;
 		this._finalized = new Queue();
+	},
+
+	getVictimsStructure: function() {
+	  return this._victims;
 	},
 
 	victimFor: function(requirement) {

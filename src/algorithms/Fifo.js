@@ -20,9 +20,9 @@ cocktail.mix({
 	},
 
 	initialize: function(requirements) {
-		this._requirements = requirements;
-		this._finalized = new Queue();
+		this.callSuper("initialize", requirements);
 	  this._victims = new Queue();
+		this.log("Initialized.");
 	},
 
 	addPage: function(requirement) {
@@ -35,27 +35,12 @@ cocktail.mix({
 
 	update: function(requirement) {
 
+		this.callSuper("update", requirement);
+
+		// A finish requirement doesn't need any other update.
 		if (requirement.getMode() === "finish") {
-
-			var context = {
-				requirement: requirement,
-				finalized: this._finalized
-			};
-
-			this.log("Adding all the frames of process " + requirement.getProcess() + " to the finalized Queue.")
-			this._victims.forEach(function(page, index, victims) {
-			  if (this.requirement.getProcess() === page.getProcess()) {
-					victims.pageOf(page).setFinished(true);
-			  	this.finalized.add(page.clone());
-			  }
-			}, context);
-
 			return;
 		}
-		//A finish requirement doesn't need any other update.
-		// if (requirement.getMode() === "finish") {
-		// 	return;
-		// }
 
 		if (this._victims.contains(requirement)) {
 			this.addPage(requirement);
