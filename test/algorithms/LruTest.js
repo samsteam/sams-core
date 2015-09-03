@@ -25,7 +25,7 @@ module.exports = function() {
       sams.setMemorySize(memorySize);
       sams.setFixedEvenAssignmentPolicy(fixedEvenAssig);
       sams.addRequirements(reqs);
-      console.log("WHATS PROBLEM?");
+      // console.log("WHATS PROBLEM?");
     }
 
     createPageExpected = function (req, required, pageF, ref, modified, finish, reservedForPageBuffering) {
@@ -49,66 +49,32 @@ module.exports = function() {
 
     verifyAndAnnounceErrors = function(errors){
       errors.forEach(function(error) {
-        console.log(error + "\n");
+        // console.log(error + "\n");
       });
     }
 
     comparingInstant = function (inst, expected) {
       var ret = [];
       inst.forEach(function(jsPage, index) {
-        if (expected[index].mode != jsPage.mode){
-          ret.push("Not equals mode " + jsPage.process + jsPage.pageNumber);
+        if (expected[index].process != jsPage.process) {
+          ret.push("Not equals process Expected: " + expected[index].process + " Found: "+ jsPage.process);
         }
-        if ((expected[index].process != jsPage.process) || (expected[index].pageNumber == jsPage.pageNumber)) {
-          ret.push("Not equals process " + jsPage.process + jsPage.pageNumber);
+        if (expected[index].pageNumber != jsPage.pageNumber){
+          ret.push("Not equals page number Expected: " + expected[index].pageNumber + " Found: "+ jsPage.pageNumber);
         }
         if (expected[index].referenced != (jsPage.referenced)) {
-          ret.push("Not equals flag referenced " + jsPage.process + jsPage.pageNumber);
+          ret.push("Not equals flag referenced Expected: " + expected[index].referenced + " Found: "+ jsPage.referenced);
         }
         if (expected[index].modified != (jsPage.modified)) {
-          ret.push("Not equals flag modified " + jsPage.process + jsPage.pageNumber);
+          ret.push("Not equals flag modified Expected: " + expected[index].modified + " Found: "+ jsPage.modified);
         }
         if (expected[index].finished != (jsPage.finished)) {
-          ret.push("Not equals flag finished " + jsPage.process + jsPage.pageNumber);
+          ret.push("Not equals flag finished Expected: " + expected[index].finished + " Found: "+ jsPage.finished);
         }
       });
       verifyAndAnnounceErrors(ret);
       return ret;
     }
-
-    // function reqFactory(string) {
-    //
-    //   var req = {};
-    //   req.process = string[0];
-    //
-    //   if (string[1] == "F") {
-    //     req.pageNumber = 0;
-    //     req.mode = "finish";
-    //   } else {
-    //     req.pageNumber = string[1];
-    //     switch (string[2]) {
-    //       case "R":
-    //         req.mode = "read";
-    //         break;
-    //       case "M":
-    //         req.mode = "write";
-    //         break;
-    //       default:
-    //         req.mode = "read";
-    //     }
-    //   }
-    //   return req;
-    // };
-    //
-    // req1 = reqFactory("A1R");
-    // req2 = reqFactory("B2R");
-    // req3 = reqFactory("C1R");
-    // req4 = reqFactory("A1M");
-    // req5 = reqFactory("B3R");
-    // req6 = reqFactory("C1M");
-    // req7 = reqFactory("C4R");
-    // req8 = reqFactory("C5R");
-    // req9 = reqFactory("B4M");
 
     req1 = new Requirement({ 'process': 'A', 'pageNumber': 1, 'mode' : 'read' });
     req2 = new Requirement({ 'process': 'B', 'pageNumber': 2, 'mode' : 'read' });
@@ -140,58 +106,58 @@ module.exports = function() {
       initializeSams(3, requirements);
       var instants = sams.run();
 
-      // it('#Analizando instante 0', function () {
-      //   expected = [createPageExpected(page1, true, true)];
-      //   assert.equal([], comparingInstant(instants[0].frames, expected));
-      //   // assert.deepEqual(instants[0].frames, expected);
-      //   assert.equal(true, instants[1].pageFault);
-      // });
-      //
-      // it('#Analizando instante 2', function () {
-      //   expected = [createPageExpected(page1),
-      //               createPageExpected(page2),
-      //               createPageExpected(page3, true, true)
-      //               ];
-      //   assert.equal([], comparingInstant(instants[2].frames, expected));
-      //   // assert.deepEqual(instants[2].frames, expected);
-      //   assert.equal(true, instants[2].pageFault);
-      //
-      // });
-      //
-      // it('#Analizando instante 3', function () {
-      //
-      //   expected = [createPageExpected(page4, true, false, true, true),
-      //                 createPageExpected(page2),
-      //                 createPageExpected(page3),
-      //               ];
-      //   assert.equal([], comparingInstant(instants[3].frames, expected));
-      //   // assert.deepEqual(instants[3].frames, expected);
-      //   assert.equal(false, instants[3].pageFault);
-      // });
-      //
-      // it('#Analizando instante 5', function () {
-      //
-      //   expected = [createPageExpected(page1, false, false, true, true),
-      //               createPageExpected(page5),
-      //               createPageExpected(page6, true, false, true, true),
-      //               ];
-      //   assert.equal([], comparingInstant(instants[5].frames, expected));
-      //   // assert.deepEqual(instants[5].frames, expected);
-      //   assert.equal(false, instants[5].pageFault);
-      // });
-      //
-      // it('#Analizando instante 7', function () {
-      //
-      //   expected = [createPageExpected(page7, true, true),
-      //               createPageExpected(page5),
-      //               createPageExpected(page6, false, false, false, true),
-      //               ];
-      //   assert.equal([], comparingInstant(instants[7].frames, expected));
-      //   // assert.deepEqual(instants[7].frames, expected);
-      //   assert.equal(true, instants[7].pageFault);
-      // });
+      it('#Analizando instante 0', function () {
+        expected = [createPageExpected(page1, true, true)];
+        assert.deepEqual([], comparingInstant(instants[0].frames, expected));
+        // assert.deepEqual(instants[0].frames, expected);
+        assert.equal(true, instants[1].pageFault);
+      });
+
+      it('#Analizando instante 2', function () {
+        expected = [createPageExpected(page1),
+                    createPageExpected(page2),
+                    createPageExpected(page3, true, true)
+                    ];
+        assert.deepEqual([], comparingInstant(instants[2].frames, expected));
+        // assert.deepEqual(instants[2].frames, expected);
+        assert.equal(true, instants[2].pageFault);
+
+      });
+
+      it('#Analizando instante 3', function () {
+
+        expected = [createPageExpected(page4, true, false, true, true),
+                      createPageExpected(page2),
+                      createPageExpected(page3),
+                    ];
+        assert.deepEqual([], comparingInstant(instants[3].frames, expected));
+        // assert.deepEqual(instants[3].frames, expected);
+        assert.equal(false, instants[3].pageFault);
+      });
+
+      it('#Analizando instante 5', function () {
+
+        expected = [createPageExpected(page1, false, false, true, true),
+                    createPageExpected(page5),
+                    createPageExpected(page6, true, false, true, true),
+                    ];
+        assert.deepEqual([], comparingInstant(instants[5].frames, expected));
+        // assert.deepEqual(instants[5].frames, expected);
+        assert.equal(false, instants[5].pageFault);
+      });
+
+      it('#Analizando instante 7', function () {
+
+        expected = [createPageExpected(page7, true, true),
+                    createPageExpected(page5),
+                    createPageExpected(page6, false, false, false, true),
+                    ];
+        assert.deepEqual([], comparingInstant(instants[7].frames, expected));
+        // assert.deepEqual(instants[7].frames, expected);
+        assert.equal(true, instants[7].pageFault);
+      });
     });
-/*
+
 //       req | required, pf, ref, mod, finish, reservedForPageBuffering (false)
     describe('Asignacion dinámica - Reemplazo global - DA', function () {
 
@@ -204,7 +170,7 @@ module.exports = function() {
                     createPageExpected(page4, true, false, true, true),
                     createPageExpected(page2),
                     ];
-        assert.equal([], comparingInstant(instants[2].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[2].frames, expected));
         // assert.deepEqual(instants[2].frames, expected);
         assert.equal(false, instants[2].pageFault);
       });
@@ -215,7 +181,7 @@ module.exports = function() {
                     createPageExpected(page4, false, false, true, true),
                     createPageExpected(page6, true, true, true, true),
                     ];
-        assert.equal([], comparingInstant(instants[3].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[3].frames, expected));
         // assert.deepEqual(instants[3].frames, expected);
         assert.equal(true, instants[3].pageFault);
       });
@@ -226,7 +192,7 @@ module.exports = function() {
                     pageDA,
                     createPageExpected(page6, false, false, false, true),
                     ];
-        assert.equal([], comparingInstant(instants[4].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[4].frames, expected));
         // assert.deepEqual(instants[4].frames, expected);
         assert.equal(true, instants[4].pageFault);
       });
@@ -242,7 +208,7 @@ module.exports = function() {
         // console.log(instants[5].frames);
         // console.log("\n" + "EX");
         // console.log(expected);
-        assert.equal([], comparingInstant(instants[5].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[5].frames, expected));
         // assert.deepEqual(instants[5].frames, expected);
         assert.equal(true, instants[5].pageFault);
       });
@@ -258,7 +224,7 @@ module.exports = function() {
       it('#Analizando instante 0', function () {
         expected = [createPageExpected(page2, true, true)];
 
-        assert.equal([], comparingInstant(instants[0].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[0].frames, expected));
         assert.equal(true, instants[0].pageFault);
       });
 
@@ -266,7 +232,7 @@ module.exports = function() {
         expected = [createPageExpected(page2),
                     createPageExpected(page3, true, true)];
 
-        assert.equal([], comparingInstant(instants[1].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[1].frames, expected));
         assert.equal(true, instants[1].pageFault);
       });
 
@@ -275,7 +241,7 @@ module.exports = function() {
                     createPageExpected(page3),
                     createPageExpected(page9)];
 
-      assert.equal([], comparingInstant(instants[3].frames, expected));
+      assert.deepEqual([], comparingInstant(instants[3].frames, expected));
         assert.equal(false, instants[3].pageFault);
       });
 
@@ -284,7 +250,7 @@ module.exports = function() {
                     createPageExpected(page3),
                     createPageExpected(page9, true, true, false, true)];
 
-        assert.equal([], comparingInstant(instants[4].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[4].frames, expected));
         assert.equal(true, instants[4].pageFault);
       });
 
@@ -292,7 +258,7 @@ module.exports = function() {
         expected = [createPageExpected(page2, false, false, true),
                     createPageExpected(page6, true, false, true, true),
                     createPageExpected(page9, false, false, false, true)];
-        assert.equal([], comparingInstant(instants[5].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[5].frames, expected));
         assert.equal(false, instants[5].pageFault);
       });
 
@@ -301,7 +267,7 @@ module.exports = function() {
                     createPageExpected(page8, true, true),
                     createPageExpected(page9, false, false, false, true),
                     createPageExpected(page7)];
-        assert.equal([], comparingInstant(instants[7].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[7].frames, expected));
         assert.equal(true, instants[7].pageFault);
       });
     });
@@ -318,7 +284,7 @@ module.exports = function() {
                     createPageExpected(page2, false, false, true),
                     createPageExpected(page3),
                     createPageExpected(page9, true, true, false, true)];
-        assert.equal([], comparingInstant(instants[4].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[4].frames, expected));
         assert.equal(true, instants[4].pageFault);
       });
 
@@ -329,7 +295,7 @@ module.exports = function() {
                     createPageExpected(page9, false, false, true),
                     createPageExpected(page7, false, false, false)];
 
-        assert.equal([], comparingInstant(instants[8].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[8].frames, expected));
         assert.equal(true, instants[8].pageFault);
       });
 
@@ -341,10 +307,10 @@ module.exports = function() {
                     createPageExpected(page7, false, false, false)];
         // console.log(instants[9].frames);
         // console.log(expected);
-        assert.equal([], comparingInstant(instants[9].frames, expected));
+        assert.deepEqual([], comparingInstant(instants[9].frames, expected));
         assert.equal(true, instants[9].pageFault);
       });
     });
-*/
+
   });
 }
