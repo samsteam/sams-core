@@ -14,8 +14,8 @@ module.exports = function() {
     var initializeSams = function (requirements, memorySize, secondChance, asyncFlush) {
       var sams = new Scheduler();
       sams.setAlgorithm("fifo");
-      sams.setSecondChanceReplacementPolicy(secondChance);
-      sams.setAsyncFlushReplacementPolicy(asyncFlush);
+      sams.setLocalReplacementPolicy(secondChance);
+      sams.setPageBufferingFilter(asyncFlush);
       sams.setMemorySize(memorySize);
       sams.addRequirements(requirements);
       return sams;
