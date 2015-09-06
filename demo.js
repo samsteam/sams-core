@@ -51,7 +51,7 @@ function ff(string) {
   frame.referenced = string.includes('e');
   frame.modified = string.includes('m');
   frame.finished = string.includes('f');
-  //frame.reservedForPageBuffering = string.includes('b');
+  frame.reservedForPageBuffering = false;
 
   return frame;
 }
