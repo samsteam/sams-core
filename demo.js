@@ -57,7 +57,6 @@ function ff(string) {
 }
 
 function pb() {
-  string = string.toLowerCase();
   var frame = {};
   frame.process = "";
   frame.pageNumber = 0;
@@ -121,7 +120,7 @@ var frame = ff("a1r");
 var frame2 = ff("a1mr");
 var frame3= ff("")
 var pageBuffering = pb();
-var victim = vf();
+var victim = vf("a1");
 
 var sams = new Scheduler();
 sams.setAlgorithm("lru");
