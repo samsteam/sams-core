@@ -14,14 +14,14 @@ cocktail.mix({
 
 	constructor: function() {
 		this._victims = undefined;
-		this._finalized = new Queue();
+		// this._finalized = new Queue();
 		this._requirements = [];
 		this._filters = [];
 	},
 
 	initialize: function(requirements) {
 	  this._requirements = requirements;
-		this._finalized = new Queue();
+		// this._finalized = new Queue();
 	},
 
 	getVictimsStructure: function() {
@@ -30,18 +30,21 @@ cocktail.mix({
 
 	victimFor: function(requirement) {
 
-		//If some process has finalized, use it's frames.
-		if (this._finalized.size() !== 0) {
-			this.log("---Seems like I have some finished processes.---");
-			var result = {};
-			result.frame = this._finalized.first();
-			result.page = result.frame;
-			this._victims.remove(result.frame);
-			this.log("The selected victim is: " + result.frame + " from a finished process.\n");
-			return result;
-		}
+		//NOTE: changed the way finished proceses are handled.
+		//			now, they are completly erased from the algorithm's view.
 
-		//Else search for a victim.
+		// //If some process has finalized, use it's frames.
+		// if (this._finalized.size() !== 0) {
+		// 	this.log("---Seems like I have some finished processes.---");
+		// 	var result = {};
+		// 	result.frame = this._finalized.first();
+		// 	result.page = result.frame;
+		// 	this._victims.remove(result.frame);
+		// 	this.log("The selected victim is: " + result.frame + " from a finished process.\n");
+		// 	return result;
+		// }
+		//
+		// //Else search for a victim.
 		this.log("---Started applying replacement filters.---");
 		var filteredVictims = this._victims.clone();
 
@@ -81,19 +84,37 @@ cocktail.mix({
 	update: function(requirement) {
 		if (requirement.getMode() === "finish") {
 
+			//NOTE: changed the way finished proceses are handled.
+			//			now, they are completly erased from the algorithm's view.
+
+			//	Use a clone of victims so we don't remove elements from
+			//	the same collection we are iterating.
 			var context = {
 				requirement: requirement,
-				finalized: this._finalized
+				victims: this._victims.clone()
 			};
 
-			this.log("Adding all the frames of process " + requirement.getProcess() + " to the finalized Queue.")
-			this._victims.forEach(function(page, index, victims) {
+			this.log("Removing all the frames of process " + requirement.getProcess() + " from the Victim's Queue.")
+			this._victims.forEach(function(page, index) {
 			  if (this.requirement.getProcess() === page.getProcess()) {
-					victims.pageOf(page).setFinished(true);
-			  	this.finalized.add(page.clone());
+					this.victims.remove(page);
 			  }
 			}, context);
 
+			this._victims = context.victims;
+
+			// var context = {
+			// 	requirement: requirement,
+			// 	finalized: this._finalized
+			// };
+
+			// this.log("Adding all the frames of process " + requirement.getProcess() + " to the finalized Queue.")
+			// this._victims.forEach(function(page, index, victims) {
+			//   if (this.requirement.getProcess() === page.getProcess()) {
+			// 		victims.pageOf(page).setFinished(true);
+			//   	this.finalized.add(page.clone());
+			//   }
+			// }, context);
 			return;
 		}
 	},

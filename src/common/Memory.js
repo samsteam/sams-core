@@ -56,10 +56,13 @@ cocktail.mix({
    *  Return whether the memory is full or not.
    */
   isFull: function() {
+    /*
     if (this._used === this._size) {
       return true;
     }
     return false;
+    */
+    return this.getFreeFrame() === -1;
   },
 
   /*
@@ -68,10 +71,14 @@ cocktail.mix({
    *  Otherwise return -1.
    */
   getFreeFrame: function() {
-    //Ensure there is space before searching for it.
-    if(this.isFull()) {
-      return -1;
-    }
+    //NOTE: changed the way finished proceses are handled.
+		//			now, they are completly erased from the algorithm's view.
+    //      Now it's memory's responsibility to check for finished proceses.
+
+    // //Ensure there is space before searching for it.
+    // if(this.isFull()) {
+    //   return -1;
+    // }
 
     //Move all initializations out of the loop.
     var i = 0;
@@ -79,10 +86,11 @@ cocktail.mix({
     var length = this._size;
 
 		for (; i < length; i++) {
-			if (array[i] == undefined) {
+			if (array[i] === undefined || array[i].isFinished()) {
 				return i;
 			}
 		}
+    return -1;
 	},
 
   /*

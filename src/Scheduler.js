@@ -281,7 +281,7 @@ cocktail.mix({
           page.setFinished(true);
         }
       }, requirement);
-      
+
     } else {
       //  Assume that the requirement is already in memory.
       var page = this._memory.at(this._memory.getFrameOf(requirement));
@@ -347,8 +347,8 @@ cocktail.mix({
          pageFault = true;
          var frame;
          if(this._assignmentFiltersAproves(requirement)) {
-            this.log("---Free frame available.---\n");
             frame = this._memory.getFreeFrame();
+            this.log("---Free frame available: " + frame + "---\n");
          } else {
            this.log("---Searching for a victim muajajaja!---\n");
            victim = this._algorithm.victimFor(requirement);
