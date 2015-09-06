@@ -1,21 +1,25 @@
 var Scheduler  = require('./src/scheduler');
 
-function reqFactory(string) {
 
+//HACK: string like "a1r"
+//      or also     "bf"
+//  First char is name.
+//  Second char is page nummber or finished flag.
+//  In case of a page number, a mode is required.
+function rf(string) {
+  string = string.toLowerCase();
   var req = {};
-
   req.process = string[0];
-
-  if (string[1] == "F") {
+  if (string[1] == "f") {
     req.pageNumber = 0;
     req.mode = "finish";
   } else {
     req.pageNumber = string[1];
     switch (string[2]) {
-      case "R":
+      case "r":
         req.mode = "read";
         break;
-      case "M":
+      case "m":
         req.mode = "write";
         break;
       default:
@@ -25,33 +29,99 @@ function reqFactory(string) {
   return req;
 };
 
-var A1R = reqFactory("A1R");
+//HACK: string like "a1premfb"
+//  First char is name.
+//  Second is page number.
+//  Next chars are all optional with this meaning:
+//  p: Pagefault.
+//  r: Required.
+//  e: rEferenced.
+//  m: Modified.
+//  f: Finished.
+//  b: reservedforpageBuffering.
 
-var A1M = reqFactory("A1M");
+function ff(string) {
+  string = string.toLowerCase();
+  var frame = {};
+  frame.process = string[0];
+  frame.pageNumber = string[1];
+  string = string.slice(2, string.length);
+  frame.pageFault = string.includes('p');
+  frame.required = string.includes('r');
+  frame.referenced = string.includes('e');
+  frame.modified = string.includes('m');
+  frame.finished = string.includes('f');
+  //frame.reservedForPageBuffering = string.includes('b');
 
-var A2R = reqFactory("A2R");
+  return frame;
+}
 
-var A3R = reqFactory("A3R");
+function pb() {
+  string = string.toLowerCase();
+  var frame = {};
+  frame.process = "";
+  frame.pageNumber = 0;
+  frame.pageFault = false;
+  frame.required = false;
+  frame.referenced = false;
+  frame.modified = false;
+  frame.finished = false;
+  frame.reservedForPageBuffering = true;
+}
 
-var AF = reqFactory("AF");
+//HACK: string like "a1emf"
+//  First char is name.
+//  Second is page number.
+//  Next chars are all optional with this meaning:
+//  e: rEferenced.
+//  m: Modified.
+//  f: Finished.
+function vf(string) {
+  string = string.toLowerCase();
+  var frame = {};
+  frame.process = string[0];
+  frame.pageNumber = string[1];
+  string = string.slice(2, string.length);
+  frame.referenced = string.includes('e');
+  frame.modified = string.includes('m');
+  frame.finished = string.includes('f');
 
-var B1R = reqFactory("B1R");
+  return frame;
+}
 
-var B2R = reqFactory("B2R");
+var A1R = rf("A1R");
 
-var B3R = reqFactory("B3R");
+var A1M = rf("A1M");
 
-var BF = reqFactory("BF");
+var A2R = rf("A2R");
 
-var C1R = reqFactory("C1R");
+var A3R = rf("A3R");
 
-var C2R = reqFactory("C2R");
+var AF = rf("AF");
 
-var C3R = reqFactory("C3R");
+var B1R = rf("B1R");
 
-var CF = reqFactory("CF");
+var B2R = rf("B2R");
 
-var reqs = [B1R, A1R, A2R, B2R, AF, C1R, C2R, C3R];
+var B3R = rf("B3R");
+
+var BF = rf("BF");
+
+var C1R = rf("C1R");
+
+var C2R = rf("C2R");
+
+var C3R = rf("C3R");
+
+var CF = rf("CF");
+
+var reqs = [A1R, B1R, C1R, A2R, A1R, C1R, A2R, C2R];
+
+var frame = ff("a1r");
+var frame2 = ff("a1mr");
+var frame3= ff("")
+var pageBuffering = pb();
+var victim = vf();
 
 var sams = new Scheduler();
 sams.setAlgorithm("lru");
