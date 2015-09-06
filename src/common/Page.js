@@ -14,6 +14,7 @@ var Requirement = require('./Requirement');
  */
 var Configurable = require('cocktail-trait-configurable');
 
+
 cocktail.mix({
 	//Define this file as a single class module exportable.
   '@exports' : module,
@@ -33,6 +34,23 @@ cocktail.mix({
     modified: false,
     finished: false,
     reservedForPageBuffering: false
+  },
+
+  '@static': {
+    empty: function () {
+      var Page = require('./Page');
+  		return new Page({
+        'process': '',
+        'pageNumber': 0,
+        'mode': '',
+        'pageFault': false,
+        'required': false,
+        'referenced': false,
+        'modified':  false,
+        'finished': false,
+        'reservedForPageBuffering': false
+      });
+    }
   },
 
 	/*
