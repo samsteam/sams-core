@@ -44,11 +44,11 @@ ff: function (string) {
   frame.process = string[0];
   frame.pageNumber = string[1];
   string = string.slice(2, string.length);
-  frame.pageFault = string.includes('p');
-  frame.required = string.includes('r');
-  frame.referenced = string.includes('e');
-  frame.modified = string.includes('m');
-  frame.finished = string.includes('f');
+  frame.pageFault = string.match(/p/) === null ? false : true;
+  frame.required = string.match(/r/) === null ? false : true;
+  frame.referenced = string.match(/e/) === null ? false : true;
+  frame.modified = string.match(/m/) === null ? false : true;
+  frame.finished = string.match(/f/) === null ? false : true;
   frame.reservedForPageBuffering = false;
 
   return frame;
@@ -80,9 +80,9 @@ vf: function (string) {
   frame.process = string[0];
   frame.pageNumber = string[1];
   string = string.slice(2, string.length);
-  frame.referenced = string.includes('e');
-  frame.modified = string.includes('m');
-  frame.finished = string.includes('f');
+  frame.referenced = string.match(/e/);
+  frame.modified = string.match(/m/);
+  frame.finished = string.match(/f/);
 
   return frame;
 }
