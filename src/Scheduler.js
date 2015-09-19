@@ -2,6 +2,8 @@ var cocktail = require('cocktail');
 var Logger = require('./annotations/Logger');
 var Fifo = require('./algorithms/Fifo');
 var Lru = require('./algorithms/Lru');
+var Nru = require('./algorithms/Nru');
+var Optimal = require('./algorithms/Optimal');
 var Memory = require('./common/Memory');
 var Requirement = require('./common/Requirement');
 var FixedEvenAssignmentPolicy = require('./filters/assignment_filters/FixedEvenAssignmentPolicy');
@@ -35,6 +37,13 @@ cocktail.mix({
 
       if (this._algorithm instanceof Fifo)
         return 'fifo';
+
+      if (this._algorithm instanceof Optimal)
+        return 'optimal';
+
+      if (this._algorithm instanceof Nru) {
+        return 'nru';
+      }
     }
 
     return undefined;
@@ -72,6 +81,7 @@ cocktail.mix({
     if (!algorithm) {
       return;
     }
+    algorithm = algorithm.toLowerCase();
     switch (algorithm) {
       case 'fifo':
         this.clearPolicies();
@@ -80,6 +90,13 @@ cocktail.mix({
       case 'lru':
         this.clearPolicies();
         this._algorithm = new Lru();
+        break;
+      case 'nru':
+        this.clearPolicies();
+        this._algorithm = new Nru();
+      case 'optimal':
+        this.clearPolicies();
+        this._algorithm = new Optimal();
         break;
       default:
         return;
@@ -115,7 +132,7 @@ cocktail.mix({
       this._filters[0] = filter;
       this._algorithm.setPageBufferingFilter(true, filter);
     } else {
-      delete this._assignmentPolicies[0];
+      delete this._filters[0];
       this._algorithm.setPageBufferingFilter(false);
     }
 	},
@@ -129,7 +146,7 @@ cocktail.mix({
       this._filters[1] = filter;
       this._algorithm.setSecondChanceFilter(true, filter);
     } else {
-      delete this._assignmentPolicies[1];
+      delete this._fiters[1];
       this._algorithm.setSecondChanceFilter(false);
     }
   },
@@ -310,7 +327,7 @@ cocktail.mix({
   },
 
   _clearTemporalFlags: function() {
-    this._memory.forEach(function(page) {
+    this._memory.forEach(function(page, index) {
       page.clearRequired();
       page.clearPageFault();
     }, this);
