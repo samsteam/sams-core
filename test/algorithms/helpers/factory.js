@@ -12,7 +12,7 @@ rf: function (string) {
     req.pageNumber = 0;
     req.mode = "finish";
   } else {
-    req.pageNumber = string[1];
+    req.pageNumber = parseInt(string[1]);
     switch (string[2]) {
       case "r":
         req.mode = "read";
@@ -25,7 +25,7 @@ rf: function (string) {
     }
   }
   return req;
-  },
+},
 
 //HACK: string like "a1premfb"
 //  First char is name.
@@ -39,23 +39,28 @@ rf: function (string) {
 //  b: reservedforpageBuffering.
 
 ff: function (string) {
-  string = string.toLowerCase();
-  var frame = {};
-  frame.process = string[0];
-  frame.pageNumber = string[1];
-  string = string.slice(2, string.length);
-  frame.pageFault = string.match(/p/) === null ? false : true;
-  frame.required = string.match(/r/) === null ? false : true;
-  frame.referenced = string.match(/e/) === null ? false : true;
-  frame.modified = string.match(/m/) === null ? false : true;
-  frame.finished = string.match(/f/) === null ? false : true;
-  frame.reservedForPageBuffering = false;
+  if (string === "pb") {
+    return this.pb();
+  } else if (string === "fin") {
+    return this.fin();
+  } else {
+    string = string.toLowerCase();
+    var frame = {};
+    frame.process = string[0];
+    frame.pageNumber = parseInt(string[1]);
+    string = string.slice(2, string.length);
+    frame.pageFault = string.match(/p/) === null ? false : true;
+    frame.required = string.match(/r/) === null ? false : true;
+    frame.referenced = string.match(/e/) === null ? false : true;
+    frame.modified = string.match(/m/) === null ? false : true;
+    frame.finished = string.match(/f/) === null ? false : true;
+    frame.reservedForPageBuffering = false;
 
-  return frame;
+    return frame;
+  }
 },
 
 pb: function () {
-  string = string.toLowerCase();
   var frame = {};
   frame.process = "";
   frame.pageNumber = 0;
@@ -65,6 +70,20 @@ pb: function () {
   frame.modified = false;
   frame.finished = false;
   frame.reservedForPageBuffering = true;
+  return frame;
+},
+
+fin: function () {
+  var frame = {};
+  frame.process = "";
+  frame.pageNumber = 0;
+  frame.pageFault = false;
+  frame.required = false;
+  frame.referenced = false;
+  frame.modified = false;
+  frame.finished = true;
+  frame.reservedForPageBuffering = false;
+  return frame;
 },
 
 //HACK: string like "a1emf"
@@ -78,12 +97,30 @@ vf: function (string) {
   string = string.toLowerCase();
   var frame = {};
   frame.process = string[0];
-  frame.pageNumber = string[1];
+  frame.pageNumber = parseInt(string[1]);
   string = string.slice(2, string.length);
-  frame.referenced = string.match(/e/);
-  frame.modified = string.match(/m/);
-  frame.finished = string.match(/f/);
-
+  frame.referenced = string.match(/e/) === null ? false : true;
+  frame.modified = string.match(/m/) === null ? false : true;
+  // frame.finished = string.match(/f/);
   return frame;
+},
+
+make: function(requirement, frames, pageFault, victim, potentialVictims) {
+  var resultFrames = [];
+  var i;
+  for (i = 0; i < frames.length; i++) {
+    resultFrames.push(this.ff(frames[i]));
+  }
+  var resultPotentialVictims = [];
+  for (i = 0; i < potentialVictims.length; i++) {
+    resultPotentialVictims.push(this.vf(potentialVictims[i]));
+  }
+  return {
+    "requirement": this.rf(requirement),
+    "frames": resultFrames,
+    "pageFault": pageFault,
+    "victim": victim === undefined ? undefined : this.vf(victim),
+    "potentialVictims": resultPotentialVictims
+  }
 }
 };
