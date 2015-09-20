@@ -114,9 +114,9 @@ var C3R = rf("C3R");
 
 var CF = rf("CF");
 
-var reqs = [A1R, B1R, C1R, A2R, A1R, C1R, A2R, C2R];
+var reqs = [A1M, B1R, C1R, A2R, A1R, C1R, A2R, C2R];
 
-console.log(Page.empty());
+//console.log(Page.empty());
 
 var frame = ff("a1r");
 var frame2 = ff("a1mr");
@@ -125,7 +125,7 @@ var pageBuffering = pb();
 var victim = vf("a1");
 
 var sams = new Scheduler();
-sams.setAlgorithm("lru");
+sams.setAlgorithm("Optimal");
 sams.setMemorySize(4);
 // sams.setSecondChanceFilter(true);
 // sams.setLocalReplacementPolicy(true);
