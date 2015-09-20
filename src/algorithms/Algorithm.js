@@ -14,9 +14,9 @@ cocktail.mix({
 
 	constructor: function() {
 		this._victims = undefined;
-		// this._finalized = new Queue();
 		this._requirements = [];
 		this._filters = [];
+		// this._finalized = new Queue();
 	},
 
 	initialize: function(requirements) {
@@ -89,19 +89,6 @@ cocktail.mix({
 
 			//	Use a clone of victims so we don't remove elements from
 			//	the same collection we are iterating.
-			var context = {
-				requirement: requirement,
-				victims: this._victims.clone()
-			};
-
-			this.log("Removing all the frames of process " + requirement.getProcess() + " from the Victim's Queue.")
-			this._victims.forEach(function(page, index) {
-			  if (this.requirement.getProcess() === page.getProcess()) {
-					this.victims.remove(page);
-			  }
-			}, context);
-
-			this._victims = context.victims;
 
 			// var context = {
 			// 	requirement: requirement,
@@ -115,6 +102,21 @@ cocktail.mix({
 			//   	this.finalized.add(page.clone());
 			//   }
 			// }, context);
+
+			var context = {
+				requirement: requirement,
+				victims: this._victims.clone()
+			};
+
+			this.log("Removing all the frames of process " + requirement.getProcess() + " from the Victim's Queue.")
+			this._victims.forEach(function(page, index) {
+			  if (this.requirement.getProcess() === page.getProcess()) {
+					this.victims.remove(page);
+			  }
+			}, context);
+
+			this._victims = context.victims;
+			
 			return;
 		}
 	},
