@@ -30,32 +30,32 @@ module.exports = function() {
       }
     }
 
-    // var deleteReferencedAttributeFromInstant = function (instant) {
-    //   instant["victim"] && delete instant["victim"].referenced;
-    //   var j;
-    //   for (j = 0; j < instant["frames"].length; j++) {
-    //     delete instant["frames"][j].referenced;
-    //   }
-    //   for (j = 0; j < instant["potentialVictims"].length; j++) {
-    //     delete instant["potentialVictims"][j].referenced;
-    //   }
-    // }
-    //
-    // var cleanNonUsedFrames = function (frames) {
-    //   var j;
-    //   for (j = 0; j < frames.length; j++) {
-    //     if (frames[j]["finished"]) {
-    //       delete frames[j]["process"];
-    //       delete frames[j]["pageNumber"];
-    //       delete frames[j]["referenced"];
-    //       delete frames[j]["modified"];
-    //       delete frames[j]["pageFault"];
-    //       delete frames[j]["required"];
-    //       delete frames[j]["reservedForPageBuffering"];
-    //     }
-    //   }
-    // }
-    //
+    var deleteReferencedAttributeFromInstant = function (instant) {
+      instant["victim"] && delete instant["victim"].referenced;
+      var j;
+      for (j = 0; j < instant["frames"].length; j++) {
+        delete instant["frames"][j].referenced;
+      }
+      for (j = 0; j < instant["potentialVictims"].length; j++) {
+        delete instant["potentialVictims"][j].referenced;
+      }
+    }
+
+    var cleanNonUsedFrames = function (frames) {
+      var j;
+      for (j = 0; j < frames.length; j++) {
+        if (frames[j]["finished"]) {
+          delete frames[j]["process"];
+          delete frames[j]["pageNumber"];
+          delete frames[j]["referenced"];
+          delete frames[j]["modified"];
+          delete frames[j]["pageFault"];
+          delete frames[j]["required"];
+          delete frames[j]["reservedForPageBuffering"];
+        }
+      }
+    }
+
     // var cleanPageBufferingReservedFrame = function (frames) {
     //   var j;
     //   for (j = 0; j < frames.length; j++) {
@@ -88,7 +88,8 @@ module.exports = function() {
       var i;
       for (i = 0; i < instants.length; i++) {
         deleteFinishedAttributeFromInstant(instants[i]);
-        // cleanNonUsedFrames(instants[i]["frames"]);
+        deleteReferencedAttributeFromInstant(instants[i]);
+        cleanNonUsedFrames(instants[i]["frames"]);
       }
       return instants;
     }

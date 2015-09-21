@@ -51,7 +51,7 @@ ff: function (string) {
     string = string.slice(2, string.length);
     frame.pageFault = string.match(/p/) === null ? false : true;
     frame.required = string.match(/r/) === null ? false : true;
-    frame.referenced = string.match(/e/) === null ? false : true;
+    // frame.referenced = string.match(/e/) === null ? false : true;
     frame.modified = string.match(/m/) === null ? false : true;
     frame.finished = string.match(/f/) === null ? false : true;
     frame.reservedForPageBuffering = false;
@@ -66,7 +66,7 @@ pb: function () {
   frame.pageNumber = 0;
   frame.pageFault = false;
   frame.required = false;
-  frame.referenced = false;
+  // frame.referenced = false;
   frame.modified = false;
   frame.finished = false;
   frame.reservedForPageBuffering = true;
@@ -75,14 +75,14 @@ pb: function () {
 
 fin: function () {
   var frame = {};
-  frame.process = "";
-  frame.pageNumber = 0;
-  frame.pageFault = false;
-  frame.required = false;
-  frame.referenced = false;
-  frame.modified = false;
+  // frame.process = "";
+  // frame.pageNumber = 0;
+  // frame.pageFault = false;
+  // frame.required = false;
+  // frame.referenced = false;
+  // frame.modified = false;
   frame.finished = true;
-  frame.reservedForPageBuffering = false;
+  // frame.reservedForPageBuffering = false;
   return frame;
 },
 
@@ -99,7 +99,7 @@ vf: function (string) {
   frame.process = string[0];
   frame.pageNumber = parseInt(string[1]);
   string = string.slice(2, string.length);
-  frame.referenced = string.match(/e/) === null ? false : true;
+  // frame.referenced = string.match(/e/) === null ? false : true;
   frame.modified = string.match(/m/) === null ? false : true;
   // frame.finished = string.match(/f/);
   return frame;

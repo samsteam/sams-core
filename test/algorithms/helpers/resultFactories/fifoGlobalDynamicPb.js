@@ -92,7 +92,7 @@ module.exports = {
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "a2m";
-    frames = ["b5", "pb", "a7", "c5", "a2rm", "b1", "b2m"];
+    frames = ["b5", "pb", "a7", "c5", "a2prm", "b1", "b2m"];
     pageFault = true;
     victim = "c3";
     potentialVictims = ["b1", "b2m", "b5", "a7", "c5", "a2m"];

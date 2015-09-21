@@ -6,4 +6,5 @@ require('./common/PageTest')();
 require('./common/MemoryTest')();
 */
 // require('./algorithms/LruTest')();
-require('./algorithms/FifoTest')();
+// require('./algorithms/FifoTest')();
+require('./algorithms/OptimalTest')();
