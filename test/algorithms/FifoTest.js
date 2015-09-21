@@ -7,7 +7,7 @@ var Behavior = require('../../src/algorithms/Lru.js');
 var Page = require('../../src/common/Page.js');
 var Requirement = require('../../src/common/Requirement.js');
 var Scheduler  = require('../../src/Scheduler');
-var FactoryFifoGlobalDynamicPb = require('./helpers/resultFactories/fifoGlobalDynamicPb')
+var FactoryFifoGlobalDynamicPb = require('./helpers/resultFactories/fifoGlobalDynamicPb');
 
 module.exports = function() {
 
