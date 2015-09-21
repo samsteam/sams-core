@@ -116,7 +116,7 @@ cocktail.mix({
 			}, context);
 
 			this._victims = context.victims;
-			
+
 			return;
 		}
 	},
@@ -128,7 +128,7 @@ cocktail.mix({
 	setLocalReplacementPolicy: function(enabled) {
 		if (enabled) {
 	  	this._filters[0] = new LocalReplacementPolicy();
-		} else {
+		} else if(this._filters[0]){
 			delete this._filters[0];
 		}
 	},
@@ -136,7 +136,7 @@ cocktail.mix({
 	setPageBufferingFilter: function(enabled, filter) {
 		if (enabled) {
 	  	this._filters[1] = filter;
-		} else {
+		} else if(this._filters[1]){
 			delete this._filters[1];
 		}
 	},
