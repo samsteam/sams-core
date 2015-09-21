@@ -125,7 +125,7 @@ var pageBuffering = pb();
 var victim = vf("a1");
 
 var sams = new Scheduler();
-sams.setAlgorithm("Optimal");
+sams.setAlgorithm("fifo");
 sams.setMemorySize(4);
 // sams.setSecondChanceFilter(true);
 // sams.setLocalReplacementPolicy(true);
