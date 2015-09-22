@@ -44,18 +44,16 @@ cocktail.mix({
 
 		if (this._victims.contains(requirement)) {
 			this.addPage(requirement);
-			if (requirement.getMode() === "read") {
-	  		this._victims.pageOf(requirement).setReferenced(true);
-				this.log("Updated victim queue, referenced.");
-			}
-			if(requirement.getMode() === "write") {
-				this._victims.pageOf(requirement).setReferenced(true);
-				this._victims.pageOf(requirement).setModified(true);
-				this.log("Updated victim queue, modified & referenced.");
-			}
-			return;
+  		this._victims.pageOf(requirement).setReferenced(true);
+			this.log("Updated victim queue, referenced.");
+		} else {
+			this.addPage(requirement);
 		}
-		this.addPage(requirement);
+
+		if(requirement.getMode() === "write") {
+			this._victims.pageOf(requirement).setModified(true);
+			this.log("Updated victim queue, modified.");
+		}
 	},
 
 	//Just recycle the page.
