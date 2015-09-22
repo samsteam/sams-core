@@ -71,18 +71,19 @@ module.exports = function() {
     //   }
     // }
 
-    // var adaptInstantsGlobal2ndChance = function (instants) {
-    //   var i;
-    //   for (i = 0; i < instants.length; i++) {
-    //     // instants[i]["victim"] && delete instants[i]["victim"].finished;
-    //     // var j;
-    //     // for (j = 0; j < instants[i]["potentialVictims"].length; j++) {
-    //     //   delete instants[i]["potentialVictims"][j].finished;
-    //     // }
-    //     deleteFinishedAttributeFromInstant(instants[i]);
-    //   }
-    //   return instants;
-    // }
+    var adaptInstantsGlobal2ndChance = function (instants) {
+      var i;
+      for (i = 0; i < instants.length; i++) {
+        // instants[i]["victim"] && delete instants[i]["victim"].finished;
+        // var j;
+        // for (j = 0; j < instants[i]["potentialVictims"].length; j++) {
+        //   delete instants[i]["potentialVictims"][j].finished;
+        // }
+        deleteFinishedAttributeFromInstant(instants[i]);
+        cleanNonUsedFrames(instants[i]["frames"]);
+      }
+      return instants;
+    }
 
     var adaptInstantsGlobalPageBuffering = function (instants) {
       var i;
@@ -3501,11 +3502,10 @@ module.exports = function() {
 ],
   'pageFault': false,
   'victim': undefined
-}]
-;
+}];
 
       var obtainedInstants = sams.run();
-      // obtainedInstants = adaptInstantsGlobal2ndChance(obtainedInstants);
+      obtainedInstants = adaptInstantsGlobal2ndChance(obtainedInstants);
 
       it('#Amount of instants', function() {
         console.log(expectedInstants.length);
