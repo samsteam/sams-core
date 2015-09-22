@@ -1,3 +1,4 @@
+
 var assert = require("assert");
 require('it-each')();
 require('it-each')({ testPerIteration: true });
@@ -15,7 +16,7 @@ module.exports = function() {
     var initializeSams = function (requirements, memorySize, secondChance, asyncFlush) {
       var sams = new Scheduler();
       sams.setAlgorithm("fifo");
-      // sams.setLocalReplacementPolicy(secondChance);
+      sams.setSecondChanceFilter(secondChance);
       sams.setPageBufferingFilter(asyncFlush);
       sams.setMemorySize(memorySize);
       sams.addRequirements(requirements);
@@ -2925,14 +2926,7 @@ module.exports = function() {
     'finished': false,
     'reservedForPageBuffering': false
   },  {
-    'process': 'C',
-    'pageNumber': 1,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
     'process': 'B',
     'pageNumber': 8,
@@ -3345,14 +3339,7 @@ module.exports = function() {
     'finished': false,
     'reservedForPageBuffering': false
   },  {
-    'process': 'B',
-    'pageNumber': 3,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
     'process': 'A',
     'pageNumber': 1,
@@ -3363,14 +3350,7 @@ module.exports = function() {
     'finished': false,
     'reservedForPageBuffering': false
   },  {
-    'process': 'B',
-    'pageNumber': 1,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
     'process': 'A',
     'pageNumber': 7,
@@ -3381,14 +3361,7 @@ module.exports = function() {
     'finished': false,
     'reservedForPageBuffering': false
   },  {
-    'process': 'B',
-    'pageNumber': 8,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
     'process': 'A',
     'pageNumber': 9,
@@ -3433,73 +3406,22 @@ module.exports = function() {
   },
   frames: [
   {
-    'process': 'A',
-    'pageNumber': 4,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
-    'process': 'B',
-    'pageNumber': 3,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
-    'process': 'A',
-    'pageNumber': 1,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
-    'process': 'B',
-    'pageNumber': 1,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
-    'process': 'A',
-    'pageNumber': 7,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
-    'process': 'B',
-    'pageNumber': 8,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   },  {
-    'process': 'A',
-    'pageNumber': 9,
-    'referenced': false,
-    'modified': false,
-    'pageFault': false,
-    'required': false,
-    'finished': true,
-    'reservedForPageBuffering': false
+    'finished': true
   }
 ],
-  'potentialVictims': [
-
-],
+  'potentialVictims': [],
   'pageFault': false,
   'victim': undefined
 }];
