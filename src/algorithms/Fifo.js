@@ -42,15 +42,17 @@ cocktail.mix({
 			return;
 		}
 
-		this.addPage(requirement);
-		if (requirement.getMode() === "read") {
+		if (this._victims.contains(requirement)) {
+			this.addPage(requirement);
   		this._victims.pageOf(requirement).setReferenced(true);
 			this.log("Updated victim queue, referenced.");
+		} else {
+			this.addPage(requirement);
 		}
+
 		if(requirement.getMode() === "write") {
-			this._victims.pageOf(requirement).setReferenced(true);
 			this._victims.pageOf(requirement).setModified(true);
-			this.log("Updated victim queue, modified & referenced.");
+			this.log("Updated victim queue, modified.");
 		}
 	},
 
