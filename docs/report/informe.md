@@ -29,10 +29,7 @@ Nos pareció que sería útil para los alumnos poseer una herramienta que agilic
 * Un esqueleto de diagrama para que complete el usuario, resolviendo de forma manual el ejercicio, y pudiéndo compararlo luego de forma automática con la resolución generada por la herramienta. Esto permitiría, además de la verificación de la correctitud de los ejercicios, que el proceso de resolución se centre en la esencia del mismo, *cómo el algoritmo resuelve las solicitudes*, gracias a la eliminación de la parte repetitiva y sin importancia.
 
 # Tecnología
-La aplicación se desarrolló como un servicio web, para lo cual se utilizaron mayormente herramientas y frameworks basados en Javascript:
-
-# Tecnologías usadas
-
+La aplicación se desarrolló como un servicio web, para lo cual se utilizaron mayormente herramientas y frameworks basados en Javascript.
 Las tecnologías usadas fueron elegidas por diversas razones entre ellas:
 	- Aprendizaje: Somos inquietos, siempre queremos aprender cosas nuevas.
 	- Portabilidad: Javascript al ejecutarse mayormente sobre browsers, es independiente del SO.
