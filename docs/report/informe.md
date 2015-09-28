@@ -31,13 +31,55 @@ Nos pareció que sería útil para los alumnos poseer una herramienta que agilic
 # Tecnología
 La aplicación se desarrolló como un servicio web, para lo cual se utilizaron mayormente herramientas y frameworks basados en Javascript:
 
-* Node Package Manager para el manejo de paquetes y dependencias.
-* Cocktail para la implementación del diseño orientado a objetos generado para la resolución de los algoritmos.
-* GruntJS para la optimización de las tareas de desarrollo y respuesta de la aplicación.
-* Mocha para generar un conjunto de tests de unidad.
-* AngularJS para el front-end.
-* Bootstrap como framework CSS.
-* Node-Webkit para la exportación a aplicación de escritorio.
+# Tecnologías usadas
+
+Las tecnologías usadas fueron elegidas por diversas razones entre ellas:
+	- Aprendizaje: Somos inquietos, siempre queremos aprender cosas nuevas.
+	- Portabilidad: Javascript al ejecutarse mayormente sobre browsers, es independiente del SO.
+	- Reutilización: Hacemos la web y luego con un comando la convertimos en una aplicación de escritorio para todos los sistemas operativos. ¡SI! se codifica sólo una vez :D
+	 
+Diferenciamos **Backend** de **Frontend**.
+
+## Backend
+
+El backend representa el detrás de escena de lo que ve el usuario final. Todo el procesamiento y el cálculo "pesado".
+
+### NodeJS & NPM
+
+Se utilizó el entorno javascript [NodeJS](https://nodejs.org) para la implementación de los algoritmos de planificación de memoria en conjunto con [npm](https://www.npmjs.com/) para la gestion de dependencias del proyecto.
+
+El [diseño de los algoritmos](https://github.com/samsteam/sams-core/blob/master/docs/wiki/home.md#class-diagram) fue completamente orientado a objetos, y para mantener consistencia entre el diseño y la implementación, se utilizó la librería [cocktailJS](http://cocktailjs.github.io/) para el uso de "Clases" en lugar de "Prototipos" (nativo de javascript).
+
+Agradecimiento al creador de esta última librería [@elmasse](https://github.com/elmasse) por el soporte.
+
+### MochaJS
+
+Una de las técnicas utilizadas en el desarrollo fue la de [TDD](https://en.wikipedia.org/wiki/Test-driven_development) en la que se involucró el Framework [mochajs](https://mochajs.org) para los tests.
+
+Se realizaron tests de unidad para cada componente del core, y luego test de integración (manuales) para corroborar el correcto funcionamiento de los algoritmos.
+
+## Frontend
+
+El frontend representa lo que el usuario final ve y con lo que interactúa para obtener los resultados que desea.
+
+### AngularJS
+
+[AngularJS](https://angularjs.org/) es un framework **MVW** (Model View Whatever) del lado del cliente creado por [Google](https://google.com), que facilita el desarrollo de aplicaciones web/híbridas, ya que otorga entre sus bondades, bindings en tiempo real, código modularizado (gracias a su patrón MVW), etc.
+
+### GruntJS
+
+Muchas veces los desarrolladores se encuentran con tareas repetitivas a la hora de desarrollar, como agregar librerías JS o CSS a sus proyectos, y la tarea tediosa y propensa a errores de agregar manualmente cada una de ellas.
+[GruntJS](http://gruntjs.com/) es un automatizador de tareas que mantiene todo esto bajo control y de manera transparente para el desarrollador. Además brinda algunas **tareas** (*tasks*) para el desarrollo, como concatenación y minificación de archivos para una optimización con todo lo relacionado a el mundo web.
+
+### BootstrapCSS
+
+Como aquí somos todos programadores y ninguno diseñador, no queremos pelearnos con colores o interminables guerras entre medidas relativas o absolutas. Por eso elegimos [Bootstrap](http://getbootstrap.com/) como framework CSS para todo lo relacionado con el diseño gráfico de cara al usuario.
+
+### NW (Node Webkit)
+
+[NW ó Node Webkit](http://nwjs.io/) es una tecnología que permite "embeber" nuestra web y tratarla como una aplicación de escritorio.
+Esta tecnología se utilizó para proveer una versión **offline** de la aplicación.
+
 
 # Prototipo generado
 ![](./images/home.png)
