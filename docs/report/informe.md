@@ -30,10 +30,12 @@ Nos pareció que sería útil para los alumnos poseer una herramienta que agilic
 
 # Tecnología
 La aplicación se desarrolló como un servicio web, para lo cual se utilizaron mayormente herramientas y frameworks basados en Javascript.
+
 Las tecnologías usadas fueron elegidas por diversas razones entre ellas:
-	- Aprendizaje: Somos inquietos, siempre queremos aprender cosas nuevas.
-	- Portabilidad: Javascript al ejecutarse mayormente sobre browsers, es independiente del SO.
-	- Reutilización: Hacemos la web y luego con un comando la convertimos en una aplicación de escritorio para todos los sistemas operativos. ¡SI! se codifica sólo una vez :D
+
+- Aprendizaje: Somos inquietos, siempre queremos aprender cosas nuevas.
+- Portabilidad: Javascript al ejecutarse mayormente sobre browsers, es independiente del SO.
+- Reutilización: Hacemos la web y luego con un comando la convertimos en una aplicación de escritorio para todos los sistemas operativos. ¡SI! se codifica sólo una vez :D
 	 
 Diferenciamos **Backend** de **Frontend**.
 
