@@ -30,7 +30,7 @@ Nos pareció que sería útil para los alumnos poseer una herramienta que agilic
 * Un esqueleto de diagrama para que complete el usuario, resolviendo de forma manual el ejercicio, y pudiéndo compararlo luego de forma automática con la resolución generada por la herramienta. Esto permitiría, además de la verificación de la correctitud de los ejercicios, que el proceso de resolución se centre en la esencia del mismo, *cómo el algoritmo resuelve las solicitudes*, gracias a la eliminación de la parte repetitiva y sin importancia.
 
 # Tecnologías utilizadas
-La aplicación se desarrolló como un servicio web, para lo cual se utilizaron mayormente herramientas y frameworks basados en JavaScript, siendo los motivos por los cuales las elegimos el aprendizaje de nuevas herramientas y la portabilidad del lenguaje.
+La aplicación se desarrolló como un servicio web, para lo cual se utilizaron mayormente herramientas y frameworks basados en JavaScript, siendo los motivos por los cuales las elegimos el aprendizaje de nuevas tecnologías y la portabilidad del lenguaje.
 
 A continuación las describimos, haciendo una separación entre las pertenecientes al *backend* y al *frontend*.
 
@@ -64,15 +64,22 @@ Node Webkit es una tecnología que permite embeber una web en una aplicación de
 # Prototipo generado
 [SAMS-webapp](https://samsteam.github.io/#/home)
 
+### Inicio
 ![](./images/home.png)
+
+### Carga de requerimientos
 ![](./images/requirements_1.png)
 ![](./images/requirements_2.png)
+
+### Selección de políticas
 ![](./images/policies.png)
+
+### Resolución
 ![](./images/resolution.png)
 <br>
 <br>
 # Conclusiones
-Se desarrolló la herramienta con sus funcionalidades troncales implementadas. Se espera que la misma sea de ayuda e introduzca mejoras en el proceso de aprendizaje de los alumnos.
+Se desarrolló la herramienta con las funcionalidades troncales implementadas. Se espera que la misma sea de ayuda e introduzca mejoras en el proceso de aprendizaje de los alumnos.
 
 # Trabajo futuro
 Se consideraron algunas ideas para la posterior extensión del software, tanto para incrementar sus capacidades como para mejorar la experiencia de usuario:
@@ -80,7 +87,7 @@ Se consideraron algunas ideas para la posterior extensión del software, tanto p
 * Identificación de situaciones dudosas comunes en los diferentes algoritmos y explicación de las razones de la forma de resolución.
 * Incremento de la descripción en las correcciones de errores.
 * Provisión de una explicación instante a instante del porqué de las decisiones tomadas por el software en la resolución de los ejercicios.
-* Inclusión de enriquecedores de la aplicación como juego serio, por ejemplo temporizadores y diferentes niveles de dificultad.
+* Inclusión de elementos enriquecedores de la aplicación como juego serio, por ejemplo temporizadores y diferentes niveles de dificultad.
 
 # Bibliografía
 * *Sistemas Operativos Modernos*, tercera edición (2009). Andrew S. Tanenbaum.
