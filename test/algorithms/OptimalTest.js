@@ -75,7 +75,7 @@ module.exports = function() {
 
     describe('Global Dynamic', function() {
       var requirements = FactoryOptimalGlobalDynamic.getRequirements();
-      var sams = initializeSams(requirements, 7, false, true);
+      var sams = initializeSams(requirements, 4, false, true);
       var expectedInstants = FactoryOptimalGlobalDynamic.getInstants();
       var obtainedInstants = sams.run();
       obtainedInstants = adaptInstantsGlobalDynamic(obtainedInstants);
