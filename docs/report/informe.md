@@ -67,7 +67,7 @@ Node Webkit es una tecnología que permite embeber una web en una aplicación de
 ### Inicio
 ![](./images/home.png)
 
-### Carga de requerimientos
+### Ingreso de requerimientos
 ![](./images/requirements_1.png)
 ![](./images/requirements_2.png)
 
