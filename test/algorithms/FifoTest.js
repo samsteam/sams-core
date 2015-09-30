@@ -122,6 +122,24 @@ module.exports = function() {
       return instants;
     }
 
+    var adaptExpectedInstantsLocalFixedEven = function (instants) {
+      var i;
+      for (i = 0; i < instants.length; i++) {
+        instants[i]["frames"].sort(function (a, b) {
+          a.process = a.process || "";
+          a.pageNumber = a.pageNumber || 0;
+          b.process = b.process || "";
+          b.pageNumber = b.pageNumber || 0;
+          if ((a.process + a.pageNumber.toString()) < (b.process + b.pageNumber.toString()))
+            return -1;
+          if ((a.process + a.pageNumber.toString()) > (b.process + b.pageNumber.toString()))
+            return 1;
+          return 0;
+        });
+      }
+      return instants;
+    }
+
     before(function() {
 
     });
@@ -230,6 +248,7 @@ module.exports = function() {
       var sams = initializeSams(requirements, 6, false, false);
       var expectedInstants = FactoryLocalFixedEven.getInstants();
       var obtainedInstants = sams.run();
+      expectedInstants = adaptExpectedInstantsLocalFixedEven(expectedInstants);
       obtainedInstants = adaptInstantsLocalFixedEven(obtainedInstants);
 
       it('#Amount of instants', function() {
