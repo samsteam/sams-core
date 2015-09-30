@@ -48,18 +48,19 @@ module.exports = function() {
     }
 
     var cleanNonUsedFrames = function (frames) {
-      var j;
-      for (j = 0; j < frames.length; j++) {
-        if (frames[j]["finished"]) {
-          delete frames[j]["process"];
-          delete frames[j]["pageNumber"];
-          delete frames[j]["referenced"];
-          delete frames[j]["modified"];
-          delete frames[j]["pageFault"];
-          delete frames[j]["required"];
-          delete frames[j]["reservedForPageBuffering"];
-        }
-      }
+      // NO LONGER NEEDED
+      // var j;
+      // for (j = 0; j < frames.length; j++) {
+      //   if (frames[j]["finished"]) {
+      //     delete frames[j]["process"];
+      //     delete frames[j]["pageNumber"];
+      //     delete frames[j]["referenced"];
+      //     delete frames[j]["modified"];
+      //     delete frames[j]["pageFault"];
+      //     delete frames[j]["required"];
+      //     delete frames[j]["reservedForPageBuffering"];
+      //   }
+      // }
     }
 
     // var cleanPageBufferingReservedFrame = function (frames) {
@@ -86,7 +87,7 @@ module.exports = function() {
         //   delete instants[i]["potentialVictims"][j].finished;
         // }
         deleteFinishedAttributeFromInstant(instants[i]);
-        cleanNonUsedFrames(instants[i]["frames"]);
+        // cleanNonUsedFrames(instants[i]["frames"]);
       }
       return instants;
     }
@@ -96,7 +97,7 @@ module.exports = function() {
       for (i = 0; i < instants.length; i++) {
         deleteFinishedAttributeFromInstant(instants[i]);
         deleteReferencedAttributeFromInstant(instants[i]);
-        cleanNonUsedFrames(instants[i]["frames"]);
+        // cleanNonUsedFrames(instants[i]["frames"]);
       }
       return instants;
     }
@@ -106,7 +107,7 @@ module.exports = function() {
       for (i = 0; i < instants.length; i++) {
         deleteFinishedAttributeFromInstant(instants[i]);
         deleteReferencedAttributeFromInstant(instants[i]);
-        cleanNonUsedFrames(instants[i]["frames"]);
+        // cleanNonUsedFrames(instants[i]["frames"]);
         instants[i]["frames"].sort(function (a, b) {
           a.process = a.process || "";
           a.pageNumber = a.pageNumber || 0;
@@ -140,6 +141,65 @@ module.exports = function() {
       return instants;
     }
 
+    var emptyFrame2ndChance = function() {
+      var frame = {};
+      frame.process = "empty";
+      frame.pageNumber = 0;
+      frame.pageFault = false;
+      frame.required = false;
+      frame.referenced = false;
+      frame.modified = false;
+      frame.finished = false;
+      frame.reservedForPageBuffering = false;
+      return frame;
+    }
+
+    var emptyFrame = function() {
+      var frame = {};
+      frame.process = "empty";
+      frame.pageNumber = 0;
+      frame.pageFault = false;
+      frame.required = false;
+      frame.modified = false;
+      frame.finished = false;
+      frame.reservedForPageBuffering = false;
+      return frame;
+    }
+
+    var addEmptyFrames = function(instants, memorySize) {
+      var i;
+      for (i = 0; i < instants.length; i++) {
+        var j = instants[i]["frames"].length;
+        for (; j < memorySize; j++) {
+          instants[i]["frames"].push(emptyFrame());
+        }
+        // var k = 0;
+        // for (; k < instants[i]["frames"].length; k++) {
+        //   if ((instants[i]["frames"][k].finished) && (instants[i]["requirement"].process === instants[i-1]["frames"][k].process)) {
+        //     instants[i]["frames"][k] = emptyFrame();
+        //   }
+        // }
+      }
+      return instants;
+    }
+
+    var addEmptyFrames2ndChance = function(instants, memorySize) {
+      var i;
+      for (i = 0; i < instants.length; i++) {
+        var j = instants[i]["frames"].length;
+        for (; j < memorySize; j++) {
+          instants[i]["frames"].push(emptyFrame2ndChance());
+        }
+        // var k = 0;
+        // for (; k < instants[i]["frames"].length; k++) {
+        //   if ((instants[i]["frames"][k].finished) && (instants[i]["requirement"].process === instants[i-1]["frames"][k].process)) {
+        //     instants[i]["frames"][k] = emptyFrame();
+        //   }
+        // }
+      }
+      return instants;
+    }
+
     before(function() {
 
     });
@@ -147,7 +207,7 @@ module.exports = function() {
     beforeEach(function() {
 
     });
-    
+
     describe('Global Dynamic 2nd chance', function() {
       var requirements = [
         { 'process': 'B', 'pageNumber': 2, 'mode' : 'read' },
@@ -188,6 +248,8 @@ module.exports = function() {
       var expectedInstants = require("./helpers/resultFactories/fifoGlobalDynamic2ndChance");
 
       var obtainedInstants = sams.run();
+
+      expectedInstants = addEmptyFrames2ndChance(expectedInstants, 7);
       obtainedInstants = adaptInstantsGlobal2ndChance(obtainedInstants);
 
       it('#Amount of instants', function() {
@@ -221,6 +283,7 @@ module.exports = function() {
       var sams = initializeSams(requirements, 7, false, true);
       var expectedInstants = FactoryFifoGlobalDynamicPb.getInstants();
       var obtainedInstants = sams.run();
+      expectedInstants = addEmptyFrames(expectedInstants, 7);
       obtainedInstants = adaptInstantsGlobalPageBuffering(obtainedInstants);
 
       it('#Amount of instants', function() {
@@ -248,6 +311,7 @@ module.exports = function() {
       var sams = initializeSams(requirements, 9, false, false, true, 3);
       var expectedInstants = FactoryLocalFixedEven.getInstants();
       var obtainedInstants = sams.run();
+      expectedInstants = addEmptyFrames(expectedInstants, 9);
       expectedInstants = adaptExpectedInstantsLocalFixedEven(expectedInstants);
       obtainedInstants = adaptInstantsLocalFixedEven(obtainedInstants);
 

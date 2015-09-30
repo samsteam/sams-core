@@ -3103,7 +3103,14 @@ module.exports = [
         'reservedForPageBuffering':false
       },
       {
-        'finished':true
+        'process': 'C',
+        'pageNumber': 1,
+        'referenced': false,
+        'modified': false,
+        'pageFault': false,
+        'required': false,
+        'finished': true,
+        'reservedForPageBuffering': false
       },
       {
         'process':'B',
@@ -3565,7 +3572,14 @@ module.exports = [
         'reservedForPageBuffering':false
       },
       {
-        'finished':true
+        'process':'B',
+        'pageNumber':3,
+        'referenced':false,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':true,
+        'reservedForPageBuffering':false
       },
       {
         'process':'A',
@@ -3578,7 +3592,14 @@ module.exports = [
         'reservedForPageBuffering':false
       },
       {
-        'finished':true
+        'process':'B',
+        'pageNumber':1,
+        'referenced':false,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':true,
+        'reservedForPageBuffering':false
       },
       {
         'process':'A',
@@ -3591,7 +3612,14 @@ module.exports = [
         'reservedForPageBuffering':false
       },
       {
-        'finished':true
+        'process':'B',
+        'pageNumber':8,
+        'referenced':false,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':true,
+        'reservedForPageBuffering':false
       },
       {
         'process':'A',
@@ -3641,25 +3669,73 @@ module.exports = [
     },
     frames:[
       {
-        'finished':true
+        'process':'A',
+        'pageNumber':4,
+        'referenced':true,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':true,
+        'reservedForPageBuffering':false
       },
       {
-        'finished':true
+        'process':'empty',
+        'pageNumber':0,
+        'referenced':false,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':false,
+        'reservedForPageBuffering':false
       },
       {
-        'finished':true
+        'process':'A',
+        'pageNumber':1,
+        'referenced':false,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':true,
+        'reservedForPageBuffering':false
       },
       {
-        'finished':true
+        'process':'empty',
+        'pageNumber':0,
+        'referenced':false,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':false,
+        'reservedForPageBuffering':false      },
+      {
+        'process':'A',
+        'pageNumber':7,
+        'referenced':false,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':true,
+        'reservedForPageBuffering':false
       },
       {
-        'finished':true
+        'process':'empty',
+        'pageNumber':0,
+        'referenced':false,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':false,
+        'reservedForPageBuffering':false
       },
       {
-        'finished':true
-      },
-      {
-        'finished':true
+        'process':'A',
+        'pageNumber':9,
+        'referenced':false,
+        'modified':false,
+        'pageFault':false,
+        'required':false,
+        'finished':true,
+        'reservedForPageBuffering':false
       }
     ],
     'potentialVictims':[

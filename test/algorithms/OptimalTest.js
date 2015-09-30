@@ -53,12 +53,55 @@ module.exports = function() {
       }
     }
 
+    var emptyFrame2ndChance = function() {
+      var frame = {};
+      frame.process = "empty";
+      frame.pageNumber = 0;
+      frame.pageFault = false;
+      frame.required = false;
+      frame.referenced = false;
+      frame.modified = false;
+      frame.finished = false;
+      frame.reservedForPageBuffering = false;
+      return frame;
+    }
+
+    var emptyFrame = function() {
+      var frame = {};
+      frame.process = "empty";
+      frame.pageNumber = 0;
+      frame.pageFault = false;
+      frame.required = false;
+      frame.modified = false;
+      frame.finished = false;
+      frame.reservedForPageBuffering = false;
+      return frame;
+    }
+
+
+    var addEmptyFrames = function(instants, memorySize) {
+      var i;
+      for (i = 0; i < instants.length; i++) {
+        var j = instants[i]["frames"].length;
+        for (; j < memorySize; j++) {
+          instants[i]["frames"].push(emptyFrame());
+        }
+        // var k = 0;
+        // for (; k < instants[i]["frames"].length; k++) {
+        //   if ((instants[i]["frames"][k].finished) && (instants[i]["requirement"].process === instants[i-1]["frames"][k].process)) {
+        //     instants[i]["frames"][k] = emptyFrame();
+        //   }
+        // }
+      }
+      return instants;
+    }
+
     var adaptInstantsGlobalDynamic = function (instants) {
       var i;
       for (i = 0; i < instants.length; i++) {
         deleteFinishedAttributeFromInstant(instants[i]);
         deleteReferencedAttributeFromInstant(instants[i]);
-        cleanNonUsedFrames(instants[i]["frames"]);
+        // cleanNonUsedFrames(instants[i]["frames"]);
       }
       return instants;
     }
@@ -68,7 +111,7 @@ module.exports = function() {
       for (i = 0; i < instants.length; i++) {
         deleteFinishedAttributeFromInstant(instants[i]);
         deleteReferencedAttributeFromInstant(instants[i]);
-        cleanNonUsedFrames(instants[i]["frames"]);
+        // cleanNonUsedFrames(instants[i]["frames"]);
       }
       return instants;
     }
@@ -78,6 +121,8 @@ module.exports = function() {
       var sams = initializeSams(requirements, 4, false, true);
       var expectedInstants = FactoryOptimalGlobalDynamic.getInstants();
       var obtainedInstants = sams.run();
+
+      expectedInstants = addEmptyFrames(expectedInstants, 4);
       obtainedInstants = adaptInstantsGlobalDynamic(obtainedInstants);
 
       it('#Amount of instants', function() {
