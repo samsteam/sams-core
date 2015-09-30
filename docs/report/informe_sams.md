@@ -32,18 +32,23 @@ Nos pareció que sería útil para los alumnos poseer una herramienta que agilic
 # Tecnologías utilizadas
 La aplicación se desarrolló como un servicio web, para lo cual se utilizaron mayormente herramientas y frameworks basados en JavaScript, siendo los motivos por los cuales las elegimos el aprendizaje de nuevas herramientas y la portabilidad del lenguaje.
 
-A continuación las describimos, haciendo una separación entre las pertenecientes al *backend*, que consiste en el procesamiento interno realizado por la aplicación, y al *frontend*, que representa a la interfaz con la que el usuario interactúa.
+A continuación las describimos, haciendo una separación entre las pertenecientes al *backend* y al *frontend*.
 
 ### Backend
+Consiste en el procesamiento interno realizado por la aplicación.
+
 ##### NodeJS & NPM
 Se utilizó el entorno javascript NodeJS para la implementación de los algoritmos de planificación de memoria en conjunto con NPN (Node Package Manager) para la gestion de dependencias del proyecto.
 
+##### CocktailJS
 El diseño de los algoritmos fue completamente orientado a objetos, y, para mantener consistencia entre el diseño y la implementación, nos valimos de la librería CocktailJS para el uso de *clases* en lugar de los *prototipos* nativos de JavaScript.
 
 ##### MochaJS
 Una técnica que aplicamos en el desarrollo fue la de TDD (Test Driven Development), para lo que se involucró el framework Mocha.js. Se implementaron tests de unidad para cada componente del core, y luego tests de integración (manuales) para corroborar el correcto funcionamiento de los algoritmos.
 
 ### Frontend
+Representa a la interfaz con la que el usuario interactúa.
+
 ##### AngularJS
 AngularJS es un framework **MVW** (Model View Whatever) creado por Google, que funciona del lado del cliente y facilita el desarrollo de aplicaciones web/híbridas, ya que otorga, entre otras bondades, bindings en tiempo real y código modularizado.
 
@@ -59,8 +64,13 @@ Node Webkit es una tecnología que permite embeber una web en una aplicación de
 # Prototipo generado
 [SAMS-webapp](https://samsteam.github.io/#/home)
 
-*Imágenes al final del documento*
-
+![](./images/home.png)
+![](./images/requirements_1.png)
+![](./images/requirements_2.png)
+![](./images/policies.png)
+![](./images/resolution.png)
+<br>
+<br>
 # Conclusiones
 Se desarrolló la herramienta con sus funcionalidades troncales implementadas. Se espera que la misma sea de ayuda e introduzca mejoras en el proceso de aprendizaje de los alumnos.
 
@@ -68,7 +78,7 @@ Se desarrolló la herramienta con sus funcionalidades troncales implementadas. S
 Se consideraron algunas ideas para la posterior extensión del software, tanto para incrementar sus capacidades como para mejorar la experiencia de usuario:
 
 * Identificación de situaciones dudosas comunes en los diferentes algoritmos y explicación de las razones de la forma de resolución.
-* Incremento de la descripción de las correcciones de errores.
+* Incremento de la descripción en las correcciones de errores.
 * Provisión de una explicación instante a instante del porqué de las decisiones tomadas por el software en la resolución de los ejercicios.
 * Inclusión de enriquecedores de la aplicación como juego serio, por ejemplo temporizadores y diferentes niveles de dificultad.
 
@@ -76,10 +86,3 @@ Se consideraron algunas ideas para la posterior extensión del software, tanto p
 * *Sistemas Operativos Modernos*, tercera edición (2009). Andrew S. Tanenbaum.
 * *Sistemas Operativos*, quinta edición (2005). William Stallings.
 * Material teórico y práctico de la cátedra de Introducción a los Sistemas Operativos (2014).
-
-# Capturas de pantalla
-![](./images/home.png)
-![](./images/requirements_2.png)
-![](./images/requirements_3.png)
-![](./images/policies.png)
-![](./images/resolution.png)
