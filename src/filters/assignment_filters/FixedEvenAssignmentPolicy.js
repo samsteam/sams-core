@@ -11,9 +11,21 @@ cocktail.mix({
 
 	'@logger' : [console, "FixedEvenAssignmentPolicy:"],
 
-	constructor: function(localitySize) {
-		this._size = localitySize;
-		this.log("Created with " + this._size + ".");
+	constructor: function() {
+		this._size = 0;
+		this.log("Created.");
+	},
+
+	initialize: function(memorySize, requirements) {
+		var processes = { cant: 0};
+		requirements.forEach(function(elem) {
+		  if (!processes[elem.getProcess()]) {
+		  	processes[elem.getProcess()] = true;
+				processes.cant++;
+		  }
+		});
+		this._size = Math.floor(memorySize / processes.cant);
+		this.log("Assumed size: " + this._size + ".");
 	},
 
 	hasFreeFrameFor: function(requirement, memory, context) {

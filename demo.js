@@ -126,11 +126,11 @@ var victim = vf("a1");
 
 var sams = new Scheduler();
 sams.setAlgorithm("fifo");
-sams.setMemorySize(4);
+sams.setMemorySize(6);
 // sams.setSecondChanceFilter(true);
-// sams.setLocalReplacementPolicy(true);
+sams.setLocalReplacementPolicy(true);
 // sams.setPageBufferingFilter(true);
-// sams.setFixedEvenAssignmentPolicy(2);
+sams.setFixedEvenAssignmentPolicy(true);
 sams.addRequirements(reqs);
 var instants;
 instants = sams.run();
