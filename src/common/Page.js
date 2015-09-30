@@ -40,7 +40,7 @@ cocktail.mix({
     empty: function () {
       var Page = require('./Page');
   		return new Page({
-        'process': '',
+        'process': 'empty',
         'pageNumber': 0,
         'mode': '',
         'pageFault': false,
