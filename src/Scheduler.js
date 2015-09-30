@@ -338,9 +338,15 @@ cocktail.mix({
     this.log("Temporal page flags cleared.");
   },
 
+  _clearFinished: function() {
+    this._memory.clearFinished();
+    this.log("Finished proceses cleared.");
+  },
+
   _processRequirements: function() {
     this._requirements.forEach(function(requirement) {
       //  Start with a clean image of the frames.
+      this._clearFinished();
       this._clearTemporalFlags();
       //Declare victim here because it'll be used for update.
       this.log("Processing requirement: " + requirement + ".");

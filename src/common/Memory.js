@@ -1,11 +1,11 @@
 var cocktail = require('cocktail');
-
 //Add Logger annotation.
 var Logger = require('../annotations/Logger');
 cocktail.use(Logger);
 
 //Using Behavior class.
 var Behavior = require('./Behavior');
+var Page = require('./Page');
 
 /*
  *  Adding this trait lets the constructor accept an object as parameter.
@@ -84,9 +84,8 @@ cocktail.mix({
     var i = 0;
     var array = this._array;
     var length = this._size;
-
 		for (; i < length; i++) {
-			if (array[i] === undefined || array[i].isFinished()) {
+			if (array[i] === undefined || Page.empty().equals(array[i])) {
 				return i;
 			}
 		}
@@ -284,5 +283,15 @@ cocktail.mix({
         exec(element, index, context.memory);
       }, context);
     }
+  },
+
+  clearFinished: function() {
+    for (var i = 0; i < this._size; i++) {
+      var page = this._array[i];
+      if (page === undefined || page.isFinished()) {
+        this.atPut(i, Page.empty());
+      }
+    }
   }
+
 });
