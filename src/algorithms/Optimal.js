@@ -40,27 +40,64 @@ cocktail.mix({
 	},
 
 	update: function(requirement) {
-		// Find the new commer, set it as loaded, update its instant & check if is finished.
-		var page = this._orderedVictims.find(function(page) {
-			return (page.process == requirement.getProcess() && page.pageNumber == requirement.getPageNumber());
-		});
-		this.log("Page: {process:" + page.process + " pageNumber:" + page.pageNumber  + "} is being updated.");
-		page.loaded = true;
-		page.index++;
-		page.finished = (page.index +1 >= page.requirements.length);
+
+		if (requirement.getMode() ===  "finish") {
+			// Remove the pages that finished from the victim's structure.
+			var toRemove = [];
+			this._orderedVictims.forEach(function(page, index) {
+			  if(page.process === requirement.getProcess()) {
+					this.log("Page: {process:" + page.process + " pageNumber:" + page.pageNumber  + "} is being finished.");
+					toRemove.push(page);
+				}
+			}, this);
+
+			toRemove.forEach(function(page) {
+				var index = this._orderedVictims.indexOf(page);
+			  this._orderedVictims.splice(index, 1);
+			}, this);
+
+			console.log(this._orderedVictims);
+		} else {
+			// Find the new commer, set it as loaded, update its instant & check if is finished.
+			var page = this._orderedVictims.find(function(page) {
+				return (page.process == requirement.getProcess() && page.pageNumber == requirement.getPageNumber());
+			});
+			this.log("Page: {process:" + page.process + " pageNumber:" + page.pageNumber  + "} is being updated.");
+			page.loaded = true;
+			page.index++;
+			page.finished = (page.index +1 >= page.requirements.length);
+		}
 
 		// Update the victim's structure.
 		this._victims = new Queue();
 
-		// Get all the finished pages first (ordered by apparition).
+		// // Get all the finished pages first (ordered by FIFO in Memory).
+		// this._orderedVictims.forEach(function(page) {
+		//   if (page.finished && page.loaded) {
+		//   	this._victims.add(page.simpleRequirement[page.index]);
+		//   }
+		// }, this);
+
+		// Get all the finished pages first (ordered by FIFO in Victim's Structure).
+		var finished = [];
 		this._orderedVictims.forEach(function(page) {
 		  if (page.finished && page.loaded) {
-		  	this._victims.add(page.simpleRequirement[page.index]);
+				finished.push(page);
 		  }
 		}, this);
 
-		// Get the loaded pages and order them by next reference (optimal).
+		finished.sort(function(a, b) {
+		  return a.requirements[a.index] - b.requirements[b.index];
+		});
 
+		finished.forEach(function(requirement) {
+			var page = this._orderedVictims.find(function(page) {
+		    return (page.process == requirement.process && page.pageNumber == requirement.pageNumber);
+		  });
+			this._victims.add(page.simpleRequirement[page.index]);
+		}, this);
+
+		// Get the loaded pages and order them by next reference (optimal).
 		var loadedNotFinished = [];
 		this._orderedVictims.forEach(function(page) {
 		  if (!page.finished && page.loaded) {
@@ -69,17 +106,16 @@ cocktail.mix({
 		});
 
 		loadedNotFinished.sort(function(a, b) {
-			// I'm sure they have another requirement, no need to check.
-		  return a.requirements[a.index +1] - b.requirements[b.index +1]
+		  return b.requirements[(b.index) +1] - a.requirements[(a.index) +1];
 		});
 
-		// Finally find'em in order & add'em.
 		loadedNotFinished.forEach(function(requirement) {
 		  var page = this._orderedVictims.find(function(page) {
 		    return (page.process == requirement.process && page.pageNumber == requirement.pageNumber);
 		  });
 			this._victims.add(page.simpleRequirement[page.index]);
 		}, this);
+
 	},
 
 	_orderVictims: function() {
