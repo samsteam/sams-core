@@ -228,7 +228,7 @@ module.exports = {
     frames = ["fin", "fin", "a7", "a9", "fin", "fin", "fin", "a4pr", "fin"];
     pageFault = true;
     victim = "a5";
-    potentialVictims = ["a5", "a7", "a9"];
+    potentialVictims = ["a7", "a9", "a4"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "af";

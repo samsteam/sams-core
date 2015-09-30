@@ -14,14 +14,14 @@ var FactoryLocalFixedEven = require("./helpers/resultFactories/fifoLocalFixedEve
 module.exports = function() {
 
   describe('FIFO', function() {
-    var initializeSams = function (requirements, memorySize, secondChance, asyncFlush, local) {
+    var initializeSams = function (requirements, memorySize, secondChance, asyncFlush, local, size) {
       var sams = new Scheduler();
       sams.setAlgorithm("fifo");
       sams.setSecondChanceFilter(secondChance);
       sams.setPageBufferingFilter(asyncFlush);
       sams.setMemorySize(memorySize);
       if (local) {
-        sams.setFixedEvenAssignmentPolicy(true);
+        sams.setFixedEvenAssignmentPolicy(size);
         sams.setLocalReplacementPolicy(true);
       }
       sams.addRequirements(requirements);
@@ -104,6 +104,9 @@ module.exports = function() {
     var adaptInstantsLocalFixedEven = function (instants) {
       var i;
       for (i = 0; i < instants.length; i++) {
+        deleteFinishedAttributeFromInstant(instants[i]);
+        deleteReferencedAttributeFromInstant(instants[i]);
+        cleanNonUsedFrames(instants[i]["frames"]);
         instants[i]["frames"].sort(function (a, b) {
           a.process = a.process || "";
           a.pageNumber = a.pageNumber || 0;
@@ -115,9 +118,6 @@ module.exports = function() {
             return 1;
           return 0;
         });
-        deleteFinishedAttributeFromInstant(instants[i]);
-        deleteReferencedAttributeFromInstant(instants[i]);
-        cleanNonUsedFrames(instants[i]["frames"]);
       }
       return instants;
     }
@@ -147,7 +147,7 @@ module.exports = function() {
     beforeEach(function() {
 
     });
-
+    
     describe('Global Dynamic 2nd chance', function() {
       var requirements = [
         { 'process': 'B', 'pageNumber': 2, 'mode' : 'read' },
@@ -245,7 +245,7 @@ module.exports = function() {
 
     describe("Local Fixed Even", function (argument) {
       var requirements = FactoryLocalFixedEven.getRequirements();
-      var sams = initializeSams(requirements, 6, false, false);
+      var sams = initializeSams(requirements, 9, false, false, true, 3);
       var expectedInstants = FactoryLocalFixedEven.getInstants();
       var obtainedInstants = sams.run();
       expectedInstants = adaptExpectedInstantsLocalFixedEven(expectedInstants);
