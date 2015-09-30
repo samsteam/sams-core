@@ -114,7 +114,7 @@ var C3R = rf("C3R");
 
 var CF = rf("CF");
 
-var reqs = [A1M, B1R, C1R, A2R, A1R, C1R, A2R, C2R];
+var reqs = [A1M, B1R, C1R, A2R, A1R, C1R,BF, AF, C2R];
 
 //console.log(Page.empty());
 
