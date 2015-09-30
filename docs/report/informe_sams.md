@@ -58,16 +58,17 @@ Node Webkit es una tecnología que permite embeber una web en una aplicación de
 
 # Prototipo generado
 [SAMS-webapp](https://samsteam.github.io/#/home)
-*Imágenes al final*
+
+*Imágenes al final del documento*
 
 # Conclusiones
-Se desarrollo la herramienta con sus funcionalidades troncales implementadas. Se espera que la misma sea de ayuda e introduzca mejoras en el proceso de aprendizaje de los alumnos.
+Se desarrolló la herramienta con sus funcionalidades troncales implementadas. Se espera que la misma sea de ayuda e introduzca mejoras en el proceso de aprendizaje de los alumnos.
 
 # Trabajo futuro
 Se consideraron algunas ideas para la posterior extensión del software, tanto para incrementar sus capacidades como para mejorar la experiencia de usuario:
 
 * Identificación de situaciones dudosas comunes en los diferentes algoritmos y explicación de las razones de la forma de resolución.
-* Incremento en la descripción de las correcciones de errores.
+* Incremento de la descripción de las correcciones de errores.
 * Provisión de una explicación instante a instante del porqué de las decisiones tomadas por el software en la resolución de los ejercicios.
 * Inclusión de enriquecedores de la aplicación como juego serio, por ejemplo temporizadores y diferentes niveles de dificultad.
 
@@ -76,8 +77,8 @@ Se consideraron algunas ideas para la posterior extensión del software, tanto p
 * *Sistemas Operativos*, quinta edición (2005). William Stallings.
 * Material teórico y práctico de la cátedra de Introducción a los Sistemas Operativos (2014).
 
+# Capturas de pantalla
 ![](./images/home.png)
-![](./images/requirements_1.png)
 ![](./images/requirements_2.png)
 ![](./images/requirements_3.png)
 ![](./images/policies.png)
