@@ -103,12 +103,12 @@ cocktail.mix({
     }
   },
 
-  setFixedEvenAssignmentPolicy: function(size) {
-    if (size === undefined) {
+  setFixedEvenAssignmentPolicy: function(enabled) {
+    if (enabled === undefined) {
       return;
     }
-    if (size) {
-      this._assignmentPolicies[0] = new FixedEvenAssignmentPolicy(size);
+    if (enabled) {
+      this._assignmentPolicies[0] = new FixedEvenAssignmentPolicy();
     } else {
       delete this._assignmentPolicies[0];
     }
@@ -175,7 +175,7 @@ cocktail.mix({
 
   _resetPolicies: function() {
     if (this.isFixedEvenAssignmentPolicy()) {
-      this.setFixedEvenAssignmentPolicy(this._assignmentPolicies[0].localSize());
+      this.setFixedEvenAssignmentPolicy(true);
     }
     if (this.isLocalReplacementPolicy()) {
       this.setLocalReplacementPolicy(true);
@@ -215,6 +215,13 @@ cocktail.mix({
       throw new Error("Some initialization is missing!!");
     }
     this._clearBuffers();
+    if (this.isFixedEvenAssignmentPolicy()) {
+      this._assignmentPolicies[0].initialize(this._memorySize, this._requirements);
+      if (!this._assignmentPolicies[0].localSize()) {
+        throw new Error("A Memory of this size cannot handle that much processes.");
+      }
+    }
+    
     this._algorithm.initialize(this._requirements);
     this._processRequirements();
     /*
@@ -340,7 +347,7 @@ cocktail.mix({
 
   _clearFinished: function() {
     this._memory.clearFinished();
-    this.log("Finished proceses cleared.");
+    this.log("Finished processes cleared.");
   },
 
   _processRequirements: function() {
