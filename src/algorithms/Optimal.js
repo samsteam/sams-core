@@ -56,7 +56,6 @@ cocktail.mix({
 			  this._orderedVictims.splice(index, 1);
 			}, this);
 
-			console.log(this._orderedVictims);
 		} else {
 			// Find the new commer, set it as loaded, update its instant & check if is finished.
 			var page = this._orderedVictims.find(function(page) {
