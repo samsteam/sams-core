@@ -1,11 +1,12 @@
 # SAMS - Some Awesome Memory Scheduler
 
 # Integrantes
-* Natalia Aparicio
-* Ignacio Babbini
-* Bruno Cascio
-* Cirano Eusebi
-* Cristian Sottile
+* Natalia Aparicio - 12667/7
+* Ignacio Babbini - 10475/1
+* Bruno Cascio - 12512/7
+* Cirano Eusebi - 12469/2
+* Cristian Sottile - 12222/2
+* Nicolás Macia - Coordinador técnico
 
 # Objetivo
 El objetivo del proyecto es el desarrollo de un software que simule los diferentes algoritmos mediante los cuales el sistema operativo gestiona la memoria en las computadoras.
@@ -56,6 +57,7 @@ Para lograr que la herramienta tenga un gran aspecto, utilizamos este framework 
 Node Webkit es una tecnología que permite embeber una web en una aplicación de escritorio. Mediante ella generamos la versión desktop del software.
 
 # Prototipo generado
+[SAMS-webapp](https://samsteam.github.io/#/home)
 *Imágenes al final*
 
 # Conclusiones
@@ -68,6 +70,11 @@ Se consideraron algunas ideas para la posterior extensión del software, tanto p
 * Incremento en la descripción de las correcciones de errores.
 * Provisión de una explicación instante a instante del porqué de las decisiones tomadas por el software en la resolución de los ejercicios.
 * Inclusión de enriquecedores de la aplicación como juego serio, por ejemplo temporizadores y diferentes niveles de dificultad.
+
+# Bibliografía
+* *Sistemas Operativos Modernos*, tercera edición (2009). Andrew S. Tanenbaum.
+* *Sistemas Operativos*, quinta edición (2005). William Stallings.
+* Material teórico y práctico de la cátedra de Introducción a los Sistemas Operativos (2014).
 
 ![](./images/home.png)
 ![](./images/requirements_1.png)
