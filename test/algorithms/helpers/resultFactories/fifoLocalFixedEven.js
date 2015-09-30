@@ -169,70 +169,70 @@ module.exports = {
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "cf";
-    frames = ["b1", "b8", "a4", "a1", "fin", "fin", "b6", "a5", "fin"];
+    frames = ["b1", "b8", "a4", "a1", "c4f", "c6f", "b6", "a5", "c1f"];
     pageFault = false;
     victim = undefined;
     potentialVictims = ["b6", "a4", "a1", "b1", "b8", "a5"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "a4";
-    frames = ["b1", "b8", "a4r", "a1", "fin", "fin", "b6", "a5", "fin"];
+    frames = ["b1", "b8", "a4r", "a1", "emp", "emp", "b6", "a5", "emp"];
     pageFault = false;
     victim = undefined;
     potentialVictims = ["b6", "a4", "a1", "b1", "b8", "a5"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "b3";
-    frames = ["b1", "b8", "a4", "a1", "fin", "fin", "b3pr", "a5", "fin"];
+    frames = ["b1", "b8", "a4", "a1", "emp", "emp", "b3pr", "a5", "emp"];
     pageFault = true;
     victim = "b6";
     potentialVictims = ["a4", "a1", "b1", "b8", "a5", "b3"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "b1";
-    frames = ["b1r", "b8", "a4", "a1", "fin", "fin", "b3", "a5", "fin"];
+    frames = ["b1r", "b8", "a4", "a1", "emp", "emp", "b3", "a5", "emp"];
     pageFault = false;
     victim = undefined;
     potentialVictims = ["a4", "a1", "b1", "b8", "a5", "b3"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "b8";
-    frames = ["b1", "b8r", "a4", "a1", "fin", "fin", "b3", "a5", "fin"];
+    frames = ["b1", "b8r", "a4", "a1", "emp", "emp", "b3", "a5", "emp"];
     pageFault = false;
     victim = undefined;
     potentialVictims = ["a4", "a1", "b1", "b8", "a5", "b3"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "a7";
-    frames = ["b1", "b8", "a7pr", "a1", "fin", "fin", "b3", "a5", "fin"];
+    frames = ["b1", "b8", "a7pr", "a1", "emp", "emp", "b3", "a5", "emp"];
     pageFault = true;
     victim = "a4";
     potentialVictims = ["a1", "b1", "b8", "a5", "b3", "a7"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "bf";
-    frames = ["fin", "fin", "a7", "a1", "fin", "fin", "fin", "a5", "fin"];
+    frames = ["b1f", "b8f", "a7", "a1", "emp", "emp", "b3f", "a5", "emp"];
     pageFault = false;
     victim = undefined;
     potentialVictims = ["a1", "a5", "a7"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "a9";
-    frames = ["fin", "fin", "a7", "a9pr", "fin", "fin", "fin", "a5", "fin"];
+    frames = ["emp", "emp", "a7", "a9pr", "emp", "emp", "emp", "a5", "emp"];
     pageFault = true;
     victim = "a1";
     potentialVictims = ["a5", "a7", "a9"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "a4";
-    frames = ["fin", "fin", "a7", "a9", "fin", "fin", "fin", "a4pr", "fin"];
+    frames = ["emp", "emp", "a7", "a9", "emp", "emp", "emp", "a4pr", "emp"];
     pageFault = true;
     victim = "a5";
     potentialVictims = ["a7", "a9", "a4"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
 
     requirement = "af";
-    frames = ["fin", "fin", "fin", "fin", "fin", "fin", "fin", "fin", "fin"];
+    frames = ["emp", "emp", "a7f", "a9f", "emp", "emp", "emp", "a4f", "emp"];
     pageFault = false;
     victim = undefined;
     potentialVictims = [];

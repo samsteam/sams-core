@@ -41,8 +41,8 @@ rf: function (string) {
 ff: function (string) {
   if (string === "pb") {
     return this.pb();
-  } else if (string === "fin") {
-    return this.fin();
+  } else if (string === "emp") {
+    return this.empty();
   } else {
     string = string.toLowerCase();
     var frame = {};
@@ -73,16 +73,16 @@ pb: function () {
   return frame;
 },
 
-fin: function () {
+empty: function () {
   var frame = {};
-  // frame.process = "";
-  // frame.pageNumber = 0;
-  // frame.pageFault = false;
-  // frame.required = false;
+  frame.process = "empty";
+  frame.pageNumber = 0;
+  frame.pageFault = false;
+  frame.required = false;
   // frame.referenced = false;
-  // frame.modified = false;
-  frame.finished = true;
-  // frame.reservedForPageBuffering = false;
+  frame.modified = false;
+  frame.finished = false;
+  frame.reservedForPageBuffering = false;
   return frame;
 },
 

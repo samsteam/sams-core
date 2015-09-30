@@ -25,7 +25,7 @@ module.exports = function() {
 			sams.setMemorySize(memorySize);
 			sams.setFixedEvenAssignmentPolicy(fixedEvenAssig);
 			sams.addRequirements(reqs);
-			
+
 		}
 
 		createPageExpected = function (req, required, pageF, ref, modified, finish, reservedForPageBuffering) {
@@ -68,7 +68,7 @@ module.exports = function() {
 					if (expected[index].finished != (jsPage.finished)) {
 						err = true;
 						ret.unshift("Not equals flag finished Expected: " + expected[index].finished + " Found: "+ jsPage.finished);
-					}          
+					}
 					if (expected[index].referenced != (jsPage.referenced)) {
 						err = true;
 						ret.unshift("Not equals flag referenced Expected: " + expected[index].referenced + " Found: "+ jsPage.referenced);
@@ -80,7 +80,7 @@ module.exports = function() {
 					if (expected[index].pageNumber != jsPage.pageNumber){
 						err = true;
 						ret.unshift("Not equals page number Expected: " + expected[index].pageNumber + " Found: "+ jsPage.pageNumber);
-					}          
+					}
 				}
 				if (err) {
 					ret.unshift(jsPage);
@@ -127,6 +127,7 @@ module.exports = function() {
 		page7 = req7.asPage();
 		page8 = req8.asPage();
 		page9 = req9.asPage();
+		pageEmpty = Page.empty().asDataObject();
 		pageDA = createPageExpected(new Requirement({ 'process': '', 'pageNumber': 0, 'mode': 'reserved' }),
 																false, false, false, false, false, true);
 		before(function(){
@@ -139,7 +140,7 @@ module.exports = function() {
 			initializeSams(3, requirements);
 			var instants = sams.run();
 			it('#Analizando instante 0', function () {
-				expected = [createPageExpected(page1, true, true)];
+				expected = [createPageExpected(page1, true, true), pageEmpty,pageEmpty];
 				comparingInstant(instants[0].frames, expected);
 				// assert.deepEqual(instants[0].frames, qexpected);
 				assert.equal(true, instants[1].pageFault);
@@ -251,7 +252,7 @@ module.exports = function() {
 			var instants = sams.run();
 
 			it('#Analizando instante 0', function () {
-				expected = [createPageExpected(page2, true, true)];
+				expected = [createPageExpected(page2, true, true), pageEmpty, pageEmpty, pageEmpty];
 
 				comparingInstant(instants[0].frames, expected);
 				// assert.deepEqual(instants[0].frames, expected);
@@ -260,7 +261,9 @@ module.exports = function() {
 
 			it('#Analizando instante 1', function () {
 				expected = [createPageExpected(page2),
-										createPageExpected(page3, true, true)];
+										createPageExpected(page3, true, true),
+										pageEmpty,
+										pageEmpty];
 
 				comparingInstant(instants[1].frames, expected);
 				// assert.deepEqual(instants[1].frames, expected);
@@ -270,7 +273,8 @@ module.exports = function() {
 			it('#Analizando instante 3', function () {
 				expected = [createPageExpected(page2, true, false, true),
 										createPageExpected(page3),
-										createPageExpected(page5)];
+										createPageExpected(page5),
+										pageEmpty];
 
 				comparingInstant(instants[3].frames, expected);
 				//assert.deepEqual(instants[3].frames, expected);
@@ -280,7 +284,8 @@ module.exports = function() {
 			it('#Analizando instante 4', function () {
 				expected = [createPageExpected(page2, false, false, true),
 										createPageExpected(page3),
-										createPageExpected(page9, true, true, false, true)];
+										createPageExpected(page9, true, true, false, true),
+										pageEmpty];
 
 				comparingInstant(instants[4].frames, expected);
 				// assert.deepEqual(instants[4].frames, expected);
@@ -290,7 +295,8 @@ module.exports = function() {
 			it('#Analizando instante 5', function () {
 				expected = [createPageExpected(page2, false, false, true),
 										createPageExpected(page6, true, false, true, true),
-										createPageExpected(page9, false, false, false, true)];
+										createPageExpected(page9, false, false, false, true),
+										pageEmpty];
 				comparingInstant(instants[5].frames, expected);
 				// assert.deepEqual(instants[5].frames, expected);
 				assert.equal(false, instants[5].pageFault);
@@ -318,7 +324,8 @@ module.exports = function() {
 				expected = [pageDA,
 										createPageExpected(page2, false, false, true),
 										createPageExpected(page3),
-										createPageExpected(page9, true, true, false, true)];
+										createPageExpected(page9, true, true, false, true),
+										pageEmpty];
 				comparingInstant(instants[4].frames, expected);
 				// assert.deepEqual(instants[4].frames, expected);
 				assert.equal(true, instants[4].pageFault);

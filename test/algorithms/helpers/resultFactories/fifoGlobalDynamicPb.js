@@ -162,7 +162,7 @@ module.exports = {
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
     // Instant 22
     requirement = "bf";
-    frames = ["c4", "c1", "c2", "a7", "a2m", "fin", "pb"];
+    frames = ["c4", "c1", "c2", "a7", "a2m", "b4f", "pb"];
     pageFault = false;
     victim = undefined;
     potentialVictims = ["a2m", "c1", "c4", "c2", "a7"];
@@ -190,14 +190,14 @@ module.exports = {
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
     // Instant 26
     requirement = "af";
-    frames = ["c4", "c1", "c2", "fin", "pb", "fin", "c3"];
+    frames = ["c4", "c1", "c2", "a7f", "pb", "a3f", "c3"];
     pageFault = false;
     victim = undefined;
     potentialVictims = ["c1", "c4", "c2", "c3"];
     instants.push(Factory.make(requirement, frames, pageFault, victim, potentialVictims));
     // Instant 27
     requirement = "cf";
-    frames = ["fin", "fin", "fin", "fin", "pb", "fin", "fin"];
+    frames = ["c4f", "c1f", "c2f", "emp", "pb", "emp", "c3f"];
     pageFault = false;
     victim = undefined;
     potentialVictims = [];
