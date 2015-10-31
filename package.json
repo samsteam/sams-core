@@ -32,6 +32,7 @@
     "cocktail-trait-configurable": "^1.0.0"
   },
   "devDependencies": {
-    "it-each": "^0.3.1"
+    "it-each": "^0.3.1",
+    "mocha": "^2.2.5"
   }
 }
