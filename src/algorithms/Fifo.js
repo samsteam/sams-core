@@ -43,9 +43,14 @@ cocktail.mix({
 		}
 
 		if (this._victims.contains(requirement)) {
+			var modified = this._victims.pageOf(requirement).isModified();
 			this.addPage(requirement);
   		this._victims.pageOf(requirement).setReferenced(true);
 			this.log("Updated victim queue, referenced.");
+			if (modified) {
+				this._victims.pageOf(requirement).setModified(true);
+				this.log("Updated victim queue, kept modified.");
+			}
 		} else {
 			this.addPage(requirement);
 		}

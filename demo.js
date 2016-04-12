@@ -66,6 +66,7 @@ function pb() {
   frame.modified = false;
   frame.finished = false;
   frame.reservedForPageBuffering = true;
+  return frame;
 }
 
 //HACK: string like "a1emf"
@@ -114,23 +115,15 @@ var C3R = rf("C3R");
 
 var CF = rf("CF");
 
-var reqs = [A1M, B1R, C1R, A2R, A1R, C1R,BF, AF, C2R];
-
-//console.log(Page.empty());
-
-var frame = ff("a1r");
-var frame2 = ff("a1mr");
-var frame3= ff("")
-var pageBuffering = pb();
-var victim = vf("a1");
+var reqs = [A1M, A1R, B1R, C1R, A2R, C1R, BF, AF, C2R, CF];
 
 var sams = new Scheduler();
-sams.setAlgorithm("fifo");
-sams.setMemorySize(6);
+sams.setAlgorithm("lru");
+sams.setMemorySize(4);
 // sams.setSecondChanceFilter(true);
-sams.setLocalReplacementPolicy(true);
-// sams.setPageBufferingFilter(true);
-sams.setFixedEvenAssignmentPolicy(true);
+//sams.setLocalReplacementPolicy(true);
+sams.setPageBufferingFilter(true);
+//sams.setFixedEvenAssignmentPolicy(true);
 sams.addRequirements(reqs);
 var instants;
 instants = sams.run();
